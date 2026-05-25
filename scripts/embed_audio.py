@@ -51,7 +51,8 @@ def main() -> None:
         verbose=True,
     )
     print(f"Saved {len(names)} songs with embedding shape {embeddings.shape}")
-    print("These are raw feature embeddings; standardization is applied later in SongCatalog.")
+    print("Saved full-song retrieval embeddings plus intro/outro transition embeddings.")
+    print("Standardization is applied later in SongCatalog.")
 
 
 if __name__ == "__main__":
