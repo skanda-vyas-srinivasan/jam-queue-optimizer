@@ -14,9 +14,15 @@ from .paths import ARTIFACT_DIR
 @dataclass
 class SongCatalog:
     embeddings: np.ndarray
+    intro_embeddings: np.ndarray | None
+    outro_embeddings: np.ndarray | None
     names: np.ndarray
     folders: np.ndarray
     normalized_embeddings: np.ndarray = field(init=False)
+    normalized_intro_embeddings: np.ndarray | None = field(init=False)
+    normalized_outro_embeddings: np.ndarray | None = field(init=False)
+    retrieval_similarity: np.ndarray = field(init=False)
+    transition_similarity: np.ndarray = field(init=False)
     similarity: np.ndarray = field(init=False)
     song_to_idx: dict[str, int] = field(init=False)
     name_aliases: dict[str, str] = field(init=False)
@@ -26,18 +32,43 @@ class SongCatalog:
             raise ValueError("Embeddings, names, and folders must have the same length")
 
         self.embeddings = np.asarray(self.embeddings)
+        self.intro_embeddings = (
+            None if self.intro_embeddings is None else np.asarray(self.intro_embeddings)
+        )
+        self.outro_embeddings = (
+            None if self.outro_embeddings is None else np.asarray(self.outro_embeddings)
+        )
         self.names = np.asarray(self.names, dtype=str)
         self.folders = np.asarray(self.folders, dtype=str)
-        feature_means = self.embeddings.mean(axis=0)
-        feature_stds = self.embeddings.std(axis=0)
-        feature_stds[feature_stds == 0.0] = 1.0
-        self.normalized_embeddings = (self.embeddings - feature_means) / feature_stds
-        self.similarity = cosine_similarity(self.normalized_embeddings)
+        self.normalized_embeddings = self._standardize_matrix(self.embeddings)
+        self.retrieval_similarity = cosine_similarity(self.normalized_embeddings)
+
+        if self.intro_embeddings is not None and self.outro_embeddings is not None:
+            self.normalized_intro_embeddings = self._standardize_matrix(self.intro_embeddings)
+            self.normalized_outro_embeddings = self._standardize_matrix(self.outro_embeddings)
+            self.transition_similarity = cosine_similarity(
+                self.normalized_outro_embeddings,
+                self.normalized_intro_embeddings,
+            )
+        else:
+            self.normalized_intro_embeddings = None
+            self.normalized_outro_embeddings = None
+            self.transition_similarity = self.retrieval_similarity
+
+        # Keep this alias for compatibility with code that still expects one matrix.
+        self.similarity = self.retrieval_similarity
         self.song_to_idx = {name: idx for idx, name in enumerate(self.names)}
         self.name_aliases = {}
         for name in self.names:
             for alias in {name, Path(name).stem}:
                 self.name_aliases.setdefault(alias.casefold(), name)
+
+    @staticmethod
+    def _standardize_matrix(matrix: np.ndarray) -> np.ndarray:
+        feature_means = matrix.mean(axis=0)
+        feature_stds = matrix.std(axis=0)
+        feature_stds[feature_stds == 0.0] = 1.0
+        return (matrix - feature_means) / feature_stds
 
     def __len__(self) -> int:
         return len(self.names)
@@ -67,7 +98,7 @@ class SongCatalog:
     def nearest_neighbors(self, song_name: str, k: int = 10) -> pd.DataFrame:
         resolved_name = self.resolve_song_name(song_name)
         idx = self.song_index(resolved_name)
-        scores = self.similarity[idx]
+        scores = self.retrieval_similarity[idx]
         order = np.argsort(scores)[::-1]
 
         rows: list[dict[str, str | float]] = []
@@ -89,7 +120,7 @@ class SongCatalog:
     def transition_score(self, prev_song: str, next_song: str) -> float:
         prev_idx = self.song_index(prev_song)
         next_idx = self.song_index(next_song)
-        return float(self.similarity[prev_idx, next_idx])
+        return float(self.transition_similarity[prev_idx, next_idx])
 
     def songs_frame(self) -> pd.DataFrame:
         return pd.DataFrame(
@@ -98,5 +129,13 @@ class SongCatalog:
 
 
 def load_catalog(artifact_dir: Path | str = ARTIFACT_DIR) -> SongCatalog:
-    embeddings, names, folders = load_artifact_arrays(Path(artifact_dir))
-    return SongCatalog(embeddings=embeddings, names=names, folders=folders)
+    embeddings, intro_embeddings, outro_embeddings, names, folders = load_artifact_arrays(
+        Path(artifact_dir)
+    )
+    return SongCatalog(
+        embeddings=embeddings,
+        intro_embeddings=intro_embeddings,
+        outro_embeddings=outro_embeddings,
+        names=names,
+        folders=folders,
+    )
