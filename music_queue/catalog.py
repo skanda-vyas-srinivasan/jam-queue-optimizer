@@ -7,8 +7,11 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from .artifacts import load_artifact_arrays
+from .artifacts import DEFAULT_N_MFCC, embedding_feature_slices, load_artifact_arrays
 from .paths import ARTIFACT_DIR
+
+TRANSITION_SEGMENT_WEIGHT = 0.85
+TRANSITION_HARMONIC_WEIGHT = 0.15
 
 
 @dataclass
@@ -22,6 +25,8 @@ class SongCatalog:
     normalized_intro_embeddings: np.ndarray | None = field(init=False)
     normalized_outro_embeddings: np.ndarray | None = field(init=False)
     retrieval_similarity: np.ndarray = field(init=False)
+    segment_transition_similarity: np.ndarray = field(init=False)
+    harmonic_transition_similarity: np.ndarray = field(init=False)
     transition_similarity: np.ndarray = field(init=False)
     similarity: np.ndarray = field(init=False)
     song_to_idx: dict[str, int] = field(init=False)
@@ -46,13 +51,24 @@ class SongCatalog:
         if self.intro_embeddings is not None and self.outro_embeddings is not None:
             self.normalized_intro_embeddings = self._standardize_matrix(self.intro_embeddings)
             self.normalized_outro_embeddings = self._standardize_matrix(self.outro_embeddings)
-            self.transition_similarity = cosine_similarity(
+            self.segment_transition_similarity = cosine_similarity(
                 self.normalized_outro_embeddings,
                 self.normalized_intro_embeddings,
+            )
+            chroma_slice = embedding_feature_slices(n_mfcc=DEFAULT_N_MFCC)["chroma"]
+            self.harmonic_transition_similarity = cosine_similarity(
+                self.normalized_outro_embeddings[:, chroma_slice],
+                self.normalized_intro_embeddings[:, chroma_slice],
+            )
+            self.transition_similarity = (
+                TRANSITION_SEGMENT_WEIGHT * self.segment_transition_similarity
+                + TRANSITION_HARMONIC_WEIGHT * self.harmonic_transition_similarity
             )
         else:
             self.normalized_intro_embeddings = None
             self.normalized_outro_embeddings = None
+            self.segment_transition_similarity = self.retrieval_similarity
+            self.harmonic_transition_similarity = self.retrieval_similarity
             self.transition_similarity = self.retrieval_similarity
 
         # Keep this alias for compatibility with code that still expects one matrix.

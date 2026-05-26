@@ -8,6 +8,11 @@ import numpy as np
 
 AUDIO_EXTS = (".mp3", ".wav", ".flac", ".m4a")
 TRANSITION_WINDOW_SECONDS = 20.0
+DEFAULT_N_MFCC = 40
+DEFAULT_N_CHROMA = 12
+DEFAULT_N_CONTRAST = 7
+ArtifactArrays = tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]
+SavedArtifactArrays = tuple[np.ndarray, np.ndarray, np.ndarray]
 
 
 def find_song_paths(song_root: Path) -> list[Path]:
@@ -19,7 +24,32 @@ def find_song_paths(song_root: Path) -> list[Path]:
     )
 
 
-def embed_signal(y: np.ndarray, sr: int, n_mfcc: int = 40) -> np.ndarray:
+def embedding_feature_slices(
+    n_mfcc: int = DEFAULT_N_MFCC,
+    n_chroma: int = DEFAULT_N_CHROMA,
+    n_contrast: int = DEFAULT_N_CONTRAST,
+) -> dict[str, slice]:
+    mfcc_mean = slice(0, n_mfcc)
+    mfcc_std = slice(mfcc_mean.stop, mfcc_mean.stop + n_mfcc)
+    chroma_mean = slice(mfcc_std.stop, mfcc_std.stop + n_chroma)
+    chroma_std = slice(chroma_mean.stop, chroma_mean.stop + n_chroma)
+    contrast_mean = slice(chroma_std.stop, chroma_std.stop + n_contrast)
+    contrast_std = slice(contrast_mean.stop, contrast_mean.stop + n_contrast)
+    return {
+        "mfcc_mean": mfcc_mean,
+        "mfcc_std": mfcc_std,
+        "mfcc": slice(mfcc_mean.start, mfcc_std.stop),
+        "chroma_mean": chroma_mean,
+        "chroma_std": chroma_std,
+        "chroma": slice(chroma_mean.start, chroma_std.stop),
+        "contrast_mean": contrast_mean,
+        "contrast_std": contrast_std,
+        "contrast": slice(contrast_mean.start, contrast_std.stop),
+        "full": slice(0, contrast_std.stop),
+    }
+
+
+def embed_signal(y: np.ndarray, sr: int, n_mfcc: int = DEFAULT_N_MFCC) -> np.ndarray:
     mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc)
     chroma = librosa.feature.chroma_stft(y=y, sr=sr)
     contrast = librosa.feature.spectral_contrast(y=y, sr=sr)
@@ -55,7 +85,7 @@ def slice_signal(
 def embed_song(
     path: Path,
     sample_rate: int = 22050,
-    n_mfcc: int = 40,
+    n_mfcc: int = DEFAULT_N_MFCC,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     y, sr = librosa.load(path, sr=sample_rate, mono=True)
     full_embedding = embed_signal(y, sr, n_mfcc=n_mfcc)
@@ -75,9 +105,9 @@ def embed_song(
 def build_embedding_artifacts(
     song_root: Path,
     sample_rate: int = 22050,
-    n_mfcc: int = 40,
+    n_mfcc: int = DEFAULT_N_MFCC,
     verbose: bool = False,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> ArtifactArrays:
     song_paths = find_song_paths(song_root)
     if not song_paths:
         raise ValueError(f"No audio files found under {song_root}")
@@ -141,9 +171,9 @@ def build_and_save_artifacts(
     song_root: Path,
     output_dir: Path,
     sample_rate: int = 22050,
-    n_mfcc: int = 40,
+    n_mfcc: int = DEFAULT_N_MFCC,
     verbose: bool = False,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> SavedArtifactArrays:
     embeddings, intro_embeddings, outro_embeddings, names, folders = build_embedding_artifacts(
         song_root=song_root,
         sample_rate=sample_rate,

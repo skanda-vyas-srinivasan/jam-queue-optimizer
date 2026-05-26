@@ -47,6 +47,18 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional relative MIP gap for method=ip, e.g. 0.05 for 5%%.",
     )
+    parser.add_argument(
+        "--max-songs-per-folder",
+        type=int,
+        default=None,
+        help="Optional hard cap on how many songs from one folder can appear in the queue. Defaults to a mild auto-cap in the solvers.",
+    )
+    parser.add_argument(
+        "--user-representation-top-k",
+        type=int,
+        default=3,
+        help="For method=ip, require each user to be represented by at least one of their top-k shortlist songs when feasible. Use 0 to disable.",
+    )
     return parser.parse_args()
 
 
@@ -70,6 +82,8 @@ def main() -> None:
         queue_len=args.queue_len,
         candidate_limit=args.candidate_limit,
         method=args.method,
+        max_songs_per_folder=args.max_songs_per_folder,
+        user_representation_top_k=None if args.user_representation_top_k <= 0 else args.user_representation_top_k,
         time_limit=args.time_limit,
         relative_gap=args.relative_gap,
     )
@@ -84,6 +98,8 @@ def main() -> None:
     if args.method == "ip":
         print("Time limit:", args.time_limit, "seconds")
         print("Relative gap:", args.relative_gap)
+        print("Max songs per folder:", args.max_songs_per_folder if args.max_songs_per_folder is not None else "auto")
+        print("User representation top-k:", args.user_representation_top_k)
         print()
     print("Queue:")
     for idx, song in enumerate(queue, start=1):
