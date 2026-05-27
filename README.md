@@ -15,10 +15,6 @@ The result is a hybrid system:
 2. **Rank / shortlist** candidates for a multi-user room with lightweight heuristics.
 3. **Optimize** the final queue with integer programming over the shortlisted songs.
 
-## System Diagram
-
-![System Diagram](artifacts/system_diagram.svg)
-
 ## Research Framing
 
 The motivating question is not simply “can songs be clustered from audio?” The more interesting problem is whether an audio-only comparison space is rich enough to surface:
