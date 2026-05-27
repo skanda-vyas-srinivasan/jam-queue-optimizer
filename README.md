@@ -9,6 +9,9 @@ This repo isn't really meant to be read as a polished consumer app; its current 
 
 --To be filled later
 
+
+## Structure
+
 ### 1. Audio Representation
 
 Each song is embedded from local audio using librosa using:
@@ -107,7 +110,7 @@ heuristic retrieval + heuristic ranking + exact final-stage optimization.
 
 At this point, heuristics deliver strong results for retrieval and ranking, albeit not perfectly. Machine Learning solutions for both are potential options.
 
-## Why Integer Programming?
+### Optimization Reasoning
 
 The sequencing idea was loosely inspired by Spotify's own mix feature, where songs are arranged to sound smoother when transitioning.
 
