@@ -7,6 +7,7 @@ This repo isn't really meant to be read as a polished consumer app; its current 
 
 ## Motivation
 
+--To be filled later
 
 ### 1. Audio Representation
 
