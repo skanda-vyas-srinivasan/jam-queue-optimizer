@@ -194,14 +194,31 @@ def select_candidate_shortlist(
     preserve_user_fraction: float = DEFAULT_PRESERVE_USER_FRACTION,
     max_preserved_per_user: int = DEFAULT_MAX_PRESERVED_PER_USER,
 ) -> pd.DataFrame:
+    shortlist_df, _ = select_candidate_shortlist_with_details(
+        ranked_df=ranked_df,
+        shortlist_size=shortlist_size,
+        preserve_user_fraction=preserve_user_fraction,
+        max_preserved_per_user=max_preserved_per_user,
+    )
+    return shortlist_df
+
+
+def select_candidate_shortlist_with_details(
+    ranked_df: pd.DataFrame,
+    shortlist_size: int,
+    preserve_user_fraction: float = DEFAULT_PRESERVE_USER_FRACTION,
+    max_preserved_per_user: int = DEFAULT_MAX_PRESERVED_PER_USER,
+) -> tuple[pd.DataFrame, dict[str, list[str]]]:
     if ranked_df.empty or shortlist_size <= 0:
-        return ranked_df.head(0).copy()
+        return ranked_df.head(0).copy(), {}
 
     candidate_df = ranked_df.copy().reset_index(drop=True)
     shortlist_size = min(shortlist_size, len(candidate_df))
     user_columns = ranked_user_columns(candidate_df)
     if not user_columns or preserve_user_fraction <= 0.0 or max_preserved_per_user <= 0:
-        return candidate_df.head(shortlist_size).copy().reset_index(drop=True)
+        shortlist_df = candidate_df.head(shortlist_size).copy().reset_index(drop=True)
+        reasons = {song: ["global_rank"] for song in shortlist_df["song"].tolist()}
+        return shortlist_df, reasons
 
     preserve_budget = min(
         shortlist_size,
@@ -220,6 +237,7 @@ def select_candidate_shortlist(
 
     selected: list[int] = []
     selected_set: set[int] = set()
+    reason_map: dict[int, list[str]] = {}
     user_counts = {user: 0 for user in user_columns}
     user_positions = {user: 0 for user in user_columns}
 
@@ -232,6 +250,7 @@ def select_candidate_shortlist(
                 continue
             selected.append(row_idx)
             selected_set.add(row_idx)
+            reason_map.setdefault(row_idx, []).append(f"preserved:{user}")
             user_counts[user] += 1
             return True
         return False
@@ -259,12 +278,18 @@ def select_candidate_shortlist(
             continue
         selected.append(int(row_idx))
         selected_set.add(int(row_idx))
+        reason_map.setdefault(int(row_idx), []).append("global_rank")
 
-    return (
+    shortlist_df = (
         candidate_df.loc[selected]
         .sort_values("room_score", ascending=False)
         .reset_index(drop=True)
     )
+    shortlist_reasons = {
+        str(row["song"]): reason_map.get(int(original_idx), ["global_rank"])
+        for original_idx, row in candidate_df.loc[selected].sort_values("room_score", ascending=False).iterrows()
+    }
+    return shortlist_df, shortlist_reasons
 
 
 def user_representation_sets(

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jam Queue Debug Panel</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">Local Debug Panel</p>
+          <h1>Jam Queue Optimizer</h1>
+          <p class="subtitle">
+            Inspect embeddings, build multi-user rooms, and run the queue pipeline without touching code.
+          </p>
+        </div>
+        <div class="pill-row">
+          <span class="pill" id="catalog-count">Loading catalog...</span>
+          <button class="ghost-button" id="load-sample-room" type="button">Load Sample Room</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel embedding-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Embedding Space</h2>
+              <p>Browse the catalog in PCA-projected embedding space.</p>
+            </div>
+            <label class="inline-control">
+              <span>Space</span>
+              <select id="embedding-space">
+                <option value="normalized" selected>Normalized</option>
+                <option value="raw">Raw</option>
+              </select>
+            </label>
+          </div>
+          <div id="embedding-plot" class="plot-frame"></div>
+        </section>
+
+        <aside class="panel control-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Simulation Controls</h2>
+              <p>Build a room, tune the solver, and inspect the resulting queue.</p>
+            </div>
+            <button class="accent-button" id="run-simulation" type="button">Run Simulation</button>
+          </div>
+
+          <div class="settings-grid">
+            <label>
+              <span>Method</span>
+              <select id="method">
+                <option value="ip" selected>IP</option>
+                <option value="beam">Beam</option>
+                <option value="greedy">Greedy</option>
+              </select>
+            </label>
+            <label>
+              <span>Queue Length</span>
+              <input id="queue-len" type="number" min="1" value="5" />
+            </label>
+            <label>
+              <span>Candidate Pool Size</span>
+              <input id="candidate-pool-size" type="number" min="5" value="50" />
+            </label>
+            <label>
+              <span>IP Shortlist Size</span>
+              <input id="candidate-limit" type="number" min="5" value="10" />
+            </label>
+            <label>
+              <span>Transition Weight</span>
+              <input id="transition-weight" type="number" min="0" step="0.05" value="0.25" />
+            </label>
+            <label>
+              <span>Time Limit (sec)</span>
+              <input id="time-limit" type="number" min="1" value="10" />
+            </label>
+            <label>
+              <span>Relative Gap</span>
+              <input id="relative-gap" type="number" min="0" step="0.01" placeholder="optional" />
+            </label>
+            <label>
+              <span>Max Songs Per Folder</span>
+              <input id="max-songs-per-folder" type="number" min="1" placeholder="auto" />
+            </label>
+            <label>
+              <span>User Representation Top-K</span>
+              <input id="user-representation-top-k" type="number" min="0" value="3" />
+            </label>
+            <label>
+              <span>Preserve User Fraction</span>
+              <input id="preserve-user-fraction" type="number" min="0" max="1" step="0.05" value="0.3" />
+            </label>
+            <label>
+              <span>Max Preserved Per User</span>
+              <input id="max-preserved-per-user" type="number" min="1" value="2" />
+            </label>
+            <label>
+              <span>Same Folder Penalty</span>
+              <input id="same-folder-penalty" type="number" min="0" step="0.05" placeholder="optional" />
+            </label>
+          </div>
+
+          <div class="panel-header compact-header">
+            <div>
+              <h2>Users</h2>
+              <p>Pick liked songs per user. Search and category filtering stay inside each user card.</p>
+            </div>
+            <button class="ghost-button" id="add-user" type="button">Add User</button>
+          </div>
+          <div id="users-container" class="users-container"></div>
+        </aside>
+
+        <section class="panel results-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Results</h2>
+              <p>Queue output plus the shortlist and ranking artifacts that produced it.</p>
+            </div>
+          </div>
+          <div class="result-summary" id="result-summary">
+            <div class="empty-state">Run a simulation to see queue diagnostics.</div>
+          </div>
+          <div class="queue-strip" id="queue-strip"></div>
+          <div class="table-section">
+            <h3>User Diagnostics</h3>
+            <div id="user-summary-grid" class="user-summary-grid"></div>
+          </div>
+          <div class="table-section">
+            <h3>Queue/User Affinity</h3>
+            <div id="queue-affinity-table" class="table-wrap"></div>
+          </div>
+          <div class="table-section">
+            <h3>Transition Breakdown</h3>
+            <div id="transition-table" class="table-wrap"></div>
+          </div>
+          <div class="table-section">
+            <h3>Seed Neighborhoods</h3>
+            <div id="seed-neighbors-grid" class="seed-neighbors-grid"></div>
+          </div>
+          <div class="table-section">
+            <h3>Shortlist</h3>
+            <div id="shortlist-table" class="table-wrap"></div>
+          </div>
+          <div class="table-section">
+            <h3>Ranked Candidates</h3>
+            <div id="ranked-table" class="table-wrap"></div>
+          </div>
+          <div class="table-section">
+            <h3>Retrieved Candidates</h3>
+            <div id="retrieval-table" class="table-wrap"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/plotly.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+  </html>

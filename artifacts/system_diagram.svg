@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Jam Queue Optimizer System Diagram</title>
+  <desc id="desc">System diagram showing the retrieval, ranking, and optimization pipeline for the audio-based music queue project.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f3ee; }
+      .title { font: 700 28px Helvetica, Arial, sans-serif; fill: #1d1b19; }
+      .subtitle { font: 400 15px Helvetica, Arial, sans-serif; fill: #5b554d; }
+      .lane-title { font: 700 18px Helvetica, Arial, sans-serif; fill: #1d1b19; }
+      .body { font: 400 14px Helvetica, Arial, sans-serif; fill: #2c2824; }
+      .small { font: 400 12px Helvetica, Arial, sans-serif; fill: #5b554d; }
+      .box { rx: 18; ry: 18; stroke-width: 2; }
+      .data { fill: #fff8ef; stroke: #d8ad6a; }
+      .model { fill: #eef6ff; stroke: #6d9ed9; }
+      .rank { fill: #eef8f0; stroke: #6aa278; }
+      .opt { fill: #fff0f1; stroke: #d27c8a; }
+      .debug { fill: #f5f0ff; stroke: #8f73d8; }
+      .lane { fill: none; stroke: #dfd5c8; stroke-width: 2; stroke-dasharray: 8 8; rx: 24; ry: 24; }
+      .arrow { stroke: #4f4a45; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .thin-arrow { stroke: #7b746d; stroke-width: 2.2; fill: none; marker-end: url(#arrowheadThin); }
+      .note { fill: #fffdf9; stroke: #d9d0c5; stroke-width: 1.5; rx: 14; ry: 14; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4f4a45" />
+    </marker>
+    <marker id="arrowheadThin" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7b746d" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="980" />
+
+  <text class="title" x="70" y="60">Audio-Based Music Queue Optimization</text>
+  <text class="subtitle" x="70" y="88">Local audio catalog -> retrieval -> room ranking -> final queue optimization</text>
+
+  <rect class="lane" x="55" y="120" width="1490" height="180" />
+  <rect class="lane" x="55" y="330" width="1490" height="220" />
+  <rect class="lane" x="55" y="580" width="1490" height="250" />
+  <rect class="lane" x="55" y="855" width="1490" height="85" />
+
+  <text class="lane-title" x="80" y="150">1. Audio Representation Layer</text>
+  <text class="lane-title" x="80" y="360">2. Retrieval and Ranking Layer</text>
+  <text class="lane-title" x="80" y="610">3. Final Queue Optimization Layer</text>
+  <text class="lane-title" x="80" y="885">4. Debug / Analysis Surface</text>
+
+  <rect class="box data" x="90" y="185" width="250" height="82" />
+  <text class="body" x="115" y="217">Local song catalog</text>
+  <text class="small" x="115" y="242">audio files grouped by folder / taste bucket</text>
+
+  <rect class="box model" x="400" y="170" width="330" height="112" />
+  <text class="body" x="425" y="202">Embedding builder</text>
+  <text class="small" x="425" y="228">scripts/embed_audio.py</text>
+  <text class="small" x="425" y="248">music_queue/artifacts.py</text>
+  <text class="small" x="425" y="268">MFCC + chroma + spectral contrast</text>
+
+  <rect class="box data" x="790" y="170" width="300" height="112" />
+  <text class="body" x="815" y="202">Saved artifacts</text>
+  <text class="small" x="815" y="228">embeddings.npy</text>
+  <text class="small" x="815" y="248">intro_embeddings.npy</text>
+  <text class="small" x="815" y="268">outro_embeddings.npy</text>
+
+  <rect class="box model" x="1150" y="170" width="330" height="112" />
+  <text class="body" x="1175" y="202">Similarity catalog</text>
+  <text class="small" x="1175" y="228">music_queue/catalog.py</text>
+  <text class="small" x="1175" y="248">retrieval_similarity = full-song cosine</text>
+  <text class="small" x="1175" y="268">transition_similarity = outro -> intro blend</text>
+
+  <path class="arrow" d="M 340 226 L 400 226" />
+  <path class="arrow" d="M 730 226 L 790 226" />
+  <path class="arrow" d="M 1090 226 L 1150 226" />
+
+  <rect class="box data" x="90" y="400" width="270" height="95" />
+  <text class="body" x="115" y="432">Room input</text>
+  <text class="small" x="115" y="458">multiple users</text>
+  <text class="small" x="115" y="478">each user provides liked seed songs</text>
+
+  <rect class="box model" x="430" y="385" width="330" height="125" />
+  <text class="body" x="455" y="417">Candidate retrieval</text>
+  <text class="small" x="455" y="443">retrieve_candidates(...)</text>
+  <text class="small" x="455" y="463">nearest neighbors are found per liked song</text>
+  <text class="small" x="455" y="483">song-seeded retrieval preserves local taste pockets</text>
+
+  <rect class="box rank" x="825" y="385" width="330" height="125" />
+  <text class="body" x="850" y="417">Room ranking</text>
+  <text class="small" x="850" y="443">rank_room_candidates(...)</text>
+  <text class="small" x="850" y="463">candidate room_score = average over users</text>
+  <text class="small" x="850" y="483">bridge songs often rise if they match multiple users</text>
+
+  <rect class="box rank" x="1220" y="385" width="260" height="125" />
+  <text class="body" x="1245" y="417">Shortlist construction</text>
+  <text class="small" x="1245" y="443">select_candidate_shortlist(...)</text>
+  <text class="small" x="1245" y="463">global rank + user-aware candidate preservation</text>
+  <text class="small" x="1245" y="483">final shortlist handed to the solver</text>
+
+  <path class="arrow" d="M 360 447 L 430 447" />
+  <path class="arrow" d="M 760 447 L 825 447" />
+  <path class="arrow" d="M 1155 447 L 1220 447" />
+  <path class="thin-arrow" d="M 1315 385 L 1315 300 L 1315 282" />
+  <text class="small" x="1185" y="324">uses retrieval / transition similarity from catalog</text>
+
+  <rect class="box opt" x="105" y="650" width="295" height="120" />
+  <text class="body" x="130" y="682">Queue objective</text>
+  <text class="small" x="130" y="708">maximize</text>
+  <text class="small" x="130" y="730">sum(room_score of chosen songs)</text>
+  <text class="small" x="130" y="750">+ transition_weight * sum(pairwise transitions)</text>
+
+  <rect class="box opt" x="465" y="635" width="365" height="150" />
+  <text class="body" x="490" y="667">Integer program</text>
+  <text class="small" x="490" y="693">solve_queue_ip(...)</text>
+  <text class="small" x="490" y="713">decision vars:</text>
+  <text class="small" x="490" y="733">x[a,t] = song a placed in slot t</text>
+  <text class="small" x="490" y="753">y[a,b,t] = a followed by b between t and t+1</text>
+  <text class="small" x="490" y="773">beam warm start is used to seed CBC</text>
+
+  <rect class="box opt" x="895" y="635" width="315" height="150" />
+  <text class="body" x="920" y="667">Constraints</text>
+  <text class="small" x="920" y="693">one song per slot</text>
+  <text class="small" x="920" y="713">each song used at most once</text>
+  <text class="small" x="920" y="733">adjacency consistency through y variables</text>
+  <text class="small" x="920" y="753">optional folder caps + user representation</text>
+
+  <rect class="box data" x="1275" y="650" width="230" height="120" />
+  <text class="body" x="1300" y="682">Final queue</text>
+  <text class="small" x="1300" y="708">ordered subset of songs</text>
+  <text class="small" x="1300" y="728">exact for the final shortlist</text>
+  <text class="small" x="1300" y="748">heuristic overall pipeline</text>
+
+  <path class="arrow" d="M 350 710 L 465 710" />
+  <path class="arrow" d="M 830 710 L 895 710" />
+  <path class="arrow" d="M 1210 710 L 1275 710" />
+  <path class="arrow" d="M 1350 510 L 1350 650" />
+
+  <rect class="note" x="109" y="872" width="1390" height="46" />
+  <text class="small" x="135" y="901">Debug panel surfaces each stage directly: embedding plot, seed neighborhoods, retrieval rows, ranked rows, shortlist reasons, queue / user affinity, and transition breakdowns.</text>
+</svg>
