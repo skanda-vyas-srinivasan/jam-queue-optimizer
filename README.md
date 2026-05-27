@@ -64,21 +64,39 @@ At this point in iteration, I'm trying not to push the solver to work over the f
 
 The last stage is an integer program over the final shortlist.
 
-Decision variables:
+**Decision variables**
 
-```text
-x[a,t] = 1 if song a is placed in slot t
-y[a,b,t] = 1 if song a is followed by song b between slots t and t+1
-```
+- $x_{a,t} \in \{0,1\}$: song $a$ is assigned to queue slot $t$
+- $y_{a,b,t} \in \{0,1\}$: song $a$ is followed by song $b$ between slots $t$ and $t+1$
 
-Objective:
+**Objective**
 
-```text
-maximize
-  sum(room_score[a] * x[a,t])
-  + transition_weight * sum(transition[a,b] * y[a,b,t])
-```
+Maximize queue quality:
+- total room relevance of selected songs
+- plus transition-weighted quality of adjacent song pairs
 
+Equivalently,
+
+- maximize $\sum r_a x_{a,t} + \lambda \sum c_{ab} y_{a,b,t}$
+
+where:
+- $r_a$ is the room score of song $a$
+- $c_{ab}$ is the transition score from song $a$ to song $b$
+- $\lambda$ controls the importance of transitions
+
+**Constraints**
+
+- Exactly one song is placed in each queue slot
+- Each song can appear at most once
+- Exactly one transition is chosen for each adjacent slot pair
+- If song $a$ is placed in slot $t$, it must connect to exactly one song in slot $t+1$
+- If song $b$ is placed in slot $t+1$, it must be reached from exactly one song in slot $t$
+
+with:
+- $A$: shortlisted songs
+- $T$: queue slots
+- $P$: adjacent slot indices
+  
 Important scope note:
 
 > the IP is exact only over the final shortlist, not over the entire catalog.
