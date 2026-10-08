@@ -36,6 +36,12 @@ class Listener:
     disliked: tuple[str, ...] = ()
     blocked: tuple[str, ...] = ()
 
+    def __post_init__(self):
+        for name in ("liked", "accepted", "disliked", "blocked"):
+            value = getattr(self, name)
+            if isinstance(value, list):
+                object.__setattr__(self, name, tuple(value))
+
 
 @dataclass(frozen=True)
 class Policy:
@@ -89,10 +95,18 @@ class QueueInstance:
     revision: int = 0
 
     def __post_init__(self):
+        for name in ("tracks", "listeners", "locked_prefix", "anchor_values", "service_debt"):
+            object.__setattr__(self, name, tuple(getattr(self, name)))
+        for name in ("utilities", "transitions"):
+            object.__setattr__(self, name, tuple(tuple(float(v) for v in row) for row in getattr(self, name)))
+        if any(type(value) is not bool for row in self.acceptance for value in row):
+            raise ValueError("Acceptance must contain explicit boolean labels")
+        object.__setattr__(self, "acceptance", tuple(tuple(row) for row in self.acceptance))
+        object.__setattr__(self, "candidate_provenance", tuple((t, tuple(r)) for t, r in self.candidate_provenance))
         n, u = len(self.tracks), len(self.listeners)
         if len({t.id for t in self.tracks}) != n or len({l.id for l in self.listeners}) != u:
             raise ValueError("Duplicate track or listener ID")
-        if not u or self.queue_len <= 0 or not n:
+        if not u or type(self.queue_len) is not int or self.queue_len <= 0 or not n:
             raise ValueError("An instance needs listeners, candidates, and a positive horizon")
         if len(self.utilities) != u or len(self.acceptance) != u:
             raise ValueError("Listener matrices are misaligned")
@@ -176,7 +190,7 @@ def validate_policy(p: Policy):
         if value is not None and (type(value) is not int or value <= 0):
             raise ValueError("Mandatory caps must be positive integers or null")
     for value in (p.transition_weight, p.same_folder_penalty, p.preference_tolerance):
-        if not math.isfinite(value) or value < 0:
+        if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
             raise ValueError("Weights and tolerance must be finite and nonnegative")
 
 
