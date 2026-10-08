@@ -9,12 +9,17 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from music_queue.debug_panel import serve_debug_panel
-from music_queue.paths import ARTIFACT_DIR
+from music_queue.paths import ARTIFACT_DIR, SONGS_DIR
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run the local music-queue debug panel."
+    )
+    parser.add_argument(
+        "--songs-dir",
+        default=str(SONGS_DIR),
+        help="Root containing local playable catalog audio.",
     )
     parser.add_argument(
         "--host",
@@ -41,6 +46,7 @@ def main() -> None:
         host=args.host,
         port=args.port,
         artifact_dir=Path(args.artifact_dir),
+        song_root=Path(args.songs_dir),
     )
 
 
