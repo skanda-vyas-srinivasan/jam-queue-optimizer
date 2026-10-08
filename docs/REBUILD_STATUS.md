@@ -1,5 +1,7 @@
 # Rebuild status — October 8, 2026
 
+This records the initial rebuild. The subsequent [interactive workbench](WORKBENCH.md) adds editable clusters, retrieval/ranking views, frozen comparisons and local playback with observed session-time tracking. Its suites pass 73 Python tests and 10 client tests; the initial 69-test evidence below remains historical verification.
+
 The software rebuild follows the supplied `AUDIT_AND_REBUILD_PLAN.md`, with the original ten-page objective-model review as supporting evidence. The audit bundle is preserved byte-for-byte in `evaluation/audit/`; the reviews' proposed policy is explicitly provisional. Historical faults were reproduced against the reviewed checkout before replacement. No reported solver percentage is presented as improved enjoyment.
 
 The software and reproducibility work is complete for the local research workbench. **The full plan's independent listening and production release gates are not complete.** Those require observations and deployment decisions that code cannot supply.

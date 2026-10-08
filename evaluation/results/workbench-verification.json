@@ -1,0 +1,46 @@
+{
+  "scope": "Interactive workbench API, DOM/media-event simulation, and local distribution checks; no human judgments or audible-browser claim",
+  "verified_at_utc": "2026-10-08T10:24:22.752692+00:00",
+  "python": "3.12.14",
+  "node": "v26.10.0",
+  "python_suite": {
+    "passed": 73,
+    "warnings": 3
+  },
+  "client_suite": {
+    "passed": 10,
+    "kind": "JSDOM and pure-state/media-event simulation"
+  },
+  "real_catalog": {
+    "tracks": 121,
+    "local_audio_available": 121,
+    "dimensions": 118,
+    "model_hash": "1bd9e4716f42e7a60b038ebf41f107c88108be84644f998907a22063295a433d",
+    "clusters": 6,
+    "full_ranked_rows": 121,
+    "protected_candidates": 10,
+    "queue_status": "OPTIMAL",
+    "validated_queue_length": 5,
+    "frozen_instance_hash": "ee63523f12eac31f69bc24b8efef833d4beadddc754d09f3bb8e3cc6b713a5ad",
+    "solver_instance_matches": true
+  },
+  "audio": {
+    "known_track_range": "bytes=0-127",
+    "response_status": 206,
+    "bytes_received": 128,
+    "head_accept_ranges": "bytes",
+    "audible_playback": "not performed; awaiting browser permission"
+  },
+  "static_routes": "passed",
+  "docs_links": "passed",
+  "wheel": {
+    "entries": 33,
+    "new_module_and_assets_included": true,
+    "music_and_feature_files": 0,
+    "sha256": "e6bbb96fd7741f3089bd87f306e9eb87ba164704012b3ddbf658b0c8d2da928b",
+    "frontend_matches_final_source": true
+  },
+  "visual_browser": "pending approval after the earlier browser permission denial",
+  "remote_ci": "configured, not executed",
+  "server": "http://127.0.0.1:8765"
+}

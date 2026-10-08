@@ -43,13 +43,15 @@ The saved baseline arrays predate the schema. Import them explicitly once:
 .venv/bin/python scripts/run_debug_panel.py
 ```
 
-Open the loopback workbench at `http://127.0.0.1:8765`. It supports listener evidence, strict/best-effort representation, explicit discovery budgets and folder limits, solver selection, phase certificates, candidate provenance, and rolling-session history. Empty profiles produce an error instead of losing room members. Sessions are in memory only; restarting the workbench clears them.
+Open the [interactive workbench](http://127.0.0.1:8765). Its four stages let you form and edit clusters on a selectable 2D/3D map, build listener profiles, inspect acoustic retrieval and every room-ranking score, prepare a protected shortlist, then sequence and play the queue. A persistent player supports previews, pause, seeking, volume and queue navigation. Static solver comparisons use the same frozen instance; manual orders are revalidated and lose their optimality certificate. See the [workflow guide](docs/WORKBENCH.md).
+
+Profiles/groups/settings save in the browser and support JSON import/export. Rolling sessions preserve promises and history, recording observed playback at track end/skip/stop. Empty profiles produce an error instead of losing room members. Sessions are in memory only; restarting clears them. Node is needed only for client development tests.
 
 For new audio, folders are categories, not artist identity:
 
 ```bash
 .venv/bin/python scripts/embed_audio.py --songs-dir /absolute/path/to/authorized-audio --output-dir /absolute/path/to/artifacts --n-mfcc 40
-.venv/bin/python scripts/run_debug_panel.py --artifact-dir /absolute/path/to/artifacts
+.venv/bin/python scripts/run_debug_panel.py --artifact-dir /absolute/path/to/artifacts --songs-dir /absolute/path/to/authorized-audio
 ```
 
 Complete generations are atomically published with stable track IDs, row alignment, checksums, feature slices, extraction parameters, durations and frozen transforms. Unsupported, partial, mixed or nonfinite inputs fail before scoring. New extraction uses two-second hard-cut endpoint features; migrated old feature rows retain their recorded 20-second windows. Measured RMS/silence metadata supports an explicitly labelled boundary-cost ablation. No loading fallback silently changes the transition algorithm.

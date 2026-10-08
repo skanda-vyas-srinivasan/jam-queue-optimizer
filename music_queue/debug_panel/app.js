@@ -808,7 +808,13 @@ function renderResult(result) {
       ["Listener", (r) => e(r.display_name)],
       ["Accepted", (r) => `${r.accepted_count} tracks`],
       ["Planned exposure", (r) => duration(r.accepted_seconds)],
-      ["First wait", (r) => duration(r.first_acceptable_wait_seconds ?? 0)],
+      [
+        "First wait",
+        (r) =>
+          r.first_acceptable_wait_seconds == null
+            ? "—"
+            : duration(r.first_acceptable_wait_seconds),
+      ],
       ["Deficit", (r) => e(r.representation_deficit)],
     ],
     "No feasible queue to inspect.",
