@@ -1,0 +1,23 @@
+Welcome to the CBC MILP Solver 
+Version: 2.10.3 
+Build Date: Dec 15 2019 
+
+command line - /Users/skandavyas/jam-queue-optimizer/.venv/lib/python3.12/site-packages/pulp/apis/../solverdir/cbc/osx/i64/cbc /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-f1dzwdgn/386cbc922ade490591b312903fdca1dd-pulp.mps -sec 1.9991862080059946 -randomSeed 42 -randomCbcSeed 42 -timeMode elapsed -ratio 0.0 -threads 1 -timeMode elapsed -branch -printingOptions all -solution /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-f1dzwdgn/386cbc922ade490591b312903fdca1dd-pulp.sol (default strategy 1)
+At line 2 NAME          MODEL
+At line 3 ROWS
+At line 44 COLUMNS
+At line 385 RHS
+At line 425 BOUNDS
+At line 481 ENDATA
+Problem MODEL has 39 rows, 55 columns and 175 elements
+Coin0008I MODEL read with 0 errors
+seconds was changed from 1e+100 to 1.99919
+randomSeed was changed from 1234567 to 42
+randomCbcSeed was changed from -1 to 42
+Option for timeMode changed from cpu to elapsed
+ratioGap was changed from 0 to 0
+threads was changed from 0 to 1
+Problem is infeasible - 0.00 seconds
+Option for printingOptions changed from normal to all
+Total time (CPU seconds):       0.00   (Wallclock seconds):       0.00
+

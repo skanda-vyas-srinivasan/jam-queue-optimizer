@@ -1,0 +1,54 @@
+Welcome to the CBC MILP Solver 
+Version: 2.10.3 
+Build Date: Dec 15 2019 
+
+command line - /Users/skandavyas/jam-queue-optimizer/.venv/lib/python3.12/site-packages/pulp/apis/../solverdir/cbc/osx/i64/cbc /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-01jkv_di/e7fba696c27a42419c7f422c211dea17-pulp.mps -mips /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-01jkv_di/e7fba696c27a42419c7f422c211dea17-pulp.mst -sec 1.862975000985898 -randomSeed 42 -randomCbcSeed 42 -timeMode elapsed -ratio 0.0 -threads 1 -timeMode elapsed -branch -printingOptions all -solution /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-01jkv_di/e7fba696c27a42419c7f422c211dea17-pulp.sol (default strategy 1)
+At line 2 NAME          MODEL
+At line 3 ROWS
+At line 219 COLUMNS
+At line 5944 RHS
+At line 6159 BOUNDS
+At line 7781 ENDATA
+Problem MODEL has 214 rows, 1621 columns and 4004 elements
+Coin0008I MODEL read with 0 errors
+opening mipstart file /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-01jkv_di/e7fba696c27a42419c7f422c211dea17-pulp.mst.
+MIPStart values read for 1621 variables.
+seconds was changed from 1e+100 to 1.86298
+randomSeed was changed from 1234567 to 42
+randomCbcSeed was changed from -1 to 42
+Option for timeMode changed from cpu to elapsed
+ratioGap was changed from 0 to 0
+threads was changed from 0 to 1
+Continuous objective value is -0.312298 - 0.00 seconds
+Cgl0002I 55 variables fixed
+Cgl0004I processed model has 93 rows, 333 columns (45 integer (45 of which binary)) and 963 elements
+Cbc0045I MIPStart provided solution with cost -0.196577
+Cbc0012I Integer solution of -0.19657668 found by Reduced search after 0 iterations and 0 nodes (0.01 seconds)
+Cbc0012I Integer solution of -0.24018146 found by DiveCoefficient after 0 iterations and 0 nodes (0.01 seconds)
+Cbc0038I Full problem 93 rows 333 columns, reduced to 0 rows 0 columns
+Cbc0012I Integer solution of -0.31229814 found by RINS after 0 iterations and 0 nodes (0.01 seconds)
+Cbc0030I Thread 0 used 0 times,  waiting to start 0.00013518333, 0 cpu time, 0 locks, 0 locked, 0 waiting for locks
+Cbc0030I Main thread 0 waiting for threads,  1 locks, 2.1457672e-06 locked, 0 waiting for locks
+Cbc0001I Search completed - best objective -0.3122981448193, took 0 iterations and 0 nodes (0.01 seconds)
+Cbc0035I Maximum depth 0, 15 variables fixed on reduced cost
+Cuts at root node changed objective from -0.312298 to -0.312298
+Probing was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Gomory was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Knapsack was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Clique was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+MixedIntegerRounding2 was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+FlowCover was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+TwoMirCuts was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+ZeroHalf was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+
+Result - Optimal solution found
+
+Objective value:                -0.31229814
+Enumerated nodes:               0
+Total iterations:               0
+Time (CPU seconds):             0.01
+Time (Wallclock seconds):       0.01
+
+Option for printingOptions changed from normal to all
+Total time (CPU seconds):       0.01   (Wallclock seconds):       0.02
+

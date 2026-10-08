@@ -1,0 +1,454 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "trk_0f1dedbfa6f1e1d6a58d368b",
+        "title": "no tears left to cry_spotdown.org",
+        "folder": "pop",
+        "source": "pop/no tears left to cry_spotdown.org.mp3",
+        "duration": 206.26285714285714,
+        "artist": null,
+        "recording_family": "audio_73bb0a877b0a4a86ef025f519a7c9d44e078684cb2b6140e65e6a8bdef08c427",
+        "content_hash": "73bb0a877b0a4a86ef025f519a7c9d44e078684cb2b6140e65e6a8bdef08c427",
+        "playable": true
+      },
+      {
+        "id": "trk_0f3ae0189fba6a12bed4821f",
+        "title": "Lucy Bedroque - Knot Me (SPOTISAVER)",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Lucy Bedroque - Knot Me (SPOTISAVER).mp3",
+        "duration": 244.73832199546484,
+        "artist": null,
+        "recording_family": "audio_0486cb7c7a6f664321125239c91ce8587ed2c5e3c04e4d6f4457ff7c97729a80",
+        "content_hash": "0486cb7c7a6f664321125239c91ce8587ed2c5e3c04e4d6f4457ff7c97729a80",
+        "playable": true
+      },
+      {
+        "id": "trk_16b3d16ccf7399027c112640",
+        "title": "jssr - rue (SPOTISAVER)",
+        "folder": "pluggnb",
+        "source": "pluggnb/jssr - rue (SPOTISAVER).mp3",
+        "duration": 120.85986394557823,
+        "artist": null,
+        "recording_family": "audio_592eae98da13b6df05206a7717fbc20ce592a2938ff3c6f2535612b4a0bb76eb",
+        "content_hash": "592eae98da13b6df05206a7717fbc20ce592a2938ff3c6f2535612b4a0bb76eb",
+        "playable": true
+      },
+      {
+        "id": "trk_29c55093531b28d70802b992",
+        "title": "jssr - company (SPOTISAVER)",
+        "folder": "pluggnb",
+        "source": "pluggnb/jssr - company (SPOTISAVER).mp3",
+        "duration": 120.71428571428571,
+        "artist": null,
+        "recording_family": "audio_d152de273f065d8f77eb20a7c1740ac9c0e53625c4d3501e8b164399b30bb848",
+        "content_hash": "d152de273f065d8f77eb20a7c1740ac9c0e53625c4d3501e8b164399b30bb848",
+        "playable": true
+      },
+      {
+        "id": "trk_5cbf8288c72d8bb11e6d917b",
+        "title": "nabh, prettifun - Air Pretti (SPOTISAVER)",
+        "folder": "rap",
+        "source": "rap/nabh, prettifun - Air Pretti (SPOTISAVER).mp3",
+        "duration": 140.52716553287982,
+        "artist": null,
+        "recording_family": "audio_1b9936d390de32d9646c8358858701d77067fffffa54d282dbacf0d9bbbdd00a",
+        "content_hash": "1b9936d390de32d9646c8358858701d77067fffffa54d282dbacf0d9bbbdd00a",
+        "playable": true
+      },
+      {
+        "id": "trk_9821b3c670153730af6aacba",
+        "title": "yeil - \uafc8\uc548\uc5d0\uc11c (SPOTISAVER)",
+        "folder": "hyperpop",
+        "source": "hyperpop/yeil - \uafc8\uc548\uc5d0\uc11c (SPOTISAVER).mp3",
+        "duration": 128.20562358276644,
+        "artist": null,
+        "recording_family": "audio_b2933ecffd9688c361a15615507f0db4a7a0fec2eb3b7b73413e09ccb07e93e2",
+        "content_hash": "b2933ecffd9688c361a15615507f0db4a7a0fec2eb3b7b73413e09ccb07e93e2",
+        "playable": true
+      },
+      {
+        "id": "trk_9cd56982d442f261db988807",
+        "title": "Bally_spotdown.org",
+        "folder": "rap",
+        "source": "rap/Bally_spotdown.org.mp3",
+        "duration": 125.25859410430839,
+        "artist": null,
+        "recording_family": "audio_f786eabb73e859a446fcf6dba3dcf17140c1abf239a5ec7b756ac9077a9031ba",
+        "content_hash": "f786eabb73e859a446fcf6dba3dcf17140c1abf239a5ec7b756ac9077a9031ba",
+        "playable": true
+      },
+      {
+        "id": "trk_a32b6f6138691116ef52256e",
+        "title": "painting_spotdown.org",
+        "folder": "pluggnb",
+        "source": "pluggnb/painting_spotdown.org.mp3",
+        "duration": 120.92952380952381,
+        "artist": null,
+        "recording_family": "audio_77be39b589ce374db7b6ba2d8116a3417a43609deee2dce74bfefcbaefac8fbc",
+        "content_hash": "77be39b589ce374db7b6ba2d8116a3417a43609deee2dce74bfefcbaefac8fbc",
+        "playable": true
+      },
+      {
+        "id": "trk_b7ac9c75ae677be8eeff0702",
+        "title": "Despacito - Remix_spotdown.org",
+        "folder": "pop",
+        "source": "pop/Despacito - Remix_spotdown.org.mp3",
+        "duration": 230.42176870748298,
+        "artist": null,
+        "recording_family": "audio_d89da2faadc5e705a913214339d7a6ae37ba1a9309345bd77b066a41ed345afa",
+        "content_hash": "d89da2faadc5e705a913214339d7a6ae37ba1a9309345bd77b066a41ed345afa",
+        "playable": true
+      },
+      {
+        "id": "trk_e79005015b6854fa303eaf82",
+        "title": "The Race_spotdown.org",
+        "folder": "rap",
+        "source": "rap/The Race_spotdown.org.mp3",
+        "duration": 140.00326530612244,
+        "artist": null,
+        "recording_family": "audio_a49db417f4c53a29d1e04cc75fbe42d263df8607499dc8ae8082f10a2727fddc",
+        "content_hash": "a49db417f4c53a29d1e04cc75fbe42d263df8607499dc8ae8082f10a2727fddc",
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "user_0",
+        "name": "Artificial listener 0",
+        "liked": [
+          "trk_29c55093531b28d70802b992",
+          "trk_9cd56982d442f261db988807",
+          "trk_e6cbd8a600473bdd624f1272"
+        ],
+        "accepted": [
+          "trk_29c55093531b28d70802b992",
+          "trk_9cd56982d442f261db988807",
+          "trk_e6cbd8a600473bdd624f1272"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_1",
+        "name": "Artificial listener 1",
+        "liked": [
+          "trk_0888f6a682622b4efc7be793",
+          "trk_0f3ae0189fba6a12bed4821f",
+          "trk_9821b3c670153730af6aacba"
+        ],
+        "accepted": [
+          "trk_0888f6a682622b4efc7be793",
+          "trk_0f3ae0189fba6a12bed4821f",
+          "trk_9821b3c670153730af6aacba"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_2",
+        "name": "Artificial listener 2",
+        "liked": [
+          "trk_16b3d16ccf7399027c112640",
+          "trk_a32b6f6138691116ef52256e",
+          "trk_e79005015b6854fa303eaf82"
+        ],
+        "accepted": [
+          "trk_16b3d16ccf7399027c112640",
+          "trk_a32b6f6138691116ef52256e",
+          "trk_e79005015b6854fa303eaf82"
+        ],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        0.17194833464810058,
+        0.03139102556952699,
+        0.05457351015139955,
+        1.0,
+        0.14910090955799868,
+        0.18582768746848194,
+        1.0,
+        0.051110742765860695,
+        0.040906218578494136,
+        0.16055491370959113
+      ],
+      [
+        0.1212291783211718,
+        1.0,
+        0.13225959593187078,
+        0.06142843233771967,
+        0.1403786995870448,
+        1.0,
+        0.09336773204224408,
+        0.012314382637391208,
+        0.1526058588191932,
+        -0.07209343675012514
+      ],
+      [
+        0.5455741942228087,
+        0.2843147426171239,
+        1.0,
+        0.433016695063728,
+        0.5686621720613467,
+        -0.0803383772981492,
+        -0.25528694856926504,
+        1.0,
+        0.6634753264947785,
+        1.0
+      ]
+    ],
+    "acceptance": [
+      [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        true,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        true
+      ]
+    ],
+    "transitions": [
+      [
+        0.5601575303433743,
+        0.335247224568732,
+        0.44932047958884114,
+        0.2560136886771572,
+        0.2398500998763002,
+        -0.13880432787502012,
+        -0.26001089276689576,
+        0.21148820852579361,
+        0.29508314798737945,
+        -0.034309066699129045
+      ],
+      [
+        -0.41622060678996653,
+        -0.1292547878741358,
+        -0.187635242472175,
+        -0.1652348923055096,
+        -0.24110160187945834,
+        -0.020815560432580715,
+        0.4242002968046136,
+        -0.5220113457016746,
+        -0.40955213153191056,
+        -0.21382629789073693
+      ],
+      [
+        0.20473723681466266,
+        0.16744959842308818,
+        0.32724497876219427,
+        0.004265779861237207,
+        0.15139071211307528,
+        -0.29926372041391713,
+        -0.1110830100242409,
+        0.12088706225458158,
+        0.20168680018823448,
+        -0.09048781993936163
+      ],
+      [
+        0.1728187130421047,
+        0.11854129128842852,
+        0.2496795383662718,
+        0.7275342122999621,
+        0.1747684156249612,
+        0.15745778536209998,
+        -0.15414465756362455,
+        0.07189893219289945,
+        0.2701718742925728,
+        0.23501085828447246
+      ],
+      [
+        0.33477805973902103,
+        0.4812900477872545,
+        0.3542636996576806,
+        0.1409529257863465,
+        0.6145371019228837,
+        0.06025210198851833,
+        -0.3719860870202301,
+        0.5308476275280563,
+        0.5696627887124174,
+        0.0410222056103334
+      ],
+      [
+        -0.3507255059170619,
+        -0.17508236628403206,
+        -0.2980612612381768,
+        0.0521505549771547,
+        0.19872180585646826,
+        0.6123700067592769,
+        0.46727891845780395,
+        -0.3902462058479812,
+        -0.3106750524857835,
+        0.3899931582934272
+      ],
+      [
+        0.35461804065008357,
+        0.5539200420797935,
+        0.2237467830185114,
+        -0.20252549148128518,
+        0.20838807063071205,
+        0.09743088863853715,
+        0.05847548882587578,
+        0.3592473360314117,
+        0.40252052764344437,
+        -0.23559097657528194
+      ],
+      [
+        0.5797470378769376,
+        0.4085717458253086,
+        0.38343945462404244,
+        0.11794290369923686,
+        0.33313353703171594,
+        -0.056714185202716386,
+        -0.5122178383529354,
+        0.9861460137563562,
+        0.7423568547035426,
+        0.026845038612638823
+      ],
+      [
+        0.4154968092232336,
+        0.5037194497246197,
+        0.43522363822326826,
+        0.19327639028068241,
+        0.30122771189429587,
+        0.05471053236019584,
+        -0.41906411029250024,
+        0.5675446268833498,
+        0.7779549471464999,
+        0.0626005376317403
+      ],
+      [
+        0.15956694575388725,
+        0.012652816593421295,
+        0.24582527937792847,
+        0.44207028419456273,
+        0.5192309722773683,
+        0.16546172471138465,
+        -0.13452827670341286,
+        0.3580808930548675,
+        0.2989120225611396,
+        0.8085269566460083
+      ]
+    ],
+    "queue_len": 5,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": null,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.0,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 0,
+      "objective": "fair",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "model_hash": "1bf11277e2ff177daf722f79cf161a5be941b15d6cce4f35d4de3a1305db6675",
+    "evidence_hash": "239fbf4f14620c11c089df660f498ca6ab4d6784b8986ad944b10b3dd19cb64a",
+    "candidate_provenance": [
+      [
+        "trk_0f1dedbfa6f1e1d6a58d368b",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_0f3ae0189fba6a12bed4821f",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_16b3d16ccf7399027c112640",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_29c55093531b28d70802b992",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_5cbf8288c72d8bb11e6d917b",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_9821b3c670153730af6aacba",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_9cd56982d442f261db988807",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_a32b6f6138691116ef52256e",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_b7ac9c75ae677be8eeff0702",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_e79005015b6854fa303eaf82",
+        [
+          "joint_feasible_cover"
+        ]
+      ]
+    ],
+    "revision": 0
+  },
+  "instance_hash": "3d60b4a3be42f2fe699385aedeef8fb460e2a2123bed964eb7e50601fbb9796d"
+}

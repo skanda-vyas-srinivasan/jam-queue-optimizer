@@ -1,0 +1,454 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "trk_39382ca6e37d0b9411c924a6",
+        "title": "Lil Shine - Like What (SPOTISAVER)",
+        "folder": "pluggnb",
+        "source": "pluggnb/Lil Shine - Like What (SPOTISAVER).mp3",
+        "duration": 132.41380952380953,
+        "artist": null,
+        "recording_family": "audio_5e558fb76221b425e784a67b068f16ea092c27e6298cf1786a2444335821fb60",
+        "content_hash": "5e558fb76221b425e784a67b068f16ea092c27e6298cf1786a2444335821fb60",
+        "playable": true
+      },
+      {
+        "id": "trk_3a1e29eb57104bd22ac84b67",
+        "title": "i can't feel at all_spotdown.org",
+        "folder": "pluggnb",
+        "source": "pluggnb/i can't feel at all_spotdown.org.mp3",
+        "duration": 120.08054421768708,
+        "artist": null,
+        "recording_family": "audio_49dd2b6be179306440298c0f0a3d975554d02036622248a9d4ef41530f584063",
+        "content_hash": "49dd2b6be179306440298c0f0a3d975554d02036622248a9d4ef41530f584063",
+        "playable": true
+      },
+      {
+        "id": "trk_5923002331d160ccca0e82b1",
+        "title": "KING OF ROCK_spotdown.org",
+        "folder": "rap",
+        "source": "rap/KING OF ROCK_spotdown.org.mp3",
+        "duration": 121.63297916666667,
+        "artist": null,
+        "recording_family": "audio_f6ecf030be5ace7a8ad87a2164d47292c065ba587237f14a94016c0183d12f60",
+        "content_hash": "f6ecf030be5ace7a8ad87a2164d47292c065ba587237f14a94016c0183d12f60",
+        "playable": true
+      },
+      {
+        "id": "trk_62e94b49e40b676f70b87c0d",
+        "title": "Sayako, MUNZi - All Eyes On Us (SPOTISAVER)",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Sayako, MUNZi - All Eyes On Us (SPOTISAVER).mp3",
+        "duration": 132.14126984126983,
+        "artist": null,
+        "recording_family": "audio_a7ee6b70c4722ce9fd5a85ff8c6d8ab06269067fcc81dead78c4281da1fa4967",
+        "content_hash": "a7ee6b70c4722ce9fd5a85ff8c6d8ab06269067fcc81dead78c4281da1fa4967",
+        "playable": true
+      },
+      {
+        "id": "trk_72387ff61a6827a1e3678dc5",
+        "title": "Green Day - Welcome to Paradise (SPOTISAVER)",
+        "folder": "rock",
+        "source": "rock/Green Day - Welcome to Paradise (SPOTISAVER).mp3",
+        "duration": 224.14222222222222,
+        "artist": null,
+        "recording_family": "audio_e6d78cd9883003a3d28fc347d0cc58cfd1f2783b3edb0f7b33b27f1cb884c1e5",
+        "content_hash": "e6d78cd9883003a3d28fc347d0cc58cfd1f2783b3edb0f7b33b27f1cb884c1e5",
+        "playable": true
+      },
+      {
+        "id": "trk_84cab641f05377562137add1",
+        "title": "Che - GET NAKED (SPOTISAVER)",
+        "folder": "rap",
+        "source": "rap/Che - GET NAKED (SPOTISAVER).mp3",
+        "duration": 108.0,
+        "artist": null,
+        "recording_family": "audio_45717d47148994ad55d2e14e8cc0729991494ab50913aa906a98a60da7b1bf0b",
+        "content_hash": "45717d47148994ad55d2e14e8cc0729991494ab50913aa906a98a60da7b1bf0b",
+        "playable": true
+      },
+      {
+        "id": "trk_9d809a4f9f35da85247fcbed",
+        "title": "kuru - Noir kei (SPOTISAVER)",
+        "folder": "rap",
+        "source": "rap/kuru - Noir kei (SPOTISAVER).mp3",
+        "duration": 166.41519274376418,
+        "artist": null,
+        "recording_family": "audio_22f4bb4a7ea927b258eaecc6e249304dd95ae968941be5d6346a71b3c97b9ff6",
+        "content_hash": "22f4bb4a7ea927b258eaecc6e249304dd95ae968941be5d6346a71b3c97b9ff6",
+        "playable": true
+      },
+      {
+        "id": "trk_b34c224e6b632c0296ea06a4",
+        "title": "UDG Records, Africakid - Chainsaw (SPOTISAVER)",
+        "folder": "rap",
+        "source": "rap/UDG Records, Africakid - Chainsaw (SPOTISAVER).mp3",
+        "duration": 74.37945578231293,
+        "artist": null,
+        "recording_family": "audio_ba19c64f071fc407e147c0c5c3c85c3d7b0f7e570d8eeec1ca87649f3b2d5b32",
+        "content_hash": "ba19c64f071fc407e147c0c5c3c85c3d7b0f7e570d8eeec1ca87649f3b2d5b32",
+        "playable": true
+      },
+      {
+        "id": "trk_de871777a262731edbc3a2d5",
+        "title": "mr. guap getter_spotdown.org",
+        "folder": "hyperpop",
+        "source": "hyperpop/mr. guap getter_spotdown.org.mp3",
+        "duration": 109.55174603174603,
+        "artist": null,
+        "recording_family": "audio_c986bd47ead98850b555f223b5d3772607723daed03d034c0021fe89e2ae17e3",
+        "content_hash": "c986bd47ead98850b555f223b5d3772607723daed03d034c0021fe89e2ae17e3",
+        "playable": true
+      },
+      {
+        "id": "trk_e6cbd8a600473bdd624f1272",
+        "title": "1crusafix, isai, akkiro - problem (SPOTISAVER)",
+        "folder": "hyperpop",
+        "source": "hyperpop/1crusafix, isai, akkiro - problem (SPOTISAVER).mp3",
+        "duration": 126.22367346938775,
+        "artist": null,
+        "recording_family": "audio_1e15c670c67794233c7cc585c40f61d94a5489e5801917ce4ed1c045a63e73cf",
+        "content_hash": "1e15c670c67794233c7cc585c40f61d94a5489e5801917ce4ed1c045a63e73cf",
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "user_0",
+        "name": "Artificial listener 0",
+        "liked": [
+          "trk_39382ca6e37d0b9411c924a6",
+          "trk_9d809a4f9f35da85247fcbed",
+          "trk_b34c224e6b632c0296ea06a4"
+        ],
+        "accepted": [
+          "trk_39382ca6e37d0b9411c924a6",
+          "trk_9d809a4f9f35da85247fcbed",
+          "trk_b34c224e6b632c0296ea06a4"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_1",
+        "name": "Artificial listener 1",
+        "liked": [
+          "trk_3a1e29eb57104bd22ac84b67",
+          "trk_62e94b49e40b676f70b87c0d",
+          "trk_e6cbd8a600473bdd624f1272"
+        ],
+        "accepted": [
+          "trk_3a1e29eb57104bd22ac84b67",
+          "trk_62e94b49e40b676f70b87c0d",
+          "trk_e6cbd8a600473bdd624f1272"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_2",
+        "name": "Artificial listener 2",
+        "liked": [
+          "trk_0f1dedbfa6f1e1d6a58d368b",
+          "trk_2e5fb6e175b2d62d4da9fdd7",
+          "trk_72387ff61a6827a1e3678dc5"
+        ],
+        "accepted": [
+          "trk_0f1dedbfa6f1e1d6a58d368b",
+          "trk_2e5fb6e175b2d62d4da9fdd7",
+          "trk_72387ff61a6827a1e3678dc5"
+        ],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        1.0,
+        -0.35851378651188115,
+        0.6400086841978238,
+        0.16747146837106652,
+        0.24203612367209176,
+        0.6817900287025059,
+        1.0,
+        1.0,
+        0.6101106557051529,
+        0.5806786888001729
+      ],
+      [
+        0.3060781139871505,
+        1.0,
+        0.46822585103546466,
+        1.0,
+        0.30506276181016606,
+        0.5102476055556102,
+        0.3122203804750865,
+        0.40096872514509474,
+        0.4319505867046318,
+        1.0
+      ],
+      [
+        -0.015499262992973634,
+        0.4093776846870149,
+        -0.039783304210630976,
+        0.00812347548091888,
+        1.0,
+        0.002308628467348639,
+        -0.012567358245902965,
+        -0.13546470882620681,
+        -0.05062571809283001,
+        -0.0909060591374039
+      ]
+    ],
+    "acceptance": [
+      [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false
+      ],
+      [
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      [
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    ],
+    "transitions": [
+      [
+        0.6488532930777104,
+        -0.16893812393066207,
+        0.19662890602358815,
+        -0.08706171598246693,
+        0.0007174427932523236,
+        0.28227583584546584,
+        0.20746647617234854,
+        0.28358438538823033,
+        0.30569356368219774,
+        0.1189175273117903
+      ],
+      [
+        -0.27743804174634407,
+        0.552634405284143,
+        -0.23842279272962796,
+        -0.14914399421282437,
+        -0.3999071058245269,
+        -0.29169114248570893,
+        -0.289872036346861,
+        -0.37902514926651637,
+        -0.21552341530580713,
+        -0.30199396988125166
+      ],
+      [
+        0.6834418714939797,
+        -0.2408967058035259,
+        0.7150049016158909,
+        0.18316153262320004,
+        0.3518650195957699,
+        0.7067583188863453,
+        0.5288372774480574,
+        0.7203390464639401,
+        0.7468714171456984,
+        0.7128542506635714
+      ],
+      [
+        0.4190446432277183,
+        -0.3361719715653678,
+        0.4625335294266652,
+        0.32278393033742064,
+        0.2806718032938769,
+        0.44173258056668085,
+        0.158877532659585,
+        0.30236947514694856,
+        0.4685131799496707,
+        0.38569238760980346
+      ],
+      [
+        0.3590391808243908,
+        -0.29910582677815384,
+        0.587149696683725,
+        0.15601670807063184,
+        0.9240768891661439,
+        0.6299125403411971,
+        0.26049765754457055,
+        0.3399990689345628,
+        0.5074820784553327,
+        0.41132148408143576
+      ],
+      [
+        0.6098420360706732,
+        -0.33094867599783395,
+        0.631373615107608,
+        0.1329535008103805,
+        0.45394509566699415,
+        0.7785357769126463,
+        0.5408027054156888,
+        0.7852782666216787,
+        0.7327891039529171,
+        0.6946110280339368
+      ],
+      [
+        -0.06161049335286537,
+        -0.19568103318227306,
+        0.208810453833142,
+        0.36359783636177945,
+        0.22441942038163776,
+        -0.049564186351512426,
+        0.3611017624377753,
+        0.03253775171572442,
+        0.02657361896943511,
+        0.12209887744135353
+      ],
+      [
+        0.6063799509251525,
+        -0.17990116088177666,
+        0.48259123975882623,
+        0.03959370204779128,
+        0.3050987697108216,
+        0.6062279972455576,
+        0.6085870900261333,
+        0.9627360170055049,
+        0.652766120090523,
+        0.7077800195274009
+      ],
+      [
+        0.48625121207188143,
+        -0.33638597678680754,
+        0.5651724029365687,
+        0.17791972058134142,
+        0.32898504114057714,
+        0.5495201088025441,
+        0.7024285970442911,
+        0.6576119791490411,
+        0.9178973295073241,
+        0.6861963712703024
+      ],
+      [
+        0.4377123814369327,
+        -0.2243318692736991,
+        0.45144186389529894,
+        0.31007060600220704,
+        0.3953709098648148,
+        0.5396626998808516,
+        0.4185677616688001,
+        0.6059522212689317,
+        0.5619875109672309,
+        0.7183218310308341
+      ]
+    ],
+    "queue_len": 5,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": null,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.0,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 0,
+      "objective": "fair",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "model_hash": "1bf11277e2ff177daf722f79cf161a5be941b15d6cce4f35d4de3a1305db6675",
+    "evidence_hash": "661a00216fcef14c048349d3f9c265dce9b26ad70281bf0c908f3076ade6b87c",
+    "candidate_provenance": [
+      [
+        "trk_39382ca6e37d0b9411c924a6",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_3a1e29eb57104bd22ac84b67",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_5923002331d160ccca0e82b1",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_62e94b49e40b676f70b87c0d",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_72387ff61a6827a1e3678dc5",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_84cab641f05377562137add1",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_9d809a4f9f35da85247fcbed",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_b34c224e6b632c0296ea06a4",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_de871777a262731edbc3a2d5",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_e6cbd8a600473bdd624f1272",
+        [
+          "joint_feasible_cover"
+        ]
+      ]
+    ],
+    "revision": 0
+  },
+  "instance_hash": "e65530929f3328ed33be8201f9786077db0bd5f6ac047d6be298907d907f504c"
+}

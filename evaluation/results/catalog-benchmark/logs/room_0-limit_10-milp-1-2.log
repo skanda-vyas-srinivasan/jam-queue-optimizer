@@ -1,0 +1,69 @@
+Welcome to the CBC MILP Solver 
+Version: 2.10.3 
+Build Date: Dec 15 2019 
+
+command line - /Users/skandavyas/jam-queue-optimizer/.venv/lib/python3.12/site-packages/pulp/apis/../solverdir/cbc/osx/i64/cbc /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-3i4o0ru8/7ff8ea301f514557966ee2930a2ae6f1-pulp.mps -mips /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-3i4o0ru8/7ff8ea301f514557966ee2930a2ae6f1-pulp.mst -sec 1.0854949989588931 -randomSeed 42 -randomCbcSeed 42 -timeMode elapsed -ratio 0.0 -threads 1 -timeMode elapsed -branch -printingOptions all -solution /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-3i4o0ru8/7ff8ea301f514557966ee2930a2ae6f1-pulp.sol (default strategy 1)
+At line 2 NAME          MODEL
+At line 3 ROWS
+At line 119 COLUMNS
+At line 1784 RHS
+At line 1899 BOUNDS
+At line 2311 ENDATA
+Problem MODEL has 114 rows, 411 columns and 1204 elements
+Coin0008I MODEL read with 0 errors
+opening mipstart file /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-3i4o0ru8/7ff8ea301f514557966ee2930a2ae6f1-pulp.mst.
+MIPStart values read for 411 variables.
+seconds was changed from 1e+100 to 1.08549
+randomSeed was changed from 1234567 to 42
+randomCbcSeed was changed from -1 to 42
+Option for timeMode changed from cpu to elapsed
+ratioGap was changed from 0 to 0
+threads was changed from 0 to 1
+Continuous objective value is -0.35484 - 0.00 seconds
+Cgl0002I 10 variables fixed
+Cgl0004I processed model has 84 rows, 264 columns (40 integer (40 of which binary)) and 792 elements
+Cbc0045I MIPStart provided solution with cost -0.125718
+Cbc0012I Integer solution of -0.12571848 found by Reduced search after 0 iterations and 0 nodes (0.00 seconds)
+Cbc0038I Full problem 84 rows 264 columns, reduced to 39 rows 44 columns
+Cbc0031I 14 added rows had average density of 236.71429
+Cbc0013I At root node, 14 cuts changed objective from -0.35484022 to -0.32400665 in 100 passes
+Cbc0014I Cut generator 0 (Probing) - 0 row cuts average 0.0 elements, 0 column cuts (0 active)  in 0.017 seconds - new frequency is -100
+Cbc0014I Cut generator 1 (Gomory) - 841 row cuts average 251.8 elements, 0 column cuts (0 active)  in 0.029 seconds - new frequency is -100
+Cbc0014I Cut generator 2 (Knapsack) - 0 row cuts average 0.0 elements, 0 column cuts (0 active)  in 0.019 seconds - new frequency is -100
+Cbc0014I Cut generator 3 (Clique) - 0 row cuts average 0.0 elements, 0 column cuts (0 active)  in 0.002 seconds - new frequency is -100
+Cbc0014I Cut generator 4 (MixedIntegerRounding2) - 62 row cuts average 33.3 elements, 0 column cuts (0 active)  in 0.019 seconds - new frequency is -100
+Cbc0014I Cut generator 5 (FlowCover) - 0 row cuts average 0.0 elements, 0 column cuts (0 active)  in 0.059 seconds - new frequency is -100
+Cbc0014I Cut generator 6 (TwoMirCuts) - 110 row cuts average 115.1 elements, 0 column cuts (0 active)  in 0.014 seconds - new frequency is 1
+Cbc0010I After 0 nodes, 1 on tree, -0.12571848 best solution, best possible -0.32400665 (0.31 seconds)
+Cbc0012I Integer solution of -0.13162774 found by DiveCoefficient after 2808 iterations and 5 nodes (0.33 seconds)
+Cbc0012I Integer solution of -0.13162774 found by heuristic after 2788 iterations and 4 nodes (0.33 seconds)
+Cbc0016I Integer solution of -0.13571707 found by strong branching after 2959 iterations and 11 nodes (0.34 seconds)
+Cbc0012I Integer solution of -0.13571707 found by heuristic after 2958 iterations and 10 nodes (0.34 seconds)
+Cbc0016I Integer solution of -0.17099336 found by strong branching after 3832 iterations and 33 nodes (0.40 seconds)
+Cbc0012I Integer solution of -0.17099336 found by heuristic after 3803 iterations and 32 nodes (0.40 seconds)
+Cbc0030I Thread 0 used 40 times,  waiting to start 0.00057172775, 0.105186 cpu time, 269 locks, 0.00055670738 locked, 1.335144e-05 waiting for locks
+Cbc0030I Main thread 0.10628057 waiting for threads,  86 locks, 8.3446503e-06 locked, 7.1525574e-06 waiting for locks
+Cbc0001I Search completed - best objective -0.1709933640823458, took 4223 iterations and 40 nodes (0.42 seconds)
+Cbc0032I Strong branching done 584 times (12355 iterations), fathomed 14 nodes and fixed 10 variables
+Cbc0035I Maximum depth 7, 61 variables fixed on reduced cost
+Cuts at root node changed objective from -0.35484 to -0.324007
+Probing was tried 200 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.033 seconds)
+Gomory was tried 200 times and created 1682 cuts of which 0 were active after adding rounds of cuts (0.058 seconds)
+Knapsack was tried 200 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.038 seconds)
+Clique was tried 200 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.003 seconds)
+MixedIntegerRounding2 was tried 200 times and created 124 cuts of which 0 were active after adding rounds of cuts (0.038 seconds)
+FlowCover was tried 200 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.118 seconds)
+TwoMirCuts was tried 265 times and created 321 cuts of which 0 were active after adding rounds of cuts (0.033 seconds)
+ZeroHalf was tried 2 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+
+Result - Optimal solution found
+
+Objective value:                -0.17099336
+Enumerated nodes:               40
+Total iterations:               4223
+Time (CPU seconds):             0.42
+Time (Wallclock seconds):       0.43
+
+Option for printingOptions changed from normal to all
+Total time (CPU seconds):       0.42   (Wallclock seconds):       0.43
+

@@ -65,6 +65,15 @@ def normalize_request(catalog,request):
 def parse_request(catalog,payload):
     if not isinstance(payload,dict):
         raise ValueError('Request must be a JSON object')
+    allowed={'listeners','room','queue_len','candidate_limit','method','policy','max_songs_per_folder',
+             'transition_weight','same_folder_penalty','time_limit','relative_gap','beam_width',
+             'locked_prefix','current_track','excluded','incumbent','revision','session_id','include_logs',
+             'repeat_window','artist_cooldown'}
+    unknown=set(payload)-allowed
+    if unknown:
+        raise ValueError('Unknown request fields: '+', '.join(sorted(unknown)))
+    if 'listeners' in payload and 'room' in payload:
+        raise ValueError('Specify one membership representation: listeners or legacy room')
     if 'listeners' in payload:
         if not isinstance(payload['listeners'],list):
             raise ValueError('listeners must be an array')

@@ -42,11 +42,13 @@ def build_instance(catalog,request,deadline,service_debt=None):
     indices=[catalog.song_index(t.id) for t in eligible]
     if deadline.expired:
         return None,QueueResult(Status.TIMEOUT_NO_SOLUTION,request.queue_len,termination_reason='Budget expired in ranking')
-    _,_,transitions=catalog.transition_block(indices)
+    # Candidate feasibility depends on selection rules, not sequencing. Avoid
+    # building full-catalog transition blocks for a small final shortlist.
+    transitions=((0.,)*len(eligible),)*len(eligible)
     anchor=()
     if request.current_track:
         previous=catalog.tracks[catalog.song_index(request.current_track)]
-        anchor=tuple(request.policy.transition_weight*catalog.transition_score(previous.id,t.id)
+        anchor=tuple(request.policy.transition_weight*catalog.transition_score(previous.id,t.id,request.policy.transition_model)
                      -request.policy.same_folder_penalty*(previous.folder==t.folder) for t in eligible)
     debt=tuple((service_debt or {}).get(l.id,0.) for l in request.listeners)
     instance=QueueInstance(tuple(eligible),request.listeners,tuple(values),tuple(acceptance),
@@ -78,7 +80,11 @@ def build_instance(catalog,request,deadline,service_debt=None):
         if not reasons[t]: reasons[t].append('full_catalog_rank')
     instance=replace(instance,candidate_provenance=tuple(sorted((t,tuple(r)) for t,r in reasons.items())))
     shortlist=subset_instance(instance,chosen)
+    shortlist_indices=[catalog.song_index(t.id) for t in shortlist.tracks]
+    _,_,transition_block=catalog.transition_block(shortlist_indices,request.policy.transition_model)
+    shortlist=replace(shortlist,transitions=tuple(tuple(float(v) for v in row) for row in transition_block))
     provenance={'full_eligible_count':len(eligible),'requested_shortlist_size':request.candidate_limit,
+                'policy':asdict(request.policy),'transition_model':request.policy.transition_model,
                 'actual_shortlist_size':len(chosen),'expanded_for_feasibility':len(chosen)>request.candidate_limit,
                 'reference':'full_catalog_ranking','exclusions':exclusions,'cover':cover,
                 'ranked_rows':[{'track_id':eligible[a].id,'song':eligible[a].title,'folder':eligible[a].folder,

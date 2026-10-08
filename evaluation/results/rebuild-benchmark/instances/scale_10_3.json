@@ -1,0 +1,371 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "track_00",
+        "title": "Synthetic track 0",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 90,
+        "artist": "artist_0",
+        "recording_family": "recording_0",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_01",
+        "title": "Synthetic track 1",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 120,
+        "artist": "artist_0",
+        "recording_family": "recording_1",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_02",
+        "title": "Synthetic track 2",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 150,
+        "artist": "artist_1",
+        "recording_family": "recording_2",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_03",
+        "title": "Synthetic track 3",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 180,
+        "artist": "artist_1",
+        "recording_family": "recording_3",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_04",
+        "title": "Synthetic track 4",
+        "folder": "folder_2",
+        "source": "",
+        "duration": 210,
+        "artist": "artist_2",
+        "recording_family": "recording_4",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_05",
+        "title": "Synthetic track 5",
+        "folder": "folder_2",
+        "source": "",
+        "duration": 90,
+        "artist": "artist_2",
+        "recording_family": "recording_5",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_06",
+        "title": "Synthetic track 6",
+        "folder": "folder_3",
+        "source": "",
+        "duration": 120,
+        "artist": "artist_3",
+        "recording_family": "recording_6",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_07",
+        "title": "Synthetic track 7",
+        "folder": "folder_3",
+        "source": "",
+        "duration": 150,
+        "artist": "artist_3",
+        "recording_family": "recording_7",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_08",
+        "title": "Synthetic track 8",
+        "folder": "folder_4",
+        "source": "",
+        "duration": 180,
+        "artist": "artist_4",
+        "recording_family": "recording_8",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_09",
+        "title": "Synthetic track 9",
+        "folder": "folder_4",
+        "source": "",
+        "duration": 210,
+        "artist": "artist_4",
+        "recording_family": "recording_9",
+        "content_hash": null,
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "listener_0",
+        "name": "Listener 0",
+        "liked": [
+          "track_00"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "listener_1",
+        "name": "Listener 1",
+        "liked": [
+          "track_01"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "listener_2",
+        "name": "Listener 2",
+        "liked": [
+          "track_02"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        1.0,
+        -0.8588437874388832,
+        -0.6982621002204905,
+        -0.7104744842395352,
+        0.22098673852342787,
+        -0.08093314068459256,
+        0.9977114196036774,
+        -0.0065410016301925555,
+        -0.659082417282939,
+        1.0
+      ],
+      [
+        -0.9095468566156515,
+        1.0,
+        0.4186317383632727,
+        -0.023482681566362018,
+        0.22796414888784033,
+        -0.4255177719849086,
+        -0.7030157302092102,
+        -0.44172895931606315,
+        0.4504975042790631,
+        1.0
+      ],
+      [
+        0.6445959965975707,
+        0.597526857173335,
+        1.0,
+        -0.5825274163843823,
+        0.8179615175540367,
+        0.7124770005624708,
+        -0.6328108238438388,
+        0.9643404493592007,
+        0.518065839608566,
+        1.0
+      ]
+    ],
+    "acceptance": [
+      [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    ],
+    "transitions": [
+      [
+        -0.5888547856258655,
+        -0.815662318262306,
+        -0.01895648226367852,
+        0.2910609726827824,
+        0.004607688264713028,
+        0.9636640265337517,
+        0.4481397141791281,
+        -0.6796302986947149,
+        0.6209389013392379,
+        0.2609349371127545
+      ],
+      [
+        -0.2563900176525362,
+        0.999192800709459,
+        0.639334138723952,
+        0.9706445854426786,
+        0.9481628116089584,
+        -0.3292928102433488,
+        -0.7238304044305919,
+        -0.37871802153396716,
+        -0.7362058193778203,
+        -0.18790601988122235
+      ],
+      [
+        0.5824037623811382,
+        0.11397845872871737,
+        0.1729044687209118,
+        -0.5961751653728318,
+        -0.3844331704775126,
+        -0.04343509818470026,
+        -0.9262524587616274,
+        0.7560108763972495,
+        -0.8054605015783796,
+        0.4019845812293843
+      ],
+      [
+        -0.23644255222020982,
+        0.6080903444579302,
+        -0.15156758301063844,
+        0.19075375843917342,
+        0.13275154197015038,
+        -0.4651289987234861,
+        0.34584970860623,
+        0.0771794072463472,
+        -0.7247585620030688,
+        -0.8569172639777172
+      ],
+      [
+        -0.7553677430212302,
+        -0.4788207972468643,
+        -0.05503102148536554,
+        -0.12551133842189133,
+        -0.17150119752412984,
+        -0.8341789288477859,
+        0.9951838591661906,
+        -0.0898404877429948,
+        -0.18145382760940532,
+        -0.9999786956553625
+      ],
+      [
+        0.126245205019474,
+        0.30906923443362566,
+        -0.6470802858030842,
+        -0.7487865149972099,
+        -0.16074906788229648,
+        0.8890029048709591,
+        0.21574232257901338,
+        -0.18995388104682642,
+        0.021053728817454376,
+        0.1946020538696882
+      ],
+      [
+        -0.24781407761103758,
+        -0.17449442830676376,
+        -0.537885180325578,
+        0.3841793565319902,
+        -0.19608140043062283,
+        -0.06812282358443733,
+        -0.023480765459597208,
+        0.24479359092658215,
+        0.3445292670261242,
+        -0.546578075210886
+      ],
+      [
+        -0.4700738957341255,
+        -0.6826208391747874,
+        0.8680326601736781,
+        -0.14719355794503364,
+        0.5572547251213902,
+        0.6740812689208489,
+        0.4422844358384417,
+        -0.9957057141008625,
+        0.4604398264362066,
+        0.27156406831720914
+      ],
+      [
+        0.09739526821620004,
+        0.6319520061728443,
+        -0.609842858602001,
+        0.06490366247614343,
+        0.08893703977728173,
+        -0.6350214365828415,
+        -0.7678840902505786,
+        -0.1897442625515393,
+        0.6406204532252178,
+        -0.6840944729928398
+      ],
+      [
+        0.20381973748223414,
+        0.1683106017568805,
+        -0.8141199175095395,
+        -0.41668142687923715,
+        -0.408388526775894,
+        -0.26344069770976186,
+        0.2717330111859959,
+        -0.28470894197701413,
+        -0.3991342679891985,
+        -0.8800674580578043
+      ]
+    ],
+    "queue_len": 5,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": 2,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.13,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 5,
+      "objective": "affinity",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [],
+    "model_hash": "frozen-synthetic-113",
+    "evidence_hash": "",
+    "candidate_provenance": [],
+    "revision": 0
+  },
+  "instance_hash": "ac7a87788bbead4c9187063b8fa02ca72c273cbce8b290d55ef8af8f9c4e8804"
+}

@@ -55,7 +55,7 @@ def solve_search(instance, deadline: Deadline, width=None):
                     expanded[key] = (value, new_queue)
         visited += len(expanded)
         if not expanded:
-            status = Status.HARD_INFEASIBLE if width is None else Status.TIMEOUT_NO_SOLUTION
+            status = Status.HARD_INFEASIBLE if width is None else Status.NO_SOLUTION_FOUND
             return result_for(instance, status=status, reason=("Joint hard rules are infeasible" if width is None
                               else "Heuristic found no valid queue; infeasibility is not proven"),
                               conflicts=conflict_details(instance), solver={"states": visited})

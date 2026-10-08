@@ -40,7 +40,7 @@ function request() {
     time_limit: Number($("time-limit").value), revision: state.session?.revision ?? 0, session_id: state.session?.id,
     policy: {representation: $("representation").value, required_count: Number($("required-count").value),
       folder_cap: nullable("folder-cap"), discovery_budget: Number($("discovery-budget").value),
-      transition_weight: Number($("transition-weight").value), same_folder_penalty: Number($("folder-penalty").value),
+      transition_model: $("transition-model").value, transition_weight: Number($("transition-weight").value), same_folder_penalty: Number($("folder-penalty").value),
       preference_tolerance: Number($("preference-tolerance").value), objective: $("objective").value, predictor: $("predictor").value}};
 }
 function table(target, rows, columns) {
@@ -60,7 +60,7 @@ function renderResult(result) {
   $("queue").innerHTML = result.queue_rows.map(row => `<article class="queue-card"><span class="eyebrow">SLOT ${row.slot}</span><h3>${escapeHtml(row.song)}</h3><p>${escapeHtml(row.folder)} · ${Math.round(row.duration)} seconds</p>${state.session?.promised_next === row.track_id ? `<button class="accent" data-play="${escapeHtml(row.track_id)}" data-duration="${row.duration}">Confirm played (${Math.round(row.duration)}s)</button>` : ""}</article>`).join("");
   table("coverage", Object.entries(result.per_listener).map(([id,row]) => ({id,...row})), [["display_name","Listener"],["id","Stable ID"],["accepted_count","Confirmed accepted tracks"],["accepted_seconds","Planned accepted seconds"],["first_acceptable_wait_seconds","Planned first wait (s)"],["representation_deficit","Explicit deficit"],["affinity_sum","Internal affinity sum"]]);
   table("phases", result.phases, [["name","Priority"],["value","Internal value"],["proven","Proven"],["termination","Termination"],["warm_start_accepted","CBC accepted start"]]);
-  table("transitions", result.transition_rows, [["from_song","From"],["to_song","To"],["boundary_acoustic_affinity","Pooled acoustic affinity"]]);
+  table("transitions", result.transition_rows, [["from_song","From"],["to_song","To"],["transition_model","Signal"],["selected_transition_value","Signal value"],["weighted_edge","Canonical edge value"]]);
   $("result-json").textContent = JSON.stringify(result, null, 2);
   message(result.termination_reason, !result.valid_incumbent);
 }

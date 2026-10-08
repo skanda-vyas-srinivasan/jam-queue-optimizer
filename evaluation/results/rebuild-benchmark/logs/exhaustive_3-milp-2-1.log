@@ -1,0 +1,61 @@
+Welcome to the CBC MILP Solver 
+Version: 2.10.3 
+Build Date: Dec 15 2019 
+
+command line - /Users/skandavyas/jam-queue-optimizer/.venv/lib/python3.12/site-packages/pulp/apis/../solverdir/cbc/osx/i64/cbc /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-fb_08n27/ea370419a67d49548d93049bc31dbbfa-pulp.mps -mips /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-fb_08n27/ea370419a67d49548d93049bc31dbbfa-pulp.mst -sec 1.9835540000349283 -randomSeed 42 -randomCbcSeed 42 -timeMode elapsed -ratio 0.0 -threads 1 -timeMode elapsed -branch -printingOptions all -solution /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-fb_08n27/ea370419a67d49548d93049bc31dbbfa-pulp.sol (default strategy 1)
+At line 2 NAME          MODEL
+At line 3 ROWS
+At line 47 COLUMNS
+At line 304 RHS
+At line 347 BOUNDS
+At line 404 ENDATA
+Problem MODEL has 42 rows, 56 columns and 211 elements
+Coin0008I MODEL read with 0 errors
+opening mipstart file /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-fb_08n27/ea370419a67d49548d93049bc31dbbfa-pulp.mst.
+MIPStart values read for 56 variables.
+seconds was changed from 1e+100 to 1.98355
+randomSeed was changed from 1234567 to 42
+randomCbcSeed was changed from -1 to 42
+Option for timeMode changed from cpu to elapsed
+ratioGap was changed from 0 to 0
+threads was changed from 0 to 1
+Continuous objective value is -1.7981 - 0.00 seconds
+Cgl0005I 3 SOS with 15 members
+Cgl0004I processed model has 34 rows, 55 columns (15 integer (15 of which binary)) and 184 elements
+Cbc0045I MIPStart provided solution with cost -1.66781
+Cbc0012I Integer solution of -1.6678112 found by Reduced search after 0 iterations and 0 nodes (0.00 seconds)
+Cbc0038I Full problem 34 rows 55 columns, reduced to 16 rows 13 columns
+Cbc0031I 3 added rows had average density of 9.3333333
+Cbc0013I At root node, 10 cuts changed objective from -1.7981004 to -1.6678112 in 1 passes
+Cbc0014I Cut generator 0 (Probing) - 0 row cuts average 0.0 elements, 0 column cuts (0 active)  in 0.000 seconds - new frequency is -100
+Cbc0014I Cut generator 1 (Gomory) - 2 row cuts average 13.5 elements, 0 column cuts (0 active)  in 0.000 seconds - new frequency is 1
+Cbc0014I Cut generator 2 (Knapsack) - 3 row cuts average 7.7 elements, 0 column cuts (0 active)  in 0.000 seconds - new frequency is 1
+Cbc0014I Cut generator 3 (Clique) - 0 row cuts average 0.0 elements, 0 column cuts (0 active)  in 0.000 seconds - new frequency is -100
+Cbc0014I Cut generator 4 (MixedIntegerRounding2) - 1 row cuts average 12.0 elements, 0 column cuts (0 active)  in 0.000 seconds - new frequency is 1
+Cbc0014I Cut generator 5 (FlowCover) - 0 row cuts average 0.0 elements, 0 column cuts (0 active)  in 0.000 seconds - new frequency is -100
+Cbc0014I Cut generator 6 (TwoMirCuts) - 4 row cuts average 11.0 elements, 0 column cuts (0 active)  in 0.000 seconds - new frequency is -100
+Cbc0030I Thread 0 used 0 times,  waiting to start 6.2942505e-05, 0 cpu time, 0 locks, 0 locked, 0 waiting for locks
+Cbc0030I Main thread 0 waiting for threads,  1 locks, 9.5367432e-07 locked, 0 waiting for locks
+Cbc0001I Search completed - best objective -1.66781120320802, took 0 iterations and 0 nodes (0.00 seconds)
+Cbc0035I Maximum depth 0, 3 variables fixed on reduced cost
+Cuts at root node changed objective from -1.7981 to -1.66781
+Probing was tried 2 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Gomory was tried 2 times and created 4 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Knapsack was tried 2 times and created 6 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Clique was tried 2 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+MixedIntegerRounding2 was tried 2 times and created 2 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+FlowCover was tried 2 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+TwoMirCuts was tried 2 times and created 8 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+ZeroHalf was tried 2 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+
+Result - Optimal solution found
+
+Objective value:                -1.66781120
+Enumerated nodes:               0
+Total iterations:               0
+Time (CPU seconds):             0.00
+Time (Wallclock seconds):       0.00
+
+Option for printingOptions changed from normal to all
+Total time (CPU seconds):       0.00   (Wallclock seconds):       0.01
+

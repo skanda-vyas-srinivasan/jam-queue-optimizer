@@ -1,0 +1,267 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "track_00",
+        "title": "Synthetic track 0",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 90,
+        "artist": "artist_0",
+        "recording_family": "recording_0",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_01",
+        "title": "Synthetic track 1",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 120,
+        "artist": "artist_0",
+        "recording_family": "recording_1",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_02",
+        "title": "Synthetic track 2",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 150,
+        "artist": "artist_1",
+        "recording_family": "recording_2",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_03",
+        "title": "Synthetic track 3",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 180,
+        "artist": "artist_1",
+        "recording_family": "recording_3",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_04",
+        "title": "Synthetic track 4",
+        "folder": "folder_2",
+        "source": "",
+        "duration": 210,
+        "artist": "artist_2",
+        "recording_family": "recording_4",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_05",
+        "title": "Synthetic track 5",
+        "folder": "folder_2",
+        "source": "",
+        "duration": 90,
+        "artist": "artist_2",
+        "recording_family": "recording_5",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_06",
+        "title": "Synthetic track 6",
+        "folder": "folder_3",
+        "source": "",
+        "duration": 120,
+        "artist": "artist_3",
+        "recording_family": "recording_6",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_07",
+        "title": "Synthetic track 7",
+        "folder": "folder_3",
+        "source": "",
+        "duration": 150,
+        "artist": "artist_3",
+        "recording_family": "recording_7",
+        "content_hash": null,
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "listener_0",
+        "name": "Listener 0",
+        "liked": [
+          "track_00"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "listener_1",
+        "name": "Listener 1",
+        "liked": [
+          "track_01"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        1.0,
+        0.8609856230206001,
+        1.0,
+        0.02487556246812539,
+        1.0,
+        0.4250466610447978,
+        1.0,
+        0.0044476602694214495
+      ],
+      [
+        -0.5202997843530226,
+        1.0,
+        0.7527093604384016,
+        1.0,
+        -0.8623985890833994,
+        1.0,
+        0.4052525276870995,
+        1.0
+      ]
+    ],
+    "acceptance": [
+      [
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false
+      ],
+      [
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true
+      ]
+    ],
+    "transitions": [
+      [
+        -0.8041990176208902,
+        -0.10864170036260656,
+        0.049314861359018414,
+        -0.47047908704191,
+        -0.8713519736276911,
+        0.27308653241502934,
+        -0.01996664681690863,
+        0.2802245393128313
+      ],
+      [
+        -0.1241225076562873,
+        0.42560254561385524,
+        0.4043483167317645,
+        -0.23138080301953012,
+        0.6639565885366421,
+        0.6864975996138551,
+        -0.06294261480295993,
+        0.6399165600713943
+      ],
+      [
+        -0.2375452029246341,
+        0.2499803426577809,
+        0.1341413261216493,
+        0.5609480506091062,
+        0.43514908267885977,
+        0.9070875864353165,
+        -0.34917103596184695,
+        -0.5620865967141679
+      ],
+      [
+        -0.8984715030527821,
+        0.6592292426115158,
+        -0.3433550982592588,
+        -0.16086842049102335,
+        -0.31462916622585824,
+        0.10936862425942939,
+        0.7453424272055718,
+        -0.42752334591714103
+      ],
+      [
+        0.43901796412511684,
+        0.8980992392305742,
+        0.8300232283466706,
+        -0.6343483073519525,
+        -0.40178781427214516,
+        0.8123535487157116,
+        0.2620232123376409,
+        -0.6973192075559891
+      ],
+      [
+        0.014286932398758223,
+        0.8957481012130166,
+        0.3849431979484992,
+        0.6333903851652063,
+        0.7972899107889502,
+        0.5601590331572404,
+        0.8935353715138896,
+        0.33291064954792704
+      ],
+      [
+        0.9225329735857282,
+        -0.24744226702707195,
+        0.44353458405641777,
+        -0.7051599831646707,
+        0.9039567934900061,
+        0.16005033811756197,
+        0.9144920793396327,
+        -0.08083347527051554
+      ],
+      [
+        0.031010624226023964,
+        0.12990123857961233,
+        -0.24293262382554026,
+        0.3485813271450968,
+        -0.26057221481048454,
+        -0.7877310868169964,
+        -0.4723807805927722,
+        0.31937906220921297
+      ]
+    ],
+    "queue_len": 5,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": 2,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.13,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 5,
+      "objective": "affinity",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [],
+    "model_hash": "frozen-synthetic-110",
+    "evidence_hash": "",
+    "candidate_provenance": [],
+    "revision": 0
+  },
+  "instance_hash": "f827ef7cd0a26ccbdf9871a30da73005cda59bf247c2286dd0551c859df59fb8"
+}

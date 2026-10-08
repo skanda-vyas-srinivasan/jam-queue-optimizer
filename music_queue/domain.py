@@ -25,6 +25,10 @@ class Track:
     recording_family: str | None = None
     content_hash: str | None = None
     playable: bool = True
+    intro_rms_dbfs: float | None = None
+    outro_rms_dbfs: float | None = None
+    leading_silence_seconds: float = 0.
+    trailing_silence_seconds: float = 0.
 
 
 @dataclass(frozen=True)
@@ -58,6 +62,7 @@ class Policy:
     objective: str = "fair"  # affinity is a separately labelled research baseline
     predictor: str = "top_two"
     playback: str = "hard_cut"
+    transition_model: str = "pooled"
 
 
 @dataclass(frozen=True)
@@ -139,6 +144,7 @@ class Status(StrEnum):
     INVALID_REQUEST = "INVALID_REQUEST"
     HARD_INFEASIBLE = "HARD_INFEASIBLE"
     TIMEOUT_NO_SOLUTION = "TIMEOUT_NO_SOLUTION"
+    NO_SOLUTION_FOUND = "NO_SOLUTION_FOUND"
     FEASIBLE_NOT_PROVEN = "FEASIBLE_NOT_PROVEN"
     OPTIMAL = "OPTIMAL"
     RESOURCE_LIMIT = "RESOURCE_LIMIT"
@@ -183,9 +189,11 @@ def validate_policy(p: Policy):
         raise ValueError("Unknown objective or predictor")
     if p.playback != "hard_cut":
         raise ValueError("Only hard_cut playback is implemented")
+    if p.transition_model not in {"pooled", "boundary_cost", "none"}:
+        raise ValueError("Unknown transition model")
     for value in (p.required_count, p.discovery_budget):
-        if type(value) is not int or value < 0:
-            raise ValueError("Counts must be nonnegative integers")
+        if type(value) is not int or not 0 <= value <= 20:
+            raise ValueError("Counts must be integers from 0 to 20")
     for value in (p.folder_cap, p.artist_cap, p.family_cap):
         if value is not None and (type(value) is not int or value <= 0):
             raise ValueError("Mandatory caps must be positive integers or null")

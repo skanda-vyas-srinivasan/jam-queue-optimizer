@@ -1,0 +1,454 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "trk_076fc7d1ca2f33f31a8f58a6",
+        "title": "Dance, Dance_spotdown.org",
+        "folder": "rock",
+        "source": "rock/Dance, Dance_spotdown.org.mp3",
+        "duration": 180.26666666666668,
+        "artist": null,
+        "recording_family": "audio_7acbfd8d4d19597553a7194d23024b0350e6b79d369d8fa25dab578c09498bf2",
+        "content_hash": "7acbfd8d4d19597553a7194d23024b0350e6b79d369d8fa25dab578c09498bf2",
+        "playable": true
+      },
+      {
+        "id": "trk_0b6504d64f783c9f9aa85473",
+        "title": "My Chemical Romance - House of Wolves (SPOTISAVER)",
+        "folder": "rock",
+        "source": "rock/My Chemical Romance - House of Wolves (SPOTISAVER).mp3",
+        "duration": 184.01814058956916,
+        "artist": null,
+        "recording_family": "audio_29e95602a98d6eadfe9e9f335bf6aefb792ada1534bfdffe4346cf48c00fe2b7",
+        "content_hash": "29e95602a98d6eadfe9e9f335bf6aefb792ada1534bfdffe4346cf48c00fe2b7",
+        "playable": true
+      },
+      {
+        "id": "trk_5923002331d160ccca0e82b1",
+        "title": "KING OF ROCK_spotdown.org",
+        "folder": "rap",
+        "source": "rap/KING OF ROCK_spotdown.org.mp3",
+        "duration": 121.63297916666667,
+        "artist": null,
+        "recording_family": "audio_f6ecf030be5ace7a8ad87a2164d47292c065ba587237f14a94016c0183d12f60",
+        "content_hash": "f6ecf030be5ace7a8ad87a2164d47292c065ba587237f14a94016c0183d12f60",
+        "playable": true
+      },
+      {
+        "id": "trk_725ecb67868806f5ae28f752",
+        "title": "The Brobecks - Better Than Me (SPOTISAVER)",
+        "folder": "rock",
+        "source": "rock/The Brobecks - Better Than Me (SPOTISAVER).mp3",
+        "duration": 267.5170975056689,
+        "artist": null,
+        "recording_family": "audio_02de2439dbee7f23bc384842ed2d29a93e95c03b15b0575560eb8fb960029358",
+        "content_hash": "02de2439dbee7f23bc384842ed2d29a93e95c03b15b0575560eb8fb960029358",
+        "playable": true
+      },
+      {
+        "id": "trk_84cab641f05377562137add1",
+        "title": "Che - GET NAKED (SPOTISAVER)",
+        "folder": "rap",
+        "source": "rap/Che - GET NAKED (SPOTISAVER).mp3",
+        "duration": 108.0,
+        "artist": null,
+        "recording_family": "audio_45717d47148994ad55d2e14e8cc0729991494ab50913aa906a98a60da7b1bf0b",
+        "content_hash": "45717d47148994ad55d2e14e8cc0729991494ab50913aa906a98a60da7b1bf0b",
+        "playable": true
+      },
+      {
+        "id": "trk_a15af3cb0825ab98e611bf06",
+        "title": "AFFLICTED - firstplace (SPOTISAVER)",
+        "folder": "hyperpop",
+        "source": "hyperpop/AFFLICTED - firstplace (SPOTISAVER).mp3",
+        "duration": 138.59990929705216,
+        "artist": null,
+        "recording_family": "audio_c4c78fd9582b9f91ae2da0e9069e40a06684214e832a8d7d7d8c75d4f54449a0",
+        "content_hash": "c4c78fd9582b9f91ae2da0e9069e40a06684214e832a8d7d7d8c75d4f54449a0",
+        "playable": true
+      },
+      {
+        "id": "trk_b318b2d00d503bc65fb00c4b",
+        "title": "Sugar, We're Goin Down_spotdown.org",
+        "folder": "rock",
+        "source": "rock/Sugar, We're Goin Down_spotdown.org.mp3",
+        "duration": 229.12145124716554,
+        "artist": null,
+        "recording_family": "audio_b33edb3e120fcc579a7190a313024699abddcbb6899673d44fde5f35756c3208",
+        "content_hash": "b33edb3e120fcc579a7190a313024699abddcbb6899673d44fde5f35756c3208",
+        "playable": true
+      },
+      {
+        "id": "trk_e1204e17fedfdca61f361cd8",
+        "title": "I'm Not Okay (I Promise)_spotdown.org",
+        "folder": "rock",
+        "source": "rock/I'm Not Okay (I Promise)_spotdown.org.mp3",
+        "duration": 186.48961451247166,
+        "artist": null,
+        "recording_family": "audio_ca84182e7578b0790f927d9fb25126468b31a6e3f572cc47c35f490d7f977fdf",
+        "content_hash": "ca84182e7578b0790f927d9fb25126468b31a6e3f572cc47c35f490d7f977fdf",
+        "playable": true
+      },
+      {
+        "id": "trk_e9c505045a0c5836617e863d",
+        "title": "All Time Low - Weightless (SPOTISAVER)",
+        "folder": "rock",
+        "source": "rock/All Time Low - Weightless (SPOTISAVER).mp3",
+        "duration": 198.0,
+        "artist": null,
+        "recording_family": "audio_b2c867e4113ba9ac7c89a0a6a30c152242be4b20d00cc2f21a42751698e9283f",
+        "content_hash": "b2c867e4113ba9ac7c89a0a6a30c152242be4b20d00cc2f21a42751698e9283f",
+        "playable": true
+      },
+      {
+        "id": "trk_fa0daaab03b1dba151091f78",
+        "title": "American Idiot_spotdown.org",
+        "folder": "rock",
+        "source": "rock/American Idiot_spotdown.org.mp3",
+        "duration": 174.322358276644,
+        "artist": null,
+        "recording_family": "audio_bb4f2560c0abaf744777023762b11fdef565be2d45c1e8fe629e2813b6fca838",
+        "content_hash": "bb4f2560c0abaf744777023762b11fdef565be2d45c1e8fe629e2813b6fca838",
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "user_0",
+        "name": "Artificial listener 0",
+        "liked": [
+          "trk_5923002331d160ccca0e82b1",
+          "trk_a15af3cb0825ab98e611bf06",
+          "trk_e9c505045a0c5836617e863d"
+        ],
+        "accepted": [
+          "trk_5923002331d160ccca0e82b1",
+          "trk_a15af3cb0825ab98e611bf06",
+          "trk_e9c505045a0c5836617e863d"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_1",
+        "name": "Artificial listener 1",
+        "liked": [
+          "trk_74e85cd8b0950e20c78c8865",
+          "trk_84cab641f05377562137add1",
+          "trk_a8949f545d54e7c222f390db"
+        ],
+        "accepted": [
+          "trk_74e85cd8b0950e20c78c8865",
+          "trk_84cab641f05377562137add1",
+          "trk_a8949f545d54e7c222f390db"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_2",
+        "name": "Artificial listener 2",
+        "liked": [
+          "trk_521d80a492e686ea19bf3809",
+          "trk_725ecb67868806f5ae28f752",
+          "trk_b318b2d00d503bc65fb00c4b"
+        ],
+        "accepted": [
+          "trk_521d80a492e686ea19bf3809",
+          "trk_725ecb67868806f5ae28f752",
+          "trk_b318b2d00d503bc65fb00c4b"
+        ],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        0.5677059767271962,
+        0.536173621823402,
+        1.0,
+        0.2862388117559936,
+        0.49765451294014174,
+        1.0,
+        0.4913640647394855,
+        0.528580858252071,
+        1.0,
+        0.43847004482808527
+      ],
+      [
+        0.22055658938918815,
+        0.2515431238016218,
+        0.32878132046670666,
+        -0.05429567250133263,
+        1.0,
+        0.04644781140354455,
+        0.16467489273296698,
+        0.2201887666077496,
+        0.01971019347464467,
+        0.2790230961833157
+      ],
+      [
+        0.5144682811737218,
+        0.48801307260341953,
+        0.11520421001922485,
+        1.0,
+        0.14875110577204592,
+        0.19397613758274224,
+        1.0,
+        0.40834441137521704,
+        0.48579982075527306,
+        0.4317869058010848
+      ]
+    ],
+    "acceptance": [
+      [
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false
+      ]
+    ],
+    "transitions": [
+      [
+        0.87874201855971,
+        0.7049115683286601,
+        0.6196711989174407,
+        0.37972363332483344,
+        0.5710426341230866,
+        -0.22756848845214864,
+        0.7641026231394968,
+        0.6306061696330366,
+        -0.2958832220396908,
+        0.4711515166019736
+      ],
+      [
+        0.6580741604818628,
+        0.8236935513258555,
+        0.553248777503998,
+        0.29347113952898735,
+        0.6464359483057374,
+        -0.08741682052504353,
+        0.787009954581948,
+        0.5695800894001344,
+        -0.44946287715680266,
+        0.48682615618959213
+      ],
+      [
+        0.6300514392593699,
+        0.5374353052427359,
+        0.7150049016158909,
+        0.07127373281060329,
+        0.7067583188863453,
+        -0.368739179285556,
+        0.7053888785997913,
+        0.42584980538495926,
+        -0.464091785031964,
+        0.44128727930400957
+      ],
+      [
+        0.41772240303165703,
+        0.5836140730616518,
+        0.20031056162391805,
+        0.5577031055509946,
+        0.2553496968053831,
+        -0.07288269445348952,
+        0.527822802588147,
+        0.4185473545077503,
+        -0.07349913960386566,
+        0.4037910395162467
+      ],
+      [
+        0.5898012943203952,
+        0.6387165136461547,
+        0.631373615107608,
+        -0.015649565246427896,
+        0.7785357769126463,
+        -0.3981150002001697,
+        0.7261249068066999,
+        0.4396092536499908,
+        -0.4551251298842287,
+        0.47499743302721065
+      ],
+      [
+        0.29583678068498936,
+        0.299596129286479,
+        0.1845871466742304,
+        0.15976471930543082,
+        0.2811150353236723,
+        0.43277189384660364,
+        0.42898324836948876,
+        0.36718733312136154,
+        -0.18582956249508123,
+        0.14503712822260315
+      ],
+      [
+        0.3263003958245071,
+        0.27035262022974393,
+        0.11919813648848357,
+        0.3604004854499698,
+        0.314321548292491,
+        -0.1680956795835939,
+        0.5177493328329584,
+        0.5063255701514461,
+        -0.3027702708660924,
+        0.30841348624333215
+      ],
+      [
+        0.5585065394100828,
+        0.6240218594937537,
+        0.3511250168654869,
+        0.14685253398633585,
+        0.4772857215536891,
+        -0.029795083540859663,
+        0.5497386243444291,
+        0.6679243536853497,
+        -0.09088852242185778,
+        0.32143301941894714
+      ],
+      [
+        0.6554148910167112,
+        0.685838879453811,
+        0.479880211548364,
+        0.37539168426299385,
+        0.5331225051855277,
+        -0.18491857014045032,
+        0.7927033541241505,
+        0.7564330612716649,
+        -0.23833666440928972,
+        0.41639638885201724
+      ],
+      [
+        0.6833928883176206,
+        0.8025765544820398,
+        0.6364415375664229,
+        0.25147281214309175,
+        0.7942491731831999,
+        -0.2903555834725622,
+        0.8286056988186941,
+        0.6226219386696701,
+        -0.43382053196630516,
+        0.7581572003786053
+      ]
+    ],
+    "queue_len": 5,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": null,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.0,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 0,
+      "objective": "fair",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "model_hash": "1bf11277e2ff177daf722f79cf161a5be941b15d6cce4f35d4de3a1305db6675",
+    "evidence_hash": "fb5a0a358d054be48da342ad85ef26fe4c68aaa94582400f8874b1941522f494",
+    "candidate_provenance": [
+      [
+        "trk_076fc7d1ca2f33f31a8f58a6",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_0b6504d64f783c9f9aa85473",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_5923002331d160ccca0e82b1",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_725ecb67868806f5ae28f752",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_84cab641f05377562137add1",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_a15af3cb0825ab98e611bf06",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_b318b2d00d503bc65fb00c4b",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_e1204e17fedfdca61f361cd8",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_e9c505045a0c5836617e863d",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_fa0daaab03b1dba151091f78",
+        [
+          "full_catalog_rank"
+        ]
+      ]
+    ],
+    "revision": 0
+  },
+  "instance_hash": "66a982524e6642d439b08a32e8924a3c8677b960c4cdfea9a31b889bf3c2f437"
+}

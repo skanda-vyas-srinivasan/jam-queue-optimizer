@@ -125,7 +125,16 @@ class SongCatalog:
                               'folder':self.tracks[i].folder,'score':float(self.retrieval_similarity[idx,i])}
                              for i in order],columns=columns)
 
-    def transition_block(self,indices):
+    def transition_block(self,indices,model='pooled'):
+        if model not in {'pooled','boundary_cost','none'}:
+            raise ValueError('Unknown transition model')
+        if model=='none':
+            matrix=np.zeros((len(indices),len(indices)))
+            return matrix,matrix,matrix
+        if model=='boundary_cost':
+            from .boundary import simple_boundary_cost
+            matrix=np.array([[simple_boundary_cost(self.tracks[a],self.tracks[b]) for b in indices] for a in indices])
+            return matrix,matrix,matrix
         out=self.normalized_outro_embeddings[indices]
         intro=self.normalized_intro_embeddings[indices]
         start,end=self.feature_schema['slices']['chroma']
@@ -133,8 +142,14 @@ class SongCatalog:
         chroma=cosine_similarity(out[:,start:end],intro[:,start:end])
         return segment,chroma,.85*segment+.15*chroma
 
-    def transition_score(self,previous,next_track):
+    def transition_score(self,previous,next_track,model='pooled'):
+        if model not in {'pooled','boundary_cost','none'}:
+            raise ValueError('Unknown transition model')
         a,b=self.song_index(previous),self.song_index(next_track)
+        if model=='none': return 0.
+        if model=='boundary_cost':
+            from .boundary import simple_boundary_cost
+            return simple_boundary_cost(self.tracks[a],self.tracks[b])
         start,end=self.feature_schema['slices']['chroma']
         out=self.normalized_outro_embeddings[a:a+1]
         intro=self.normalized_intro_embeddings[b:b+1]

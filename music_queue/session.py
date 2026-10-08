@@ -53,6 +53,8 @@ class SessionState:
             self.revision+=1
 
     def _check_revision(self,expected):
+        if type(expected) is not int:
+            raise ValueError('Session revision must be an integer')
         if expected!=self.revision:
             raise ValueError(f'Stale session revision {expected}; current revision is {self.revision}')
 

@@ -8,6 +8,7 @@ from .candidates import build_instance
 from .domain import Deadline, QueueResult, SessionRequest, Status
 from .preferences import normalize_request, parse_request
 from .solvers import beam,greedy,milp,subset_dp
+from .validation import result_for,validate_queue
 
 
 def solve_instance(instance,method='milp',deadline=None,beam_width=64,relative_gap=0.,**options):
@@ -50,6 +51,12 @@ def generate_queue(catalog,request,service_debt=None):
             failed=result.termination_reason
             result=solve_instance(instance,'milp',deadline,relative_gap=request.relative_gap)
             result.fallback_reason=failed
+        if not result.valid_incumbent and result.status in {Status.TIMEOUT_NO_SOLUTION,Status.NO_SOLUTION_FOUND,Status.SOLVER_ERROR}:
+            cover=provenance['cover']
+            if not validate_queue(instance,cover):
+                result=result_for(instance,cover,Status.FEASIBLE_NOT_PROVEN,
+                                  reason='Solver did not finish; returned the validated joint-feasibility incumbent',
+                                  fallback_reason=result.termination_reason,phases=result.phases,solver=result.solver)
         result.provenance=provenance
         result.timings['preprocessing']=provenance['preprocessing_seconds']
         result.timings['total']=time.perf_counter()-started

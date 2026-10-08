@@ -1,0 +1,48 @@
+Welcome to the CBC MILP Solver 
+Version: 2.10.3 
+Build Date: Dec 15 2019 
+
+command line - /Users/skandavyas/jam-queue-optimizer/.venv/lib/python3.12/site-packages/pulp/apis/../solverdir/cbc/osx/i64/cbc /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-ecypy33w/9d703c0d04294baeaee7312ba24f46f5-pulp.mps -mips /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-ecypy33w/9d703c0d04294baeaee7312ba24f46f5-pulp.mst -sec 1.9920046249753796 -randomSeed 42 -randomCbcSeed 42 -timeMode elapsed -ratio 0.0 -threads 1 -timeMode elapsed -branch -printingOptions all -solution /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-ecypy33w/9d703c0d04294baeaee7312ba24f46f5-pulp.sol (default strategy 1)
+At line 2 NAME          MODEL
+At line 3 ROWS
+At line 119 COLUMNS
+At line 1690 RHS
+At line 1805 BOUNDS
+At line 2216 ENDATA
+Problem MODEL has 114 rows, 410 columns and 1060 elements
+Coin0008I MODEL read with 0 errors
+opening mipstart file /var/folders/08/5_z36dsd6qjcd2ck3nmfxyxh0000gn/T/jam-milp-ecypy33w/9d703c0d04294baeaee7312ba24f46f5-pulp.mst.
+MIPStart values read for 410 variables.
+seconds was changed from 1e+100 to 1.992
+randomSeed was changed from 1234567 to 42
+randomCbcSeed was changed from -1 to 42
+Option for timeMode changed from cpu to elapsed
+ratioGap was changed from 0 to 0
+threads was changed from 0 to 1
+Continuous objective value is -2.6773 - 0.00 seconds
+Cgl0004I processed model has 104 rows, 410 columns (50 integer (50 of which binary)) and 1010 elements
+Cbc0045I MIPStart provided solution with cost -2.6773
+Cbc0012I Integer solution of -2.6773012 found by Reduced search after 0 iterations and 0 nodes (0.00 seconds)
+Cbc0006I The LP relaxation is infeasible or too expensive
+Cbc0045I Solution of -2.6773 already found by heuristic
+Cuts at root node changed objective from 1.79769e+308 to -1.79769e+308
+Probing was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Gomory was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Knapsack was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+Clique was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+MixedIntegerRounding2 was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+FlowCover was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+TwoMirCuts was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+ZeroHalf was tried 0 times and created 0 cuts of which 0 were active after adding rounds of cuts (0.000 seconds)
+
+Result - Optimal solution found
+
+Objective value:                -2.67730120
+Enumerated nodes:               0
+Total iterations:               0
+Time (CPU seconds):             0.00
+Time (Wallclock seconds):       0.01
+
+Option for printingOptions changed from normal to all
+Total time (CPU seconds):       0.01   (Wallclock seconds):       0.01
+

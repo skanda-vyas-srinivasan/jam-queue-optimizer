@@ -28,7 +28,7 @@ def solve(instance,deadline,method):
             if status==Status.TIMEOUT_NO_SOLUTION:
                 break
         if not added:
-            return result_for(instance,status=Status.TIMEOUT_NO_SOLUTION,
+            return result_for(instance,status=Status.TIMEOUT_NO_SOLUTION if deadline.expired else Status.NO_SOLUTION_FOUND,
                               reason='Baseline could not find a joint-feasible extension within budget')
         turn+=1
     if len(queue)!=instance.queue_len:

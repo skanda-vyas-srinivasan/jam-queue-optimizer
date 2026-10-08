@@ -9,6 +9,7 @@ import numpy as np
 import soundfile as sf
 from music_queue.artifact_store import publish_generation, schema
 from music_queue.domain import Track
+from music_queue.boundary import track_boundary_metadata
 from music_queue.paths import ARTIFACT_DIR, SONGS_DIR
 
 
@@ -28,9 +29,11 @@ def migrate(artifact_dir=ARTIFACT_DIR, song_root=SONGS_DIR):
         content_hash=hashlib.sha256(path.read_bytes()).hexdigest()
         info=sf.info(path)
         tracks.append(Track('trk_'+hashlib.sha256(source.encode()).hexdigest()[:24],str(title),str(folder),
-                            source,info.duration,recording_family='audio_'+content_hash,content_hash=content_hash))
+                            source,info.duration,recording_family='audio_'+content_hash,content_hash=content_hash,
+                            **track_boundary_metadata(path)))
     return publish_generation(artifact_dir,arrays,tracks,schema(),provenance={
         'origin':'explicit_legacy_migration','audio_regenerated':False,
+        'hard_cut_endpoint_metadata_measured':True,
         'parameters':'Baseline source defaults; original files did not carry extraction metadata',
         'reviewed_commit':'e637be5f78567ea24f04cf0734286f357fef7d74'})
 

@@ -1,0 +1,177 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "track_00",
+        "title": "Synthetic track 0",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 90,
+        "artist": "artist_0",
+        "recording_family": "recording_0",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_01",
+        "title": "Synthetic track 1",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 120,
+        "artist": "artist_0",
+        "recording_family": "recording_1",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_02",
+        "title": "Synthetic track 2",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 150,
+        "artist": "artist_1",
+        "recording_family": "recording_2",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_03",
+        "title": "Synthetic track 3",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 180,
+        "artist": "artist_1",
+        "recording_family": "recording_3",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_04",
+        "title": "Synthetic track 4",
+        "folder": "folder_2",
+        "source": "",
+        "duration": 210,
+        "artist": "artist_2",
+        "recording_family": "recording_4",
+        "content_hash": null,
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "listener_0",
+        "name": "Listener 0",
+        "liked": [
+          "track_00"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "listener_1",
+        "name": "Listener 1",
+        "liked": [
+          "track_01"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        1.0,
+        0.25019093320933394,
+        1.0,
+        0.794427601939151,
+        1.0
+      ],
+      [
+        0.551371380490387,
+        1.0,
+        -0.5495856200188163,
+        1.0,
+        -0.39966743017754913
+      ]
+    ],
+    "acceptance": [
+      [
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
+      [
+        false,
+        true,
+        false,
+        true,
+        false
+      ]
+    ],
+    "transitions": [
+      [
+        0.7471068907925238,
+        -0.9894693908688506,
+        0.6424568367655326,
+        0.5941388575040925,
+        -0.06413009431255845
+      ],
+      [
+        -0.39393514636137295,
+        -0.44314877579845335,
+        -0.4902608246917508,
+        -0.10984738823470686,
+        0.009096517915906599
+      ],
+      [
+        0.10699470414898493,
+        0.9910005668687853,
+        0.5853238384275061,
+        0.24435845888232532,
+        0.9779202953637698
+      ],
+      [
+        -0.5693826035288021,
+        -0.6795759322843109,
+        0.22507920854606156,
+        -0.9121159840772333,
+        -0.9286394424528077
+      ],
+      [
+        0.02977764054274057,
+        -0.0675879493494218,
+        0.8343355463857045,
+        0.2584525089820209,
+        0.028235293199027733
+      ]
+    ],
+    "queue_len": 3,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": 2,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.13,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 3,
+      "objective": "fair",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [],
+    "model_hash": "frozen-synthetic-7",
+    "evidence_hash": "",
+    "candidate_provenance": [],
+    "revision": 0
+  },
+  "instance_hash": "ba5c0b7b69e855d030902de24d8023e5ebc9afbadc85233e549e7d6c7a1edbbf"
+}

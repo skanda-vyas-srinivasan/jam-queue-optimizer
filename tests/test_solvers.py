@@ -149,3 +149,33 @@ def test_instance_is_deeply_immutable_and_rejects_bad_labels():
     rows[0][0]=999
     assert frozen.utilities[0][0]!=999
     with pytest.raises(ValueError): replace(ins,acceptance=((1,)*5,(0,)*5))
+
+
+def test_trivial_required_last_track_does_not_scan_powerset():
+    n=20
+    base=instance(n=n,k=1,policy=Policy(required_count=1,discovery_budget=1,objective='affinity'))
+    for index in (0,19):
+        ins=replace(base,acceptance=tuple(tuple(i==index for i in range(n)) for _ in range(2)))
+        r=solve_instance(ins,'dp',Deadline(1))
+        assert r.status==Status.OPTIMAL and r.queue==(f't{index}',)
+        assert r.solver['states']==2
+
+
+def test_transition_endpoint_opportunity_loss_is_an_objective_fixture():
+    from music_queue.candidates import subset_instance
+    ins=QueueInstance((Track('a','a','X'),Track('b','b','Y'),Track('bridge','bridge','Z')),
+                      (Listener('u','U',('a','b','bridge')),),((.51,.5,.49),),((True,True,True),),
+                      ((1.,-1.,1.),(-1.,1.,-1.),(1.,-1.,1.)),2,
+                      Policy(objective='affinity',required_count=0,discovery_budget=2))
+    a=solve_instance(subset_instance(ins,('a','b')),'dp',Deadline(1))
+    b=solve_instance(ins,'dp',Deadline(1))
+    assert a.objective_components['affinity_objective']==pytest.approx(.76)
+    assert b.objective_components['affinity_objective']==pytest.approx(1.25)
+
+
+def test_zero_constant_one_slot_objective_with_and_without_warm_start():
+    ins=replace(instance(n=3,k=1),acceptance=((True,)*3,(True,)*3),utilities=((0.,)*3,(0.,)*3),
+                policy=Policy(objective='affinity',discovery_budget=1,transition_weight=0.))
+    for warm in (False,True):
+        r=solve_instance(ins,'milp',Deadline(1),warm_start=warm)
+        assert r.status==Status.OPTIMAL and r.objective_components['affinity_objective']==0.

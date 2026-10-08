@@ -99,3 +99,11 @@ def test_legacy_migration_is_explicit_and_manifest_row_alignment(tmp_path):
     (tmp_path/'generations'/m['generation']/'manifest.json').write_text(text)
     with pytest.raises(ValueError,match='row order'):
         load_generation(tmp_path)
+
+
+def test_measured_boundary_cost_uses_declared_loudness_and_silence_units():
+    tracks=tuple(Track(f't{i}',f's{i}','F',intro_rms_dbfs=-10.,outro_rms_dbfs=-20.,
+                       leading_silence_seconds=.2,trailing_silence_seconds=.4) for i in range(3))
+    c=catalog(tracks=tracks)
+    assert c.transition_score('t0','t1','boundary_cost')==pytest.approx(-.8)
+    assert c.transition_score('t0','t1','none')==0

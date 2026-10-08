@@ -1,0 +1,454 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "trk_1df637f500ae322723c12080",
+        "title": "KELLY KELLY_spotdown.org",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/KELLY KELLY_spotdown.org.mp3",
+        "duration": 380.7375963718821,
+        "artist": null,
+        "recording_family": "audio_ace118cc7622f8e820e613db80ba30e9c615df25ca22ee10d2735d2e91264db5",
+        "content_hash": "ace118cc7622f8e820e613db80ba30e9c615df25ca22ee10d2735d2e91264db5",
+        "playable": true
+      },
+      {
+        "id": "trk_36534a931222ff1aec183543",
+        "title": "Sayako - Falling In (SPOTISAVER)",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Sayako - Falling In (SPOTISAVER).mp3",
+        "duration": 142.8259410430839,
+        "artist": null,
+        "recording_family": "audio_574721220773f65369bd1f1cafdfd9abd747c3be2af37b95fdfcb4a9a1ac7bf4",
+        "content_hash": "574721220773f65369bd1f1cafdfd9abd747c3be2af37b95fdfcb4a9a1ac7bf4",
+        "playable": true
+      },
+      {
+        "id": "trk_40f9d7c71e4fd9fa7c82f5ff",
+        "title": "Inside My Heart_spotdown.org",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Inside My Heart_spotdown.org.mp3",
+        "duration": 167.41587301587302,
+        "artist": null,
+        "recording_family": "audio_d145b126048e7c25268767717945934eeb1583dc99c31addfdc30fee6e183a72",
+        "content_hash": "d145b126048e7c25268767717945934eeb1583dc99c31addfdc30fee6e183a72",
+        "playable": true
+      },
+      {
+        "id": "trk_4ef9ed420f96ae2990c0b217",
+        "title": "USE YOUR WINGS_spotdown.org",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/USE YOUR WINGS_spotdown.org.mp3",
+        "duration": 252.92190476190476,
+        "artist": null,
+        "recording_family": "audio_ef491c29f2194ae0b6c16394b2b2417c22078f1fccd4ad8bff77237621c8a0f1",
+        "content_hash": "ef491c29f2194ae0b6c16394b2b2417c22078f1fccd4ad8bff77237621c8a0f1",
+        "playable": true
+      },
+      {
+        "id": "trk_521d80a492e686ea19bf3809",
+        "title": "Pretty Peach_spotdown.org",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Pretty Peach_spotdown.org.mp3",
+        "duration": 204.31238095238095,
+        "artist": null,
+        "recording_family": "audio_9ccac17b6641718be6a2e88dce728e27530db4bb118ae8d072d05c82dca402e6",
+        "content_hash": "9ccac17b6641718be6a2e88dce728e27530db4bb118ae8d072d05c82dca402e6",
+        "playable": true
+      },
+      {
+        "id": "trk_5cf431b106f676c17159ee6c",
+        "title": "Keep Me Dreaming Dear, Introduction_spotdown.org",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Keep Me Dreaming Dear, Introduction_spotdown.org.mp3",
+        "duration": 70.44934240362812,
+        "artist": null,
+        "recording_family": "audio_3d0f14a80ed14ad85ad139ce94ea7f300b73cbb583456bbe35424fa82cbf5f5c",
+        "content_hash": "3d0f14a80ed14ad85ad139ce94ea7f300b73cbb583456bbe35424fa82cbf5f5c",
+        "playable": true
+      },
+      {
+        "id": "trk_a9eeafd9f96760bdbdba46a3",
+        "title": "Your soldier, your sincere cover_spotdown.org",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Your soldier, your sincere cover_spotdown.org.mp3",
+        "duration": 125.1091156462585,
+        "artist": null,
+        "recording_family": "audio_f02e10557d10ac4f34f9af9d430b1ed8b998f339040338b9c11a7dcd775d9d68",
+        "content_hash": "f02e10557d10ac4f34f9af9d430b1ed8b998f339040338b9c11a7dcd775d9d68",
+        "playable": true
+      },
+      {
+        "id": "trk_afab3d8a05295c936f5368be",
+        "title": "Sayako, Lucy Bedroque - Confession, do you still adore me 2006 (SPOTISAVER)",
+        "folder": "Fete-Aesthetic",
+        "source": "Fete-Aesthetic/Sayako, Lucy Bedroque - Confession, do you still adore me 2006 (SPOTISAVER).mp3",
+        "duration": 161.13639455782314,
+        "artist": null,
+        "recording_family": "audio_4484e790f571c132dd6ea303b0a25aef334cddbdd7c9301da72a51468f333f7d",
+        "content_hash": "4484e790f571c132dd6ea303b0a25aef334cddbdd7c9301da72a51468f333f7d",
+        "playable": true
+      },
+      {
+        "id": "trk_e6cbd8a600473bdd624f1272",
+        "title": "1crusafix, isai, akkiro - problem (SPOTISAVER)",
+        "folder": "hyperpop",
+        "source": "hyperpop/1crusafix, isai, akkiro - problem (SPOTISAVER).mp3",
+        "duration": 126.22367346938775,
+        "artist": null,
+        "recording_family": "audio_1e15c670c67794233c7cc585c40f61d94a5489e5801917ce4ed1c045a63e73cf",
+        "content_hash": "1e15c670c67794233c7cc585c40f61d94a5489e5801917ce4ed1c045a63e73cf",
+        "playable": true
+      },
+      {
+        "id": "trk_f12184a6b245e93946ca8c16",
+        "title": "1tap_spotdown.org",
+        "folder": "hyperpop",
+        "source": "hyperpop/1tap_spotdown.org.mp3",
+        "duration": 83.98657596371882,
+        "artist": null,
+        "recording_family": "audio_5fa119c7d80a89a1e871e2413be7219c84fb0feaff72b3a20f3ff26adaf863cb",
+        "content_hash": "5fa119c7d80a89a1e871e2413be7219c84fb0feaff72b3a20f3ff26adaf863cb",
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "user_0",
+        "name": "Artificial listener 0",
+        "liked": [
+          "trk_1df637f500ae322723c12080",
+          "trk_40f9d7c71e4fd9fa7c82f5ff",
+          "trk_5cf431b106f676c17159ee6c"
+        ],
+        "accepted": [
+          "trk_1df637f500ae322723c12080",
+          "trk_40f9d7c71e4fd9fa7c82f5ff",
+          "trk_5cf431b106f676c17159ee6c"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_1",
+        "name": "Artificial listener 1",
+        "liked": [
+          "trk_36534a931222ff1aec183543",
+          "trk_521d80a492e686ea19bf3809",
+          "trk_afab3d8a05295c936f5368be"
+        ],
+        "accepted": [
+          "trk_36534a931222ff1aec183543",
+          "trk_521d80a492e686ea19bf3809",
+          "trk_afab3d8a05295c936f5368be"
+        ],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "user_2",
+        "name": "Artificial listener 2",
+        "liked": [
+          "trk_d878dbe5066fcaa9761e7a3c",
+          "trk_e6cbd8a600473bdd624f1272",
+          "trk_f12184a6b245e93946ca8c16"
+        ],
+        "accepted": [
+          "trk_d878dbe5066fcaa9761e7a3c",
+          "trk_e6cbd8a600473bdd624f1272",
+          "trk_f12184a6b245e93946ca8c16"
+        ],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        1.0,
+        0.08922366854920494,
+        1.0,
+        0.28528873749876427,
+        0.31707997281358824,
+        1.0,
+        0.4754290358237381,
+        0.14004878056477152,
+        -0.07021685975765074,
+        0.1680881133978505
+      ],
+      [
+        0.16678456331810104,
+        1.0,
+        0.08747008889881064,
+        0.3437757036087947,
+        1.0,
+        0.2965965533295468,
+        0.2852786404592195,
+        1.0,
+        -0.05005958893437158,
+        0.36981949890187815
+      ],
+      [
+        0.04063730408597681,
+        0.23612410160057123,
+        -0.022787743146556065,
+        0.2590800406289039,
+        0.12366616106355424,
+        0.1327069074490652,
+        0.19275883066280985,
+        0.03641490810252021,
+        1.0,
+        1.0
+      ]
+    ],
+    "acceptance": [
+      [
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false
+      ],
+      [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true
+      ]
+    ],
+    "transitions": [
+      [
+        0.13934898714210125,
+        0.1881043687521389,
+        0.18041627134314595,
+        0.1000868234056411,
+        0.11018606869027515,
+        0.0473294444387967,
+        -0.12899362538468523,
+        -0.00154820065340594,
+        -0.15581271039427297,
+        -0.29289248331774304
+      ],
+      [
+        0.055470529781289815,
+        0.2873745031133732,
+        -0.3177734069011186,
+        -0.0829960711185124,
+        -0.06973217081954594,
+        -0.09419784178749832,
+        0.37049363480847797,
+        0.26159680822794756,
+        0.3990969249358002,
+        0.33196532128100553
+      ],
+      [
+        0.3406264527523122,
+        0.18431823431692318,
+        0.5717371516487331,
+        0.13774475024902877,
+        0.07780701504093955,
+        -0.04881256251514161,
+        -0.2765920952332964,
+        -0.04822592982990099,
+        -0.34281734082764015,
+        -0.16016864385361518
+      ],
+      [
+        0.27417656735499296,
+        0.0724160088119225,
+        0.18162196019639276,
+        0.33204761472558786,
+        -0.08376878984134242,
+        0.3227283411925414,
+        0.21931021029956588,
+        0.2025319090020615,
+        -0.4112315895697174,
+        0.37718162490988777
+      ],
+      [
+        0.2011603324643526,
+        0.024875604324094226,
+        -0.12135429542836894,
+        -0.02553943056369739,
+        0.08277815463085694,
+        -0.0023549681348777954,
+        0.1050385500582603,
+        -0.05520137052018388,
+        -0.0875296990866356,
+        0.16891036078151156
+      ],
+      [
+        0.001649789121223176,
+        0.010752229213501153,
+        0.15125916658147698,
+        0.04704793894910901,
+        0.04098528574143498,
+        0.47823692201035006,
+        -0.09384679510991538,
+        0.1306743969805762,
+        -0.4429978210812144,
+        0.008715079242010215
+      ],
+      [
+        -0.11439794465820051,
+        0.23045423959142533,
+        0.08208729692097143,
+        0.2015425075741158,
+        0.0940109131907678,
+        0.502033081400685,
+        0.05658300475844836,
+        -0.13134559288606365,
+        -0.2617669428227442,
+        0.026720863195838246
+      ],
+      [
+        0.045202716450305575,
+        0.48931691740869976,
+        -0.0508313259489999,
+        0.10332512242343815,
+        0.14137911923261615,
+        0.29648638525517285,
+        0.3424098423856629,
+        0.166231523114507,
+        0.045605728472009166,
+        0.3695817031113594
+      ],
+      [
+        -0.15276915668219082,
+        0.0605858693532129,
+        -0.21722314122693628,
+        -0.41229853283997553,
+        0.09687229767743588,
+        -0.40557746674065664,
+        0.004831834097542988,
+        -0.039823834618908274,
+        0.7183218310308341,
+        0.009831538803496598
+      ],
+      [
+        0.1473964715434536,
+        -0.056189128559632595,
+        0.07613505906646505,
+        0.2524698517510428,
+        -0.21003673268432052,
+        0.4165410087493158,
+        0.33143173972412227,
+        0.25480011121750323,
+        -0.31426280123364253,
+        0.7976560491924618
+      ]
+    ],
+    "queue_len": 5,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": null,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.0,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 0,
+      "objective": "fair",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "model_hash": "1bf11277e2ff177daf722f79cf161a5be941b15d6cce4f35d4de3a1305db6675",
+    "evidence_hash": "e9d0fdbfa5ff1458ef224fc3b3e4a8b5478f29c3c36470cb420f5a12728663ed",
+    "candidate_provenance": [
+      [
+        "trk_1df637f500ae322723c12080",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_36534a931222ff1aec183543",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_40f9d7c71e4fd9fa7c82f5ff",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_4ef9ed420f96ae2990c0b217",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_521d80a492e686ea19bf3809",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_5cf431b106f676c17159ee6c",
+        [
+          "joint_feasible_cover"
+        ]
+      ],
+      [
+        "trk_a9eeafd9f96760bdbdba46a3",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_afab3d8a05295c936f5368be",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_e6cbd8a600473bdd624f1272",
+        [
+          "full_catalog_rank"
+        ]
+      ],
+      [
+        "trk_f12184a6b245e93946ca8c16",
+        [
+          "joint_feasible_cover"
+        ]
+      ]
+    ],
+    "revision": 0
+  },
+  "instance_hash": "2930ab0de1e8dcc49fa87567846d00c92f37c89f08fa0aab50566ced49e7021c"
+}

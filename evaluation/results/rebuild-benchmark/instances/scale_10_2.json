@@ -1,0 +1,337 @@
+{
+  "format_version": 1,
+  "instance": {
+    "tracks": [
+      {
+        "id": "track_00",
+        "title": "Synthetic track 0",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 90,
+        "artist": "artist_0",
+        "recording_family": "recording_0",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_01",
+        "title": "Synthetic track 1",
+        "folder": "folder_0",
+        "source": "",
+        "duration": 120,
+        "artist": "artist_0",
+        "recording_family": "recording_1",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_02",
+        "title": "Synthetic track 2",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 150,
+        "artist": "artist_1",
+        "recording_family": "recording_2",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_03",
+        "title": "Synthetic track 3",
+        "folder": "folder_1",
+        "source": "",
+        "duration": 180,
+        "artist": "artist_1",
+        "recording_family": "recording_3",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_04",
+        "title": "Synthetic track 4",
+        "folder": "folder_2",
+        "source": "",
+        "duration": 210,
+        "artist": "artist_2",
+        "recording_family": "recording_4",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_05",
+        "title": "Synthetic track 5",
+        "folder": "folder_2",
+        "source": "",
+        "duration": 90,
+        "artist": "artist_2",
+        "recording_family": "recording_5",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_06",
+        "title": "Synthetic track 6",
+        "folder": "folder_3",
+        "source": "",
+        "duration": 120,
+        "artist": "artist_3",
+        "recording_family": "recording_6",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_07",
+        "title": "Synthetic track 7",
+        "folder": "folder_3",
+        "source": "",
+        "duration": 150,
+        "artist": "artist_3",
+        "recording_family": "recording_7",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_08",
+        "title": "Synthetic track 8",
+        "folder": "folder_4",
+        "source": "",
+        "duration": 180,
+        "artist": "artist_4",
+        "recording_family": "recording_8",
+        "content_hash": null,
+        "playable": true
+      },
+      {
+        "id": "track_09",
+        "title": "Synthetic track 9",
+        "folder": "folder_4",
+        "source": "",
+        "duration": 210,
+        "artist": "artist_4",
+        "recording_family": "recording_9",
+        "content_hash": null,
+        "playable": true
+      }
+    ],
+    "listeners": [
+      {
+        "id": "listener_0",
+        "name": "Listener 0",
+        "liked": [
+          "track_00"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      },
+      {
+        "id": "listener_1",
+        "name": "Listener 1",
+        "liked": [
+          "track_01"
+        ],
+        "accepted": [],
+        "disliked": [],
+        "blocked": []
+      }
+    ],
+    "utilities": [
+      [
+        1.0,
+        -0.7670819739846892,
+        1.0,
+        0.6883071459714751,
+        1.0,
+        0.5973468486493132,
+        1.0,
+        -0.965206769405675,
+        1.0,
+        -0.8461065630005928
+      ],
+      [
+        -0.007087308402690784,
+        1.0,
+        0.6541976265213774,
+        1.0,
+        -0.4762023102857118,
+        1.0,
+        -0.3742138920396785,
+        1.0,
+        0.4448135093376493,
+        1.0
+      ]
+    ],
+    "acceptance": [
+      [
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false
+      ],
+      [
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true
+      ]
+    ],
+    "transitions": [
+      [
+        -0.9011456979786161,
+        0.6439448902809188,
+        0.9329946879256883,
+        0.5882050468546951,
+        0.9689864931763521,
+        0.018785768167129735,
+        -0.6234178541240694,
+        0.62236208924741,
+        0.9660911689552487,
+        0.5296401482162054
+      ],
+      [
+        -0.7779212073108108,
+        -0.3492991622437871,
+        -0.5485511962200289,
+        0.5233774205441548,
+        -0.6176705954154886,
+        -0.9293055117485325,
+        -0.02988855976967586,
+        -0.01464428600382095,
+        -0.050640048401824345,
+        0.10883599370550745
+      ],
+      [
+        0.346607346621131,
+        0.13107160425941644,
+        -0.21791676614371513,
+        -0.9572330455669882,
+        0.43909221745454463,
+        -0.48238283143976135,
+        -0.8206788063706876,
+        0.5802825251924781,
+        -0.6580306442278099,
+        0.7507800509050815
+      ],
+      [
+        -0.26934176959178147,
+        0.8801574203988995,
+        0.9738938148422513,
+        0.960480601252373,
+        0.5863716808801462,
+        -0.4827261863198047,
+        0.42976294178230146,
+        0.07281701327025525,
+        0.41628585078258706,
+        -0.2514044570462701
+      ],
+      [
+        0.15425804170658797,
+        -0.054218599603178985,
+        -0.19336911218090025,
+        -0.19841249866448973,
+        0.38471474440133235,
+        -0.3141337772561428,
+        -0.02567874897796174,
+        0.0212348976261465,
+        -0.6224956000119592,
+        0.47319131976700746
+      ],
+      [
+        0.43326559735309944,
+        0.5193739641881308,
+        0.0236165038662548,
+        0.497481463037277,
+        0.16473757508058928,
+        -0.7707635033362414,
+        -0.5434438461969466,
+        0.574332752400194,
+        0.22253693276713848,
+        0.8023077807482346
+      ],
+      [
+        -0.8827505681132437,
+        0.6650760490054015,
+        -0.03291595078103127,
+        -0.9044176970162248,
+        -0.26573355455636105,
+        0.3268172548512225,
+        -0.3497951423981567,
+        0.6644283644030649,
+        0.1212811924811994,
+        -0.3220162259609547
+      ],
+      [
+        0.981653568789441,
+        0.9750710103716991,
+        -0.3514464039120875,
+        0.1623840356053754,
+        -0.6237568769818309,
+        0.12383256254207708,
+        0.07494069050729357,
+        -0.11930389147666887,
+        -0.40069822486010165,
+        -0.5932914832269001
+      ],
+      [
+        -0.9900331964084073,
+        0.36938985214647224,
+        0.15539253027523858,
+        -0.03026670205485904,
+        -0.4200625812048062,
+        -0.15281206706687667,
+        0.5279728648593123,
+        0.45548423338855915,
+        0.765630688094034,
+        -0.5761184398893024
+      ],
+      [
+        -0.8150211545371016,
+        0.769609053624863,
+        0.06117319497213347,
+        -0.223312805177579,
+        0.6690825111416896,
+        0.5411257650107499,
+        0.4633586009237587,
+        -0.5318841987807048,
+        -0.1970839699227549,
+        0.8605787137994465
+      ]
+    ],
+    "queue_len": 5,
+    "policy": {
+      "version": "shared-speaker-v1",
+      "representation": "strict",
+      "required_count": 1,
+      "folder_cap": 2,
+      "artist_cap": null,
+      "family_cap": 1,
+      "transition_weight": 0.25,
+      "same_folder_penalty": 0.13,
+      "preference_tolerance": 0.0,
+      "discovery_budget": 5,
+      "objective": "affinity",
+      "predictor": "top_two",
+      "playback": "hard_cut"
+    },
+    "locked_prefix": [],
+    "anchor_values": [],
+    "service_debt": [],
+    "model_hash": "frozen-synthetic-112",
+    "evidence_hash": "",
+    "candidate_provenance": [],
+    "revision": 0
+  },
+  "instance_hash": "8ae083bd7670d6bd2d6ecb1b3ded11a48074f847d694703f83a498cbbdccb423"
+}

@@ -106,9 +106,13 @@ class DebugPanelApp:
         tracks={t.id:t for t in self.catalog.tracks}
         response['queue_rows']=[{'slot':i+1,'track_id':id,'song':tracks[id].title,'folder':tracks[id].folder,
                                 'duration':tracks[id].duration} for i,id in enumerate(result.queue)]
+        policy=result.provenance.get('policy',{})
+        model=policy.get('transition_model','pooled')
         response['transition_rows']=[{'from_song':tracks[a].title,'to_song':tracks[b].title,
-            'boundary_acoustic_affinity':self.catalog.transition_score(a,b),
-            'evidence':'unvalidated pooled segment signal'} for a,b in zip(result.queue,result.queue[1:])]
+            'transition_model':model,'selected_transition_value':self.catalog.transition_score(a,b,model),
+            'weighted_edge':policy.get('transition_weight',.25)*self.catalog.transition_score(a,b,model)
+                            -policy.get('same_folder_penalty',0.)*(tracks[a].folder==tracks[b].folder),
+            'evidence':'Unvalidated diagnostic signal; not listener-rated quality'} for a,b in zip(result.queue,result.queue[1:])]
         response['session']=session
         # Full logs are included only on explicit request; phase status remains visible.
         if not payload.get('include_logs',False):

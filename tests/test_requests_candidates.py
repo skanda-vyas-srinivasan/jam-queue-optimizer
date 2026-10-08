@@ -92,3 +92,19 @@ def test_candidate_expansion_keeps_incumbent_and_frozen_coefficients():
     assert 't2' in {t.id for t in small.tracks}
     assert {t.id for t in small.tracks}<={t.id for t in bigger.tracks}
     assert small.model_hash==bigger.model_hash and small.evidence_hash==bigger.evidence_hash
+
+
+def test_unknown_rule_fields_do_not_silently_disappear():
+    c=catalog()
+    r=generate_queue(c,{'room':{'A':['s0']},'queue_len':1,'folder_cpa':1})
+    assert r.status==Status.INVALID_REQUEST and 'folder_cpa' in r.termination_reason
+
+
+def test_transition_ablation_requires_measured_metadata_and_can_disable_audio():
+    c=catalog()
+    req=SessionRequest((Listener('A','A',('t0','t1','t2')),),queue_len=2,method='dp',
+                       policy=Policy(transition_model='none'))
+    r=generate_queue(c,req)
+    assert r.valid_incumbent and r.objective_components['transition_affinity']==0
+    missing=generate_queue(c,replace(req,policy=replace(req.policy,transition_model='boundary_cost')))
+    assert missing.status==Status.INVALID_REQUEST and 'metadata' in missing.termination_reason

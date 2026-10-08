@@ -7,7 +7,7 @@ import librosa
 import numpy as np
 
 AUDIO_EXTS = (".mp3", ".wav", ".flac", ".m4a")
-TRANSITION_WINDOW_SECONDS = 20.0
+TRANSITION_WINDOW_SECONDS = 2.0
 DEFAULT_N_MFCC = 40
 DEFAULT_N_CHROMA = 12
 DEFAULT_N_CONTRAST = 7
@@ -188,6 +188,7 @@ def build_and_save_artifacts(
     import soundfile as sf
     from .artifact_store import publish_generation, schema
     from .domain import Track
+    from .boundary import track_boundary_metadata
 
     tracks = []
     for path in find_song_paths(Path(song_root)):
@@ -195,7 +196,8 @@ def build_and_save_artifacts(
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
         tracks.append(Track("trk_" + hashlib.sha256(source.encode()).hexdigest()[:24],
                             path.stem, path.parent.name, source, sf.info(path).duration,
-                            recording_family="audio_" + digest, content_hash=digest))
+                            recording_family="audio_" + digest, content_hash=digest,
+                            **track_boundary_metadata(path)))
     publish_generation(output_dir, {"embeddings": embeddings,
                                    "intro_embeddings": intro_embeddings,
                                    "outro_embeddings": outro_embeddings}, tracks,

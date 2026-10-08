@@ -57,6 +57,18 @@ def validate_arrays(arrays, tracks, feature_schema):
         raise ValueError("Artifact track IDs must be unique and nonempty")
     if any(t.duration <= 0 or not np.isfinite(t.duration) for t in tracks):
         raise ValueError("Invalid track duration")
+    for track in tracks:
+        if not isinstance(track.id,str) or not track.id or not isinstance(track.title,str):
+            raise ValueError("Invalid track identity")
+        if type(track.playable) is not bool:
+            raise ValueError("Playback eligibility must be boolean")
+        if track.source and (Path(track.source).is_absolute() or '..' in Path(track.source).parts):
+            raise ValueError("Track source must stay within the local catalog")
+        values=[track.leading_silence_seconds,track.trailing_silence_seconds]
+        if any(not np.isfinite(v) or v<0 for v in values):
+            raise ValueError("Invalid boundary silence metadata")
+        if any(v is not None and not np.isfinite(v) for v in (track.intro_rms_dbfs,track.outro_rms_dbfs)):
+            raise ValueError("Invalid boundary loudness metadata")
     expected = schema(feature_schema["n_mfcc"], feature_schema["sample_rate"], feature_schema["segment_seconds"])
     if expected["dimensions"] != dims or expected["slices"] != feature_schema["slices"]:
         raise ValueError("Unsupported or inconsistent feature schema")
@@ -88,7 +100,8 @@ def publish_generation(output_dir, arrays, tracks, feature_schema, transforms=No
                     "transforms": transforms, "checksums": checksums, "package_versions": versions,
                     "provenance": provenance or {"origin": "fresh_audio_extraction"}}
         manifest["model_hash"] = fingerprint({"schema": feature_schema, "transforms": transforms,
-                                              "checksums": checksums})
+                                              "checksums": checksums, "boundary_version": "hard-cut-rms-silence-2s-v1",
+                                              "track_metadata": [asdict(t) for t in tracks]})
         manifest["manifest_hash"] = fingerprint(manifest)
         text = json.dumps(manifest, indent=2, allow_nan=False) + '\n'
         (temporary / "manifest.json").write_text(text)
