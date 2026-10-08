@@ -1,0 +1,70 @@
+{
+  "scope": "Software verification only; no independent listener outcomes or remote CI/deployment claim",
+  "verified_at_utc": "2026-10-08T09:05:44.254344+00:00",
+  "source_commit": "ad5ec3954f3f44457312ff921399107c16765bd8",
+  "python": "3.12.14",
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "test_runs": {
+    "development": {
+      "command": "python -m pytest -q",
+      "passed": 69,
+      "warnings": 3,
+      "seconds": 4.47,
+      "output": "evaluation/results/final-development-pytest.txt",
+      "output_sha256": "f100bca74380b53824e073f98893b4f063003a69637c396bb86356113fb6565b"
+    },
+    "installed_wheel": {
+      "command": "python -m pytest -q",
+      "passed": 69,
+      "warnings": 3,
+      "seconds": 4.64,
+      "output": "evaluation/results/final-installed_wheel-pytest.txt",
+      "output_sha256": "57d2cff81b38e00171badeb3f9716c6953f6a6ab37ea434007ecf243e5b89427"
+    }
+  },
+  "black": {
+    "version": "25.9.0",
+    "files_checked": 43,
+    "passed": true
+  },
+  "ruff": {
+    "version": "0.14.0",
+    "passed": true
+  },
+  "frontend_js_syntax": {
+    "command": "node --check music_queue/debug_panel/app.js",
+    "passed": true
+  },
+  "dependency_consistency": {
+    "command": "python -m pip check",
+    "development": "passed",
+    "installed_wheel": "passed"
+  },
+  "frozen_replay": {
+    "instances": 30,
+    "exact_solver_runs": 60,
+    "dp_milp_statuses_and_optima_agree": true,
+    "evidence": "evaluation/results/final-instance-replay.json"
+  },
+  "wheel": {
+    "file": "jam_queue_optimizer-0.2.0-py3-none-any.whl",
+    "sha256": "c7a97ceac89e4435a5b04ac96c402b2246f6ac5d2d8c8904ae031a0c1a75044e",
+    "entries": 31,
+    "frontend_assets_included": true,
+    "audio_and_feature_files": 0
+  },
+  "git_archive": {
+    "source_commit": "ad5ec3954f3f44457312ff921399107c16765bd8",
+    "worktree_export_attributes": true,
+    "songs_and_artifacts_excluded": true,
+    "entries": 373
+  },
+  "original_audit_files_unchanged": 9,
+  "original_tracked_music_and_feature_arrays_unchanged": true,
+  "external_gates": {
+    "human_listening": "pending independent judgments",
+    "visual_ui": "approval review rejected browser access; not visually verified",
+    "production_load": "pending chosen load and memory targets",
+    "remote_ci": "configured; not pushed or executed"
+  }
+}

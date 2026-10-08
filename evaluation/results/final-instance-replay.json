@@ -1,0 +1,216 @@
+{
+  "scope": "Final frozen-instance replay; not additional listening outcomes or latency benchmarks",
+  "budget_seconds_per_solver": 5,
+  "results": [
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_0.json",
+      "instance_hash": "2737e819c641b87cf41c0da9e021bca32d638d020a1b8f4c077597c80a3bddd5",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_1.json",
+      "instance_hash": "4bded3b6e5c5582f3ba09f94e3ff6bc5d8bfa0c751c94e0c5b4afe3cab7ecbc9",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_2.json",
+      "instance_hash": "d1cad1ba7d1b44af9202166f49c25ad9dcb9d3e19382378e212a033d5eb89b52",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_3.json",
+      "instance_hash": "fdb8b6923ee35a387b72595fd3b5fd91bcefc623894f80cf7a192b81166264d4",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_4.json",
+      "instance_hash": "ac03ca19fa26353897f7f3fc2b05c8d7a9dd59b1c2bb6637fb30f061fb668b9f",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_5.json",
+      "instance_hash": "6c204876f82a164f4ab01d17c901377ba86dda72316e22e3dc9c7aef0a764aaf",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_6.json",
+      "instance_hash": "f3f18231e2e5c1ff430b8e5539f36a4d5ae5cc5aaf378f66195d0825e0c78077",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_7.json",
+      "instance_hash": "60822c7aacff2995aaa943491b7a928363301e3977bcd30921ae455bcffdd6e6",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_8.json",
+      "instance_hash": "ffa5d66aff728b2da1cb9c3097059f41b3006e33d6e55468c752b2b15c0e9012",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/exhaustive_9.json",
+      "instance_hash": "2b2fe17a480fcb0dadaf271aa759de28c5b72b2118543aab035413e618254c9a",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/joint_conflict.json",
+      "instance_hash": "eaf7c93b0fbbb8a0b7e581265104c825488ace761fe4c819b4df9e9fe95dddaf",
+      "dp_status": "HARD_INFEASIBLE",
+      "milp_status": "HARD_INFEASIBLE",
+      "milp_valid_incumbent": false
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/locked_history.json",
+      "instance_hash": "0e1be9b7f796833579a075ad0264291aaba51692a3cc1fb6eee7b448edb484d1",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/scale_10_2.json",
+      "instance_hash": "3d91f7d64a9db0a0a803544934ce27dec182284407cd95611e06b129625f4d25",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/scale_10_3.json",
+      "instance_hash": "e4f7c90ce586a4cd9b2cf2f042f4b08a8d2808ec65dcb72a3b5356a6bca90cc2",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/scale_12_2.json",
+      "instance_hash": "cdffe2c7be50b65a19f1f0ccddd81c1ea70f9712a21904c2f4008f727b690b5b",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/scale_12_3.json",
+      "instance_hash": "1403da7d4d2f54266aab9006a496755c191db5a0ba4e92f3b977b450f53d8e0b",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/scale_8_2.json",
+      "instance_hash": "4fdfab06fd875b0c51a272d54a6f79784eab2b78e062dcb78b0bd1689c56b566",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/rebuild-benchmark/instances/scale_8_3.json",
+      "instance_hash": "a271dd1276a20d3010e65ff151d8295f9fa7fd4e43036661575056a9a975d37f",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_0-limit_10.json",
+      "instance_hash": "d4f7f7505c772efd2ed6801876aa0a3112035a54817940315717cc30b5ec55fb",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_0-limit_20.json",
+      "instance_hash": "b6247a31d6b71374456b2b24a86e80e7c18155624245362c6e788629ec5c1f3d",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_1-limit_10.json",
+      "instance_hash": "aa1979d86afd7427319f4837c056a80ac717a31e7d4d25a0ff9e0f49b9b8ae6c",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_1-limit_20.json",
+      "instance_hash": "ae91a2f937128284a372a671997a46fee3d933a7b0e04235e73e06a53a56673d",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_2-limit_10.json",
+      "instance_hash": "5d591809c36c51c00194ca007a0a2c59b34f279a504e26be562a0978106a6919",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_2-limit_20.json",
+      "instance_hash": "11f2c906a2df223e714b67cb38ab35bf9064aa4c6bd611759695ca9df3fd5ffe",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_3-limit_10.json",
+      "instance_hash": "f270c102ebdd17ac7dc1831d86af5839a72296c53e48a131d3f47d782ac5f711",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_3-limit_20.json",
+      "instance_hash": "f8d13b46bd71f2a24b9ef8a333fab58b7c2c4a0e6e75f9e0c04de356c170a452",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_4-limit_10.json",
+      "instance_hash": "7779655470ba2a9f93002ae1ea23070f17605555faa9bf1f9e318b105ce01566",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_4-limit_20.json",
+      "instance_hash": "8d12de34035a681c115d55dcbb895bf84a89e7bb6ae69a4a7d17c0cdd35b9766",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_5-limit_10.json",
+      "instance_hash": "8aff3075ad9fb2698188b1762e7d55d2d47a22cf8154832be956ab32c0cb9408",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    },
+    {
+      "instance": "evaluation/results/catalog-benchmark/instances/room_5-limit_20.json",
+      "instance_hash": "f68293036bc15dae352768b81c6fd10d78150feeecfc274f618499600280f266",
+      "dp_status": "OPTIMAL",
+      "milp_status": "OPTIMAL",
+      "milp_valid_incumbent": true
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# Code distribution does not require or redistribute the local music collection.
+songs export-ignore
+songs/** export-ignore
+artifacts export-ignore
+artifacts/** export-ignore
