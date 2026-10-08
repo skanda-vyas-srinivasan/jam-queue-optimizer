@@ -7,11 +7,12 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-from .artifacts import DEFAULT_N_MFCC, embedding_feature_slices, load_artifact_arrays
+from .artifact_store import fit_transform, load_generation, schema, transform
+from .domain import Track, fingerprint
 from .paths import ARTIFACT_DIR
 
-TRANSITION_SEGMENT_WEIGHT = 0.85
-TRANSITION_HARMONIC_WEIGHT = 0.15
+TRANSITION_SEGMENT_WEIGHT = .85
+TRANSITION_HARMONIC_WEIGHT = .15
 
 
 @dataclass
@@ -21,137 +22,151 @@ class SongCatalog:
     outro_embeddings: np.ndarray | None
     names: np.ndarray
     folders: np.ndarray
-    normalized_embeddings: np.ndarray = field(init=False)
-    normalized_intro_embeddings: np.ndarray | None = field(init=False)
-    normalized_outro_embeddings: np.ndarray | None = field(init=False)
-    retrieval_similarity: np.ndarray = field(init=False)
-    segment_transition_similarity: np.ndarray = field(init=False)
-    harmonic_transition_similarity: np.ndarray = field(init=False)
-    transition_similarity: np.ndarray = field(init=False)
-    similarity: np.ndarray = field(init=False)
-    song_to_idx: dict[str, int] = field(init=False)
-    name_aliases: dict[str, str] = field(init=False)
+    tracks: tuple[Track,...] = ()
+    feature_schema: dict | None = None
+    transforms: dict | None = None
+    model_hash: str = ''
+    manifest: dict = field(default_factory=dict)
 
-    def __post_init__(self) -> None:
-        if len(self.embeddings) != len(self.names) or len(self.names) != len(self.folders):
-            raise ValueError("Embeddings, names, and folders must have the same length")
+    def __post_init__(self):
+        self.embeddings=np.asarray(self.embeddings,dtype=float)
+        self.names=np.asarray(self.names,dtype=str)
+        self.folders=np.asarray(self.folders,dtype=str)
+        n=len(self.names)
+        if len(self.folders)!=n or self.embeddings.ndim!=2 or len(self.embeddings)!=n or n<1:
+            raise ValueError('Embeddings, names and folders must align and be nonempty')
+        if self.feature_schema is None:
+            if self.embeddings.shape[1]!=118:
+                raise ValueError('Nondefault features require an explicit feature schema')
+            self.feature_schema=schema()
+        dims=self.feature_schema['dimensions']
+        if self.embeddings.shape!=(n,dims) or not np.isfinite(self.embeddings).all():
+            raise ValueError('Invalid full-song features')
+        if self.intro_embeddings is None or self.outro_embeddings is None:
+            raise ValueError('Both segment arrays are required; transition fallback is not implicit')
+        self.intro_embeddings=np.asarray(self.intro_embeddings,dtype=float)
+        self.outro_embeddings=np.asarray(self.outro_embeddings,dtype=float)
+        for array in (self.intro_embeddings,self.outro_embeddings):
+            if array.shape!=(n,dims) or not np.isfinite(array).all():
+                raise ValueError('Invalid segment dimensions or nonfinite values')
+        if not self.tracks:
+            # Synthetic callers must provide unique names or explicit IDs.
+            if len(set(self.names)) != n:
+                raise ValueError('Duplicate titles require explicit stable track IDs')
+            self.tracks=tuple(Track('synthetic_'+fingerprint(str(name))[:24],str(name),str(folder))
+                              for name,folder in zip(self.names,self.folders))
+        if len(self.tracks)!=n or len({t.id for t in self.tracks})!=n:
+            raise ValueError('Track metadata or IDs are misaligned')
+        if any(t.title!=name or t.folder!=folder for t,name,folder in zip(self.tracks,self.names,self.folders)):
+            raise ValueError('Track metadata differs from feature row order')
+        self.transforms=self.transforms or {'retrieval':fit_transform(self.embeddings),
+            'transition':fit_transform(np.vstack([self.intro_embeddings,self.outro_embeddings]))}
+        self.normalized_embeddings=transform(self.embeddings,self.transforms['retrieval'])
+        self.normalized_intro_embeddings=transform(self.intro_embeddings,self.transforms['transition'])
+        self.normalized_outro_embeddings=transform(self.outro_embeddings,self.transforms['transition'])
+        self.retrieval_similarity=cosine_similarity(self.normalized_embeddings)
+        self.similarity=self.retrieval_similarity  # legacy diagnostic alias
+        self.id_to_idx={t.id:i for i,t in enumerate(self.tracks)}
+        self.aliases={}
+        for i,t in enumerate(self.tracks):
+            for alias in {t.id,t.title,Path(t.title).stem,t.source}:
+                if alias:
+                    self.aliases.setdefault(alias.casefold(),set()).add(i)
+        self.model_hash=self.model_hash or fingerprint({'schema':self.feature_schema,'transforms':self.transforms})
+        self._transition_cache=None
+        self._segment_cache=None
+        self._chroma_cache=None
+        for array in (self.embeddings,self.intro_embeddings,self.outro_embeddings,
+                      self.normalized_embeddings,self.normalized_intro_embeddings,self.normalized_outro_embeddings,
+                      self.retrieval_similarity):
+            array.setflags(write=False)
 
-        self.embeddings = np.asarray(self.embeddings)
-        self.intro_embeddings = (
-            None if self.intro_embeddings is None else np.asarray(self.intro_embeddings)
-        )
-        self.outro_embeddings = (
-            None if self.outro_embeddings is None else np.asarray(self.outro_embeddings)
-        )
-        self.names = np.asarray(self.names, dtype=str)
-        self.folders = np.asarray(self.folders, dtype=str)
-        self.normalized_embeddings = self._standardize_matrix(self.embeddings)
-        self.retrieval_similarity = cosine_similarity(self.normalized_embeddings)
+    def __len__(self):
+        return len(self.tracks)
 
-        if self.intro_embeddings is not None and self.outro_embeddings is not None:
-            self.normalized_intro_embeddings = self._standardize_matrix(self.intro_embeddings)
-            self.normalized_outro_embeddings = self._standardize_matrix(self.outro_embeddings)
-            self.segment_transition_similarity = cosine_similarity(
-                self.normalized_outro_embeddings,
-                self.normalized_intro_embeddings,
-            )
-            chroma_slice = embedding_feature_slices(n_mfcc=DEFAULT_N_MFCC)["chroma"]
-            self.harmonic_transition_similarity = cosine_similarity(
-                self.normalized_outro_embeddings[:, chroma_slice],
-                self.normalized_intro_embeddings[:, chroma_slice],
-            )
-            self.transition_similarity = (
-                TRANSITION_SEGMENT_WEIGHT * self.segment_transition_similarity
-                + TRANSITION_HARMONIC_WEIGHT * self.harmonic_transition_similarity
-            )
-        else:
-            self.normalized_intro_embeddings = None
-            self.normalized_outro_embeddings = None
-            self.segment_transition_similarity = self.retrieval_similarity
-            self.harmonic_transition_similarity = self.retrieval_similarity
-            self.transition_similarity = self.retrieval_similarity
+    def song_index(self,reference):
+        raw=str(reference).strip()
+        if raw in self.id_to_idx:
+            return self.id_to_idx[raw]
+        for alias in (raw,Path(raw).stem):
+            indices=self.aliases.get(alias.casefold(),set())
+            if len(indices)>1:
+                raise ValueError(f'Ambiguous song title {reference!r}; use a stable track ID')
+            if indices:
+                return next(iter(indices))
+        raise KeyError(f'Unknown track: {reference}')
 
-        # Keep this alias for compatibility with code that still expects one matrix.
-        self.similarity = self.retrieval_similarity
-        self.song_to_idx = {name: idx for idx, name in enumerate(self.names)}
-        self.name_aliases = {}
-        for name in self.names:
-            for alias in {name, Path(name).stem}:
-                self.name_aliases.setdefault(alias.casefold(), name)
+    def track_id(self,reference):
+        return self.tracks[self.song_index(reference)].id
 
-    @staticmethod
-    def _standardize_matrix(matrix: np.ndarray) -> np.ndarray:
-        feature_means = matrix.mean(axis=0)
-        feature_stds = matrix.std(axis=0)
-        feature_stds[feature_stds == 0.0] = 1.0
-        return (matrix - feature_means) / feature_stds
+    def resolve_song_name(self,reference):
+        return str(self.names[self.song_index(reference)])
 
-    def __len__(self) -> int:
-        return len(self.names)
-
-    def resolve_song_name(self, song_name: str) -> str:
-        raw_name = str(song_name).strip()
-        for alias in (raw_name, Path(raw_name).stem):
-            resolved = self.name_aliases.get(alias.casefold())
-            if resolved is not None:
-                return str(resolved)
-        raise KeyError(f"Unknown song: {song_name}")
-
-    def has_song(self, song_name: str) -> bool:
+    def has_song(self,reference):
         try:
-            self.resolve_song_name(song_name)
-        except KeyError:
+            self.song_index(reference)
+            return True
+        except (KeyError,ValueError):
             return False
-        return True
 
-    def song_index(self, song_name: str) -> int:
-        resolved_name = self.resolve_song_name(song_name)
-        return self.song_to_idx[resolved_name]
+    def get_folder(self,reference):
+        return self.tracks[self.song_index(reference)].folder
 
-    def get_folder(self, song_name: str) -> str:
-        return str(self.folders[self.song_index(song_name)])
+    def nearest_neighbors(self,reference,k=10):
+        if type(k) is not int or k<0:
+            raise ValueError('Neighbor count must be a nonnegative integer')
+        columns=['track_id','song','folder','score']
+        if k==0:
+            return pd.DataFrame(columns=columns)
+        idx=self.song_index(reference)
+        order=sorted((i for i in range(len(self)) if i!=idx),
+                     key=lambda i:(-self.retrieval_similarity[idx,i],self.tracks[i].id))[:k]
+        return pd.DataFrame([{'track_id':self.tracks[i].id,'song':self.tracks[i].title,
+                              'folder':self.tracks[i].folder,'score':float(self.retrieval_similarity[idx,i])}
+                             for i in order],columns=columns)
 
-    def nearest_neighbors(self, song_name: str, k: int = 10) -> pd.DataFrame:
-        resolved_name = self.resolve_song_name(song_name)
-        idx = self.song_index(resolved_name)
-        scores = self.retrieval_similarity[idx]
-        order = np.argsort(scores)[::-1]
+    def transition_block(self,indices):
+        out=self.normalized_outro_embeddings[indices]
+        intro=self.normalized_intro_embeddings[indices]
+        start,end=self.feature_schema['slices']['chroma']
+        segment=cosine_similarity(out,intro)
+        chroma=cosine_similarity(out[:,start:end],intro[:,start:end])
+        return segment,chroma,.85*segment+.15*chroma
 
-        rows: list[dict[str, str | float]] = []
-        for neighbor_idx in order:
-            if neighbor_idx == idx:
-                continue
-            rows.append(
-                {
-                    "song": str(self.names[neighbor_idx]),
-                    "folder": str(self.folders[neighbor_idx]),
-                    "score": float(scores[neighbor_idx]),
-                }
-            )
-            if len(rows) >= k:
-                break
+    def transition_score(self,previous,next_track):
+        a,b=self.song_index(previous),self.song_index(next_track)
+        start,end=self.feature_schema['slices']['chroma']
+        out=self.normalized_outro_embeddings[a:a+1]
+        intro=self.normalized_intro_embeddings[b:b+1]
+        return float(.85*cosine_similarity(out,intro)[0,0]
+                     +.15*cosine_similarity(out[:,start:end],intro[:,start:end])[0,0])
 
-        return pd.DataFrame(rows)
+    def _all_transitions(self):
+        if self._transition_cache is None:
+            self._segment_cache,self._chroma_cache,self._transition_cache=self.transition_block(list(range(len(self))))
+        return self._transition_cache
 
-    def transition_score(self, prev_song: str, next_song: str) -> float:
-        prev_idx = self.song_index(prev_song)
-        next_idx = self.song_index(next_song)
-        return float(self.transition_similarity[prev_idx, next_idx])
+    @property
+    def transition_similarity(self):
+        return self._all_transitions()
 
-    def songs_frame(self) -> pd.DataFrame:
-        return pd.DataFrame(
-            {"song": self.names.astype(str), "folder": self.folders.astype(str)}
-        )
+    @property
+    def segment_transition_similarity(self):
+        self._all_transitions()
+        return self._segment_cache
+
+    @property
+    def harmonic_transition_similarity(self):
+        self._all_transitions()
+        return self._chroma_cache
+
+    def songs_frame(self):
+        return pd.DataFrame({'track_id':[t.id for t in self.tracks],'song':self.names,'folder':self.folders})
 
 
-def load_catalog(artifact_dir: Path | str = ARTIFACT_DIR) -> SongCatalog:
-    embeddings, intro_embeddings, outro_embeddings, names, folders = load_artifact_arrays(
-        Path(artifact_dir)
-    )
-    return SongCatalog(
-        embeddings=embeddings,
-        intro_embeddings=intro_embeddings,
-        outro_embeddings=outro_embeddings,
-        names=names,
-        folders=folders,
-    )
+def load_catalog(artifact_dir=ARTIFACT_DIR):
+    arrays,tracks,manifest=load_generation(artifact_dir)
+    return SongCatalog(**arrays,names=np.array([t.title for t in tracks]),
+                       folders=np.array([t.folder for t in tracks]),tracks=tracks,
+                       feature_schema=manifest['schema'],transforms=manifest['transforms'],
+                       model_hash=manifest['model_hash'],manifest=manifest)

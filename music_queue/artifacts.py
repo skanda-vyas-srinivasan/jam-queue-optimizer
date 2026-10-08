@@ -72,6 +72,10 @@ def slice_signal(
     seconds: float = TRANSITION_WINDOW_SECONDS,
     position: str = "intro",
 ) -> np.ndarray:
+    if position not in {"intro", "outro"}:
+        raise ValueError(f"Unknown slice position: {position}")
+    if seconds <= 0 or sr <= 0 or not len(y):
+        raise ValueError("Audio and segment dimensions must be positive")
     window_samples = max(1, int(seconds * sr))
     if len(y) <= window_samples:
         return y
@@ -180,26 +184,29 @@ def build_and_save_artifacts(
         n_mfcc=n_mfcc,
         verbose=verbose,
     )
-    save_artifact_arrays(
-        output_dir=output_dir,
-        embeddings=embeddings,
-        intro_embeddings=intro_embeddings,
-        outro_embeddings=outro_embeddings,
-        names=names,
-        folders=folders,
-    )
+    import hashlib
+    import soundfile as sf
+    from .artifact_store import publish_generation, schema
+    from .domain import Track
+
+    tracks = []
+    for path in find_song_paths(Path(song_root)):
+        source = path.relative_to(song_root).as_posix()
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        tracks.append(Track("trk_" + hashlib.sha256(source.encode()).hexdigest()[:24],
+                            path.stem, path.parent.name, source, sf.info(path).duration,
+                            recording_family="audio_" + digest, content_hash=digest))
+    publish_generation(output_dir, {"embeddings": embeddings,
+                                   "intro_embeddings": intro_embeddings,
+                                   "outro_embeddings": outro_embeddings}, tracks,
+                       schema(n_mfcc, sample_rate, TRANSITION_WINDOW_SECONDS))
     return embeddings, names, folders
 
 
 def load_artifact_arrays(
     artifact_dir: Path,
 ) -> tuple[np.ndarray, np.ndarray | None, np.ndarray | None, np.ndarray, np.ndarray]:
-    artifact_dir = Path(artifact_dir)
-    embeddings = np.load(artifact_dir / "embeddings.npy")
-    intro_path = artifact_dir / "intro_embeddings.npy"
-    outro_path = artifact_dir / "outro_embeddings.npy"
-    intro_embeddings = np.load(intro_path) if intro_path.exists() else None
-    outro_embeddings = np.load(outro_path) if outro_path.exists() else None
-    names = np.load(artifact_dir / "song_names.npy", allow_pickle=True).astype(str)
-    folders = np.load(artifact_dir / "song_folders.npy", allow_pickle=True).astype(str)
-    return embeddings, intro_embeddings, outro_embeddings, names, folders
+    from .artifact_store import load_generation
+    arrays, tracks, _ = load_generation(artifact_dir)
+    return (arrays["embeddings"], arrays["intro_embeddings"], arrays["outro_embeddings"],
+            np.array([t.title for t in tracks]), np.array([t.folder for t in tracks]))
