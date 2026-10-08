@@ -8,8 +8,6 @@ import pytest
 from music_queue import workbench
 from tests.test_artifacts import catalog
 
-pytest_plugins = ["tests.test_debug_panel"]
-
 
 def call(server, path, body):
     connection = HTTPConnection("127.0.0.1", server[0], timeout=10)

@@ -1,32 +1,521 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jam Queue Optimizer</title><link rel="stylesheet" href="/styles.css"></head>
-<body><div class="shell">
-<header><div><p class="eyebrow">LOCAL RESEARCH WORKBENCH</p><h1>Jam Queue Optimizer</h1><p>Explicit listening rules. Inspectable queues. Measured evidence.</p></div><div class="toolbar"><span id="catalog-count">Loading catalog…</span><button id="load-sample">Load sample room</button></div></header>
-<div id="message" role="status" aria-live="polite"></div>
-<main>
-<section class="panel"><div class="section-heading"><h2>Listening policy</h2><button id="run" class="accent">Generate queue</button></div>
-<p class="muted">Likes and acceptance protect each listener. Acoustic predictions are unvalidated and do not establish acceptance.</p>
-<div class="settings">
-<label>Method<select id="method"><option value="milp">MILP reference solver</option><option value="dp">Exact subset DP</option><option value="beam">Beam heuristic</option><option value="greedy">Greedy heuristic</option><option value="round_robin">Round-robin accepted favorites</option><option value="shared_approval">Shared approval baseline</option></select></label>
-<label>Queue length<input id="queue-len" type="number" min="1" max="20" value="5"></label>
-<label>Shortlist size<input id="candidate-limit" type="number" min="1" max="30" value="10"></label>
-<label>Total budget (seconds)<input id="time-limit" type="number" min="0.01" max="60" step="0.1" value="10"></label>
-<label>Representation<select id="representation"><option value="strict">Strict promise</option><option value="best_effort">Authorized best effort</option></select></label>
-<label>Accepted tracks per listener<input id="required-count" type="number" min="0" max="20" value="1"></label>
-<label>Discovery budget<input id="discovery-budget" type="number" min="0" max="20" value="0"></label>
-<label>Mandatory folder cap<input id="folder-cap" type="number" min="1" max="20" placeholder="No cap"></label>
-<label>Transition signal<select id="transition-model"><option value="pooled">Shared-coordinate pooled affinity</option><option value="boundary_cost">Measured loudness / silence cost</option><option value="none">No acoustic transition signal</option></select></label>
-<label>Transition weight<input id="transition-weight" type="number" min="0" step="0.05" value="0.25"></label>
-<label>Same-folder edge penalty<input id="folder-penalty" type="number" min="0" step="0.05" value="0"></label>
-<label>Preference loss tolerance<input id="preference-tolerance" type="number" min="0" step="0.01" value="0"></label>
-<label>Objective<select id="objective"><option value="fair">Least served → mean → transitions</option><option value="affinity">Research affinity sum + edges</option></select></label>
-<label>Prediction baseline<select id="predictor"><option value="top_two">Top-two acoustic affinity</option><option value="maximum">Maximum acoustic affinity</option><option value="pockets">Small taste-pocket baseline</option></select></label>
-</div>
-</section>
-<section class="panel"><div class="section-heading"><h2>Listeners & evidence</h2><button id="add-user">Add listener</button></div><p class="muted">Display names may repeat. Empty profiles remain in the request and produce an explicit error.</p><div id="users"></div></section>
-<section class="panel"><div class="section-heading"><h2>Rolling session</h2><div class="toolbar"><button id="start-session">Start new session</button><button id="apply-membership" disabled>Apply listeners to session</button><button id="override" disabled>Override promised next</button></div></div><p class="muted">A session preserves promises and service history. Confirmed playback advances exposure; a generated queue does not.</p><div id="session-state">No rolling session. Generation currently uses a static request.</div><div id="history"></div></section>
-<section class="panel"><h2>Queue & certificate</h2><div id="summary" class="stats">Generate a queue to inspect the result.</div><div id="queue" class="queue-strip"></div><h3>Listener coverage</h3><div id="coverage"></div><h3>Priority phases</h3><div id="phases"></div><h3>Transition diagnostics</h3><div id="transitions"></div><details><summary>Full result, candidate decisions & conflict explanation</summary><pre id="result-json"></pre></details></section>
-<section class="panel"><div class="section-heading"><h2>Acoustic feature space</h2><label>Coordinates<select id="embedding-space"><option value="normalized">Frozen standardized</option><option value="raw">Raw</option></select></label></div><p class="muted">PCA projects acoustic features. Proximity is not a listener judgment.</p><div id="embedding-plot"></div></section>
-</main><footer>Loopback-only workbench · Hard-cut playback baseline · Listening validity awaits independent judgments</footer>
-</div><script src="/plotly.min.js"></script><script src="/app.js"></script></body></html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Jam · Listening workbench</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#library"
+        ><span class="brand-icon">♫</span
+        ><span>jam<span class="brand-sub">LISTENING WORKBENCH</span></span></a
+      >
+      <p class="nav-caption">YOUR PIPELINE</p>
+      <nav aria-label="Pipeline stages">
+        <button data-view="library" class="nav-item active">
+          <span>01</span>
+          <div>
+            Library & clusters<small>Explore the acoustic landscape</small>
+          </div>
+        </button>
+        <button data-view="profiles" class="nav-item">
+          <span>02</span>
+          <div>Listener profiles<small>Shape the room’s taste</small></div>
+        </button>
+        <button data-view="ranking" class="nav-item">
+          <span>03</span>
+          <div>Retrieval & ranking<small>Inspect every candidate</small></div>
+        </button>
+        <button data-view="sequence" class="nav-item">
+          <span>04</span>
+          <div>Sequence & play<small>Build and hear your queue</small></div>
+        </button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="local-dot"></span> LOCAL CATALOG
+        <p id="catalog-count">Connecting…</p>
+        <p class="tiny">Your audio stays on this computer.</p>
+        <button id="export-project" class="subtle">Export workspace ↗</button
+        ><button id="import-project" class="subtle">Import workspace</button
+        ><input
+          id="import-file"
+          type="file"
+          accept="application/json,.json"
+          hidden
+        />
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow" id="stage-label">01 / EXPLORE</p>
+          <h1 id="view-title">Your listening landscape</h1>
+          <p id="view-subtitle">
+            Find connections, shape clusters, and discover your next seed.
+          </p>
+        </div>
+        <div class="header-actions">
+          <span id="save-state" class="tiny">Saved in this browser</span
+          ><button id="load-sample">Load demo profiles</button>
+        </div>
+      </header>
+      <div id="message" role="status" aria-live="polite"></div>
+      <main>
+        <section id="view-library" class="stage">
+          <div class="card">
+            <div class="card-heading">
+              <div>
+                <h2>Acoustic map</h2>
+                <p>
+                  Click a point to inspect it. In 2D, use the box or lasso tool
+                  to select a group.
+                </p>
+              </div>
+              <span class="badge" id="map-summary">Feature space</span>
+            </div>
+            <div class="control-bar">
+              <label
+                >Coordinates<select id="embedding-space">
+                  <option value="normalized">Frozen standardized</option>
+                  <option value="raw">Raw features</option>
+                </select></label
+              ><label
+                >Feature family<select id="feature-family">
+                  <option value="full">All features</option>
+                  <option value="mfcc">Timbre · MFCC</option>
+                  <option value="chroma">Pitch · chroma</option>
+                  <option value="contrast">Spectral contrast</option>
+                </select></label
+              ><label
+                >Groups<input
+                  id="cluster-count"
+                  type="number"
+                  min="1"
+                  max="20"
+                  value="6" /></label
+              ><label
+                >Map<select id="map-dimensions">
+                  <option value="2">2D · select & zoom</option>
+                  <option value="3">3D · rotate & explore</option>
+                </select></label
+              ><label
+                >Color by<select id="color-by">
+                  <option value="cluster">Your clusters</option>
+                  <option value="folder">Catalog folder</option>
+                </select></label
+              ><button id="recluster" class="primary">Form clusters</button>
+            </div>
+            <div class="map-layout">
+              <div
+                id="embedding-plot"
+                aria-label="Interactive acoustic map"
+              ></div>
+              <aside id="track-inspector" class="inspector">
+                <span class="eyebrow">TRACK INSPECTOR</span>
+                <h3>Select a track</h3>
+                <p>
+                  Listen, inspect its nearest neighbors, or add it to a
+                  listener’s profile.
+                </p>
+              </aside>
+            </div>
+            <div class="selection-bar">
+              <strong id="selection-count">0 selected</strong
+              ><button id="clear-selection">Clear</button
+              ><label class="inline-label"
+                >Move to<select id="assign-cluster"></select></label
+              ><button id="move-cluster">Assign group</button
+              ><button id="new-cluster">New group from selection</button
+              ><button id="query-selection">Retrieve similar →</button>
+            </div>
+            <details class="advanced">
+              <summary>Feature recipe & catalog provenance</summary>
+              <p id="catalog-model" class="footnote"></p>
+            </details>
+          </div>
+          <div class="library-layout">
+            <div class="card cluster-card">
+              <div class="card-heading">
+                <h2>Your clusters</h2>
+                <span class="tiny">Editable groups</span>
+              </div>
+              <div id="clusters"></div>
+              <p class="footnote">
+                Groups organize acoustic exploration. Renaming or moving tracks
+                changes your workspace, not the fitted preference model.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-heading">
+                <h2>Track library</h2>
+                <span id="library-count" class="badge"></span>
+              </div>
+              <div class="control-bar">
+                <label class="grow"
+                  >Search<input
+                    id="library-search"
+                    type="search"
+                    placeholder="Track or folder…" /></label
+                ><label
+                  >Folder<select id="library-folder">
+                    <option value="">All folders</option>
+                  </select></label
+                ><label
+                  >Group<select id="library-cluster">
+                    <option value="">All groups</option>
+                  </select></label
+                ><button id="select-visible">Select visible</button>
+              </div>
+              <div id="library-table" class="scroll-table"></div>
+              <div class="selection-bar">
+                <label class="grow"
+                  >Add selected to<select id="library-listener"></select></label
+                ><label
+                  >As<select id="library-evidence">
+                    <option value="liked">Liked seeds</option>
+                    <option value="accepted">Accepted this session</option>
+                    <option value="disliked">Ordinary dislike</option>
+                    <option value="blocked">Do not play</option>
+                  </select></label
+                ><button id="add-selected" class="primary">Add evidence</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="view-profiles" class="stage" hidden>
+          <div class="stage-intro">
+            <div>
+              <h2>Who’s listening?</h2>
+              <p>
+                Choose favorites and session acceptance for each person.
+                Dislikes express taste; blocks exclude tracks from the entire
+                room.
+              </p>
+            </div>
+            <button id="add-user" class="primary">+ Add listener</button>
+          </div>
+          <div id="users" class="profile-grid"></div>
+          <div class="stage-footer">
+            <p>
+              Explicit likes and acceptance protect representation. Acoustic
+              predictions do not become acceptance.
+            </p>
+            <button data-view="ranking" class="primary">
+              Inspect retrieval & ranking →
+            </button>
+          </div>
+        </section>
+        <section id="view-ranking" class="stage" hidden>
+          <div class="card">
+            <div class="card-heading">
+              <div>
+                <h2>1. Retrieve acoustic neighbors</h2>
+                <p>
+                  Explore full-feature similarities before deciding what anyone
+                  accepts.
+                </p>
+              </div>
+              <button id="use-profile-seeds">Use this listener’s likes</button>
+            </div>
+            <div class="control-bar">
+              <label>Listener<select id="retrieval-listener"></select></label
+              ><label class="grow"
+                >Add a query seed<select id="query-track"></select></label
+              ><button id="add-query">Add seed</button
+              ><label
+                >Aggregation<select id="retrieval-aggregation">
+                  <option value="maximum">Closest seed</option>
+                  <option value="top_two">Top-two mean</option>
+                </select></label
+              ><label
+                >Neighbors<input
+                  id="retrieval-limit"
+                  type="number"
+                  min="1"
+                  value="20" /></label
+              ><button id="retrieve" class="primary">Retrieve</button>
+            </div>
+            <div id="retrieval-seeds" class="chips"></div>
+            <div id="retrieval-table" class="scroll-table empty">
+              Choose seeds to see acoustic neighbors.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-heading">
+              <div>
+                <h2>2. Rank the room & protect the shortlist</h2>
+                <p>
+                  Score the full eligible catalog and preserve a selection that
+                  satisfies the room’s rules.
+                </p>
+              </div>
+              <button id="prepare" class="primary">Prepare candidates</button>
+            </div>
+            <div id="policy-controls" class="settings">
+              <label
+                >Queue length<input
+                  id="queue-len"
+                  type="number"
+                  min="1"
+                  max="20"
+                  value="5" /></label
+              ><label
+                >Shortlist target<input
+                  id="candidate-limit"
+                  type="number"
+                  min="1"
+                  max="30"
+                  value="10" /></label
+              ><label
+                >Representation<select id="representation">
+                  <option value="strict">Strict promise</option>
+                  <option value="best_effort">Explicit best effort</option>
+                </select></label
+              ><label
+                >Accepted per listener<input
+                  id="required-count"
+                  type="number"
+                  min="0"
+                  max="20"
+                  value="1" /></label
+              ><label
+                >Discovery allowance<input
+                  id="discovery-budget"
+                  type="number"
+                  min="0"
+                  max="20"
+                  value="0" /></label
+              ><label
+                >Mandatory folder cap<input
+                  id="folder-cap"
+                  type="number"
+                  min="1"
+                  max="20"
+                  placeholder="No cap" /></label
+              ><label
+                >Affinity predictor<select id="predictor">
+                  <option value="top_two">Top-two baseline</option>
+                  <option value="maximum">Maximum baseline</option>
+                  <option value="pockets">Taste-pocket baseline</option>
+                </select></label
+              ><label
+                >Objective<select id="objective">
+                  <option value="fair">Least served → mean → edges</option>
+                  <option value="affinity">Mean affinity + edges</option>
+                </select></label
+              >
+            </div>
+            <details class="advanced">
+              <summary>Transition settings & additional limits</summary>
+              <div class="settings">
+                <label
+                  >Transition signal<select id="transition-model">
+                    <option value="pooled">Shared-coordinate affinity</option>
+                    <option value="boundary_cost">
+                      Loudness & silence cost
+                    </option>
+                    <option value="none">No acoustic signal</option>
+                  </select></label
+                ><label
+                  >Transition weight<input
+                    id="transition-weight"
+                    type="number"
+                    min="0"
+                    step="0.05"
+                    value="0.25" /></label
+                ><label
+                  >Same-folder penalty<input
+                    id="folder-penalty"
+                    type="number"
+                    min="0"
+                    step="0.05"
+                    value="0" /></label
+                ><label
+                  >Preference loss tolerance<input
+                    id="preference-tolerance"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value="0" /></label
+                ><label
+                  >Artist cap<input
+                    id="artist-cap"
+                    type="number"
+                    min="1"
+                    placeholder="No cap" /></label
+                ><label
+                  >Recording-family cap<input
+                    id="family-cap"
+                    type="number"
+                    min="1"
+                    value="1"
+                /></label>
+              </div>
+            </details>
+            <div id="pipeline-summary" class="stats">
+              <p class="empty">
+                Prepare candidates to inspect every listener score and selection
+                reason.
+              </p>
+            </div>
+            <div class="control-bar">
+              <label class="grow"
+                >Filter ranking<input
+                  id="ranking-search"
+                  type="search"
+                  placeholder="Track, folder, evidence…" /></label
+              ><label
+                >Rows<select id="ranking-scope">
+                  <option value="all">Full eligible ranking</option>
+                  <option value="shortlist">Protected shortlist</option>
+                </select></label
+              >
+            </div>
+            <div id="ranking-table" class="scroll-table"></div>
+            <div id="exclusions"></div>
+            <div class="stage-footer">
+              <span id="snapshot-note" class="tiny"
+                >No frozen pipeline yet.</span
+              ><button data-view="sequence" class="primary">
+                Sequence this shortlist →
+              </button>
+            </div>
+          </div>
+        </section>
+        <section id="view-sequence" class="stage" hidden>
+          <div class="card">
+            <div class="card-heading">
+              <div>
+                <h2>Sequence your candidates</h2>
+                <p id="solve-context">
+                  Prepare candidates in stage 03. Every method will use the same
+                  frozen instance.
+                </p>
+              </div>
+              <button id="run" class="primary" disabled>Build queue</button>
+            </div>
+            <div class="control-bar">
+              <label class="grow"
+                >Method<select id="method">
+                  <option value="milp">MILP · reference solver</option>
+                  <option value="dp">
+                    Subset DP · exact, up to 20 candidates
+                  </option>
+                  <option value="beam">Beam search · heuristic</option>
+                  <option value="greedy">Greedy · heuristic</option>
+                  <option value="round_robin">Round-robin favorites</option>
+                  <option value="shared_approval">Shared approval</option>
+                </select></label
+              ><label
+                >Compute budget (seconds)<input
+                  id="time-limit"
+                  type="number"
+                  min="0.1"
+                  max="60"
+                  value="10"
+                  step="0.1" /></label
+              ><label
+                >Beam width<input
+                  id="beam-width"
+                  type="number"
+                  min="1"
+                  max="4096"
+                  value="64"
+              /></label>
+            </div>
+            <div id="summary" class="stats"></div>
+            <div class="card-heading queue-heading">
+              <h3>Your queue</h3>
+              <div class="toolbar">
+                <button id="play-queue" class="primary" disabled>
+                  ▶ Play queue</button
+                ><button id="export-queue" disabled>Export queue</button>
+              </div>
+            </div>
+            <div id="queue" class="queue-list empty">
+              Your sequenced queue will appear here.
+            </div>
+            <p class="footnote">
+              Playback uses hard cuts and native audio controls. A manually
+              changed order is revalidated and loses its optimality certificate.
+            </p>
+          </div>
+          <div class="two-columns">
+            <div class="card">
+              <h2>Who gets served?</h2>
+              <div id="coverage"></div>
+            </div>
+            <div class="card">
+              <h2>Directed transition map</h2>
+              <p>Rows lead into columns. The diagonal cannot be used.</p>
+              <div id="transition-map"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-heading">
+              <h2>Rolling session</h2>
+              <div class="toolbar">
+                <button id="start-session">Start session</button
+                ><button id="apply-membership" disabled>
+                  Apply profile changes</button
+                ><button id="override" disabled>Release next promise</button
+                ><button id="leave-session" disabled>Use static mode</button>
+              </div>
+            </div>
+            <p>
+              In session mode, queue playback records observed playing time when
+              each track ends or is skipped. Previews never count as session
+              service.
+            </p>
+            <div id="session-state" class="session-banner">
+              Static mode · no listening history yet.
+            </div>
+            <div id="history"></div>
+          </div>
+          <details class="card">
+            <summary>
+              Inspect certificates, edge scores & raw pipeline data
+            </summary>
+            <h3>Priority phases</h3>
+            <div id="phases"></div>
+            <h3>Edges in the returned order</h3>
+            <div id="transitions"></div>
+            <pre id="result-json"></pre>
+          </details>
+        </section>
+      </main>
+      <footer class="workspace-footer">
+        Acoustic similarities are exploratory signals. Listening quality and
+        preference prediction await independent judgments.
+      </footer>
+    </div>
+    <div class="player" id="player">
+      <div class="now-playing">
+        <span class="player-art">♫</span>
+        <div>
+          <strong id="playing-title">Ready when you are</strong
+          ><small id="playing-detail"
+            >Preview a track or play a generated queue</small
+          >
+        </div>
+      </div>
+      <div class="transport">
+        <button id="previous" aria-label="Previous track" disabled>⏮</button
+        ><button id="next" aria-label="Next track" disabled>⏭</button
+        ><button id="stop" disabled>Stop</button>
+      </div>
+      <audio
+        id="audio"
+        controls
+        preload="metadata"
+        aria-label="Audio player"
+      ></audio
+      ><span id="playing-mode" class="badge">LOCAL AUDIO</span>
+    </div>
+    <script src="/plotly.min.js"></script>
+    <script src="/ui-core.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

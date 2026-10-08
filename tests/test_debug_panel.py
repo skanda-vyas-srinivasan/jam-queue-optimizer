@@ -1,25 +1,9 @@
 from http.client import HTTPConnection
-from http.server import ThreadingHTTPServer
 import json
-import threading
 
 import pytest
 
-from music_queue.debug_panel import DebugPanelApp, DebugPanelHandler, serve_debug_panel
-from tests.test_artifacts import catalog
-
-
-@pytest.fixture
-def server():
-    app = DebugPanelApp(catalog())
-    handler = type("Handler", (DebugPanelHandler,), {"app": app})
-    server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
-    thread = threading.Thread(target=server.serve_forever, daemon=True)
-    thread.start()
-    yield server.server_port, app
-    server.shutdown()
-    server.server_close()
-    thread.join()
+from music_queue.debug_panel import serve_debug_panel
 
 
 def request(server, method, path, payload=None, headers=None):

@@ -12,3 +12,4 @@ output/
 build/
 dist/
 .ruff_cache/
+node_modules/

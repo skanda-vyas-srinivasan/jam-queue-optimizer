@@ -155,6 +155,8 @@ class DebugPanelApp:
             ],
             "count": len(self.catalog),
             "model_hash": self.catalog.model_hash,
+            "feature_schema": self.catalog.feature_schema,
+            "feature_provenance": self.catalog.manifest.get("provenance", {}),
         }
 
     def sample_room_payload(self):
