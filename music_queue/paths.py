@@ -8,4 +8,3 @@ ARTIFACT_DIR = REPO_ROOT / "artifacts"
 SONGS_DIR = REPO_ROOT / "songs"
 NOTEBOOKS_DIR = REPO_ROOT / "notebooks"
 SCRIPTS_DIR = REPO_ROOT / "scripts"
-

@@ -11,7 +11,9 @@ from .paths import ARTIFACT_DIR
 
 
 def build_embedding_frame(catalog: SongCatalog, n_components: int = 3) -> pd.DataFrame:
-    return build_embedding_frame_for_space(catalog, space="raw", n_components=n_components)
+    return build_embedding_frame_for_space(
+        catalog, space="raw", n_components=n_components
+    )
 
 
 def build_embedding_frame_for_space(

@@ -18,9 +18,7 @@ SavedArtifactArrays = tuple[np.ndarray, np.ndarray, np.ndarray]
 def find_song_paths(song_root: Path) -> list[Path]:
     song_root = Path(song_root)
     return sorted(
-        path
-        for path in song_root.rglob("*")
-        if path.suffix.lower() in AUDIO_EXTS
+        path for path in song_root.rglob("*") if path.suffix.lower() in AUDIO_EXTS
     )
 
 
@@ -143,7 +141,9 @@ def build_embedding_artifacts(
 
     if verbose:
         elapsed = time.perf_counter() - start_time
-        print(f"Finished embedding {len(song_paths)} songs in {elapsed:.2f}s", flush=True)
+        print(
+            f"Finished embedding {len(song_paths)} songs in {elapsed:.2f}s", flush=True
+        )
 
     return (
         np.vstack(embeddings),
@@ -154,23 +154,6 @@ def build_embedding_artifacts(
     )
 
 
-def save_artifact_arrays(
-    output_dir: Path,
-    embeddings: np.ndarray,
-    intro_embeddings: np.ndarray,
-    outro_embeddings: np.ndarray,
-    names: np.ndarray,
-    folders: np.ndarray,
-) -> None:
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    np.save(output_dir / "embeddings.npy", embeddings)
-    np.save(output_dir / "intro_embeddings.npy", intro_embeddings)
-    np.save(output_dir / "outro_embeddings.npy", outro_embeddings)
-    np.save(output_dir / "song_names.npy", names)
-    np.save(output_dir / "song_folders.npy", folders)
-
-
 def build_and_save_artifacts(
     song_root: Path,
     output_dir: Path,
@@ -178,11 +161,13 @@ def build_and_save_artifacts(
     n_mfcc: int = DEFAULT_N_MFCC,
     verbose: bool = False,
 ) -> SavedArtifactArrays:
-    embeddings, intro_embeddings, outro_embeddings, names, folders = build_embedding_artifacts(
-        song_root=song_root,
-        sample_rate=sample_rate,
-        n_mfcc=n_mfcc,
-        verbose=verbose,
+    embeddings, intro_embeddings, outro_embeddings, names, folders = (
+        build_embedding_artifacts(
+            song_root=song_root,
+            sample_rate=sample_rate,
+            n_mfcc=n_mfcc,
+            verbose=verbose,
+        )
     )
     import hashlib
     import soundfile as sf
@@ -194,14 +179,28 @@ def build_and_save_artifacts(
     for path in find_song_paths(Path(song_root)):
         source = path.relative_to(song_root).as_posix()
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        tracks.append(Track("trk_" + hashlib.sha256(source.encode()).hexdigest()[:24],
-                            path.stem, path.parent.name, source, sf.info(path).duration,
-                            recording_family="audio_" + digest, content_hash=digest,
-                            **track_boundary_metadata(path)))
-    publish_generation(output_dir, {"embeddings": embeddings,
-                                   "intro_embeddings": intro_embeddings,
-                                   "outro_embeddings": outro_embeddings}, tracks,
-                       schema(n_mfcc, sample_rate, TRANSITION_WINDOW_SECONDS))
+        tracks.append(
+            Track(
+                "trk_" + hashlib.sha256(source.encode()).hexdigest()[:24],
+                path.stem,
+                path.parent.name,
+                source,
+                sf.info(path).duration,
+                recording_family="audio_" + digest,
+                content_hash=digest,
+                **track_boundary_metadata(path),
+            )
+        )
+    publish_generation(
+        output_dir,
+        {
+            "embeddings": embeddings,
+            "intro_embeddings": intro_embeddings,
+            "outro_embeddings": outro_embeddings,
+        },
+        tracks,
+        schema(n_mfcc, sample_rate, TRANSITION_WINDOW_SECONDS),
+    )
     return embeddings, names, folders
 
 
@@ -209,6 +208,12 @@ def load_artifact_arrays(
     artifact_dir: Path,
 ) -> tuple[np.ndarray, np.ndarray | None, np.ndarray | None, np.ndarray, np.ndarray]:
     from .artifact_store import load_generation
+
     arrays, tracks, _ = load_generation(artifact_dir)
-    return (arrays["embeddings"], arrays["intro_embeddings"], arrays["outro_embeddings"],
-            np.array([t.title for t in tracks]), np.array([t.folder for t in tracks]))
+    return (
+        arrays["embeddings"],
+        arrays["intro_embeddings"],
+        arrays["outro_embeddings"],
+        np.array([t.title for t in tracks]),
+        np.array([t.folder for t in tracks]),
+    )

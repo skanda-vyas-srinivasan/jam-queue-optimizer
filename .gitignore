@@ -9,3 +9,6 @@ __pycache__/
 artifacts/generations/
 artifacts/manifest.json
 output/
+build/
+dist/
+.ruff_cache/

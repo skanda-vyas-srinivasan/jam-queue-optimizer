@@ -1,4 +1,5 @@
 """Versioned, immutable inputs and explicit outcomes shared by every algorithm."""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
@@ -10,8 +11,11 @@ import time
 
 
 def fingerprint(value) -> str:
-    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
-                                     allow_nan=False).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(
+            value, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode()
+    ).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -27,8 +31,8 @@ class Track:
     playable: bool = True
     intro_rms_dbfs: float | None = None
     outro_rms_dbfs: float | None = None
-    leading_silence_seconds: float = 0.
-    trailing_silence_seconds: float = 0.
+    leading_silence_seconds: float = 0.0
+    trailing_silence_seconds: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -100,19 +104,40 @@ class QueueInstance:
     revision: int = 0
 
     def __post_init__(self):
-        for name in ("tracks", "listeners", "locked_prefix", "anchor_values", "service_debt"):
+        for name in (
+            "tracks",
+            "listeners",
+            "locked_prefix",
+            "anchor_values",
+            "service_debt",
+        ):
             object.__setattr__(self, name, tuple(getattr(self, name)))
         for name in ("utilities", "transitions"):
-            object.__setattr__(self, name, tuple(tuple(float(v) for v in row) for row in getattr(self, name)))
+            object.__setattr__(
+                self,
+                name,
+                tuple(tuple(float(v) for v in row) for row in getattr(self, name)),
+            )
         if any(type(value) is not bool for row in self.acceptance for value in row):
             raise ValueError("Acceptance must contain explicit boolean labels")
-        object.__setattr__(self, "acceptance", tuple(tuple(row) for row in self.acceptance))
-        object.__setattr__(self, "candidate_provenance", tuple((t, tuple(r)) for t, r in self.candidate_provenance))
+        object.__setattr__(
+            self, "acceptance", tuple(tuple(row) for row in self.acceptance)
+        )
+        object.__setattr__(
+            self,
+            "candidate_provenance",
+            tuple((t, tuple(r)) for t, r in self.candidate_provenance),
+        )
         n, u = len(self.tracks), len(self.listeners)
-        if len({t.id for t in self.tracks}) != n or len({l.id for l in self.listeners}) != u:
+        if (
+            len({t.id for t in self.tracks}) != n
+            or len({listener.id for listener in self.listeners}) != u
+        ):
             raise ValueError("Duplicate track or listener ID")
         if not u or type(self.queue_len) is not int or self.queue_len <= 0 or not n:
-            raise ValueError("An instance needs listeners, candidates, and a positive horizon")
+            raise ValueError(
+                "An instance needs listeners, candidates, and a positive horizon"
+            )
         if len(self.utilities) != u or len(self.acceptance) != u:
             raise ValueError("Listener matrices are misaligned")
         if any(len(r) != n for r in self.utilities + self.acceptance):
@@ -155,7 +180,7 @@ class Status(StrEnum):
 @dataclass
 class QueueResult:
     status: Status
-    requested_length: int
+    requested_length: int | None
     queue: tuple[str, ...] = ()
     termination_reason: str = ""
     valid_incumbent: bool = False
@@ -185,7 +210,11 @@ class QueueResult:
 def validate_policy(p: Policy):
     if p.representation not in {"strict", "best_effort"}:
         raise ValueError("Representation must be strict or explicitly best_effort")
-    if p.objective not in {"fair", "affinity"} or p.predictor not in {"top_two", "maximum", "pockets"}:
+    if p.objective not in {"fair", "affinity"} or p.predictor not in {
+        "top_two",
+        "maximum",
+        "pockets",
+    }:
         raise ValueError("Unknown objective or predictor")
     if p.playback != "hard_cut":
         raise ValueError("Only hard_cut playback is implemented")

@@ -1,4 +1,5 @@
 """Selection rules and inexpensive necessary feasibility checks, never relaxations."""
+
 from collections import Counter
 
 
@@ -7,12 +8,19 @@ def selection_violations(instance, indices, complete=False):
     p = instance.policy
     violations = []
     for t in tracks:
-        if not t.playable or any(t.id in listener.blocked for listener in instance.listeners):
+        if not t.playable or any(
+            t.id in listener.blocked for listener in instance.listeners
+        ):
             violations.append(f"Ineligible track {t.id}")
-    for field, cap in (("folder", p.folder_cap), ("artist", p.artist_cap),
-                       ("recording_family", p.family_cap)):
+    for field, cap in (
+        ("folder", p.folder_cap),
+        ("artist", p.artist_cap),
+        ("recording_family", p.family_cap),
+    ):
         if cap is not None:
-            counts = Counter(getattr(t, field) for t in tracks if getattr(t, field) is not None)
+            counts = Counter(
+                getattr(t, field) for t in tracks if getattr(t, field) is not None
+            )
             for group, count in counts.items():
                 if count > cap:
                     violations.append(f"{field} cap {cap} exceeded for {group}")

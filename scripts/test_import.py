@@ -10,7 +10,9 @@ from music_queue.catalog import load_catalog
 
 def main() -> None:
     catalog = load_catalog()
-    print(f"Loaded {len(catalog)} songs with embedding shape {catalog.embeddings.shape}")
+    print(
+        f"Loaded {len(catalog)} songs with embedding shape {catalog.embeddings.shape}"
+    )
 
 
 if __name__ == "__main__":
