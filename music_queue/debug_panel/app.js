@@ -1,550 +1,90 @@
-const state = {
-  catalog: [],
-  folders: [],
-  users: [],
-  nextUserId: 1,
-  sampleRoom: {},
-  embeddingSpace: "normalized",
-  results: null,
-};
-
-const tableColumns = {
-  shortlist: ["song", "folder", "room_score", "selection_reason"],
-  ranked: ["song", "folder", "room_score"],
-  retrieval: ["song", "folder", "retrieval_score", "user_coverage", "users_retrieved"],
-  transitions: [
-    "from_song",
-    "to_song",
-    "segment_transition",
-    "harmonic_transition",
-    "combined_transition",
-  ],
-};
-
-document.addEventListener("DOMContentLoaded", async () => {
-  bindStaticControls();
-  await loadCatalog();
-  await loadSampleRoom();
-  await renderEmbeddingPlot();
-  if (Object.keys(state.sampleRoom).length) {
-    applyRoom(state.sampleRoom);
-  } else {
-    addUserCard();
-  }
-});
-
-function bindStaticControls() {
-  document.getElementById("embedding-space").addEventListener("change", async (event) => {
-    state.embeddingSpace = event.target.value;
-    await renderEmbeddingPlot();
-  });
-
-  document.getElementById("add-user").addEventListener("click", () => addUserCard());
-  document.getElementById("load-sample-room").addEventListener("click", () => applyRoom(state.sampleRoom));
-  document.getElementById("run-simulation").addEventListener("click", runSimulation);
-  document.getElementById("users-container").addEventListener("input", handleUsersInput);
-  document.getElementById("users-container").addEventListener("click", handleUsersClick);
-}
-
-async function loadCatalog() {
-  const response = await fetch("/api/catalog");
-  const payload = await response.json();
-  state.catalog = payload.songs;
-  state.folders = Object.keys(payload.folders || {}).sort();
-  document.getElementById("catalog-count").textContent = `${payload.count} songs loaded`;
-}
-
-async function loadSampleRoom() {
-  const response = await fetch("/api/sample-room");
-  const payload = await response.json();
-  state.sampleRoom = payload.room || {};
-}
-
-async function renderEmbeddingPlot() {
-  const response = await fetch(`/api/embedding?space=${encodeURIComponent(state.embeddingSpace)}`);
-  const figure = await response.json();
-  Plotly.react("embedding-plot", figure.data, figure.layout, {
-    responsive: true,
-    displaylogo: false,
-  });
-}
-
-function addUserCard(seed = {}) {
-  state.users.push({
-    id: state.nextUserId++,
-    name: seed.name || `user_${state.nextUserId - 1}`,
-    search: "",
-    folderFilter: "",
-    selectedSongs: [...(seed.selectedSongs || [])],
-  });
-  renderUsers();
-}
-
-function removeUserCard(userId) {
-  state.users = state.users.filter((user) => user.id !== userId);
-  if (!state.users.length) {
-    addUserCard();
-    return;
-  }
-  renderUsers();
-}
-
-function updateUserName(userId, value) {
-  const user = state.users.find((entry) => entry.id === userId);
-  if (!user) return;
-  user.name = value;
-}
-
-function updateUserSearch(userId, value) {
-  const user = state.users.find((entry) => entry.id === userId);
-  if (!user) return;
-  user.search = value;
-  renderUserLists(userId);
-}
-
-function updateUserFolderFilter(userId, value) {
-  const user = state.users.find((entry) => entry.id === userId);
-  if (!user) return;
-  user.folderFilter = value;
-  renderUserLists(userId);
-}
-
-function addSongToUser(userId, song) {
-  const user = state.users.find((entry) => entry.id === userId);
-  if (!user || user.selectedSongs.includes(song)) return;
-  user.selectedSongs.push(song);
-  renderUserLists(userId);
-}
-
-function removeSongFromUser(userId, song) {
-  const user = state.users.find((entry) => entry.id === userId);
-  if (!user) return;
-  user.selectedSongs = user.selectedSongs.filter((value) => value !== song);
-  renderUserLists(userId);
-}
-
-function applyRoom(room) {
-  state.users = [];
-  Object.entries(room || {}).forEach(([name, songs]) => {
-    state.users.push({
-      id: state.nextUserId++,
-      name,
-      search: "",
-      folderFilter: "",
-      selectedSongs: [...songs],
-    });
-  });
-  if (!state.users.length) {
-    addUserCard();
-    return;
-  }
-  renderUsers();
-}
-
-function renderUsers() {
-  const container = document.getElementById("users-container");
-  container.innerHTML = "";
-
-  for (const user of state.users) {
-    const card = document.createElement("article");
-    card.className = "user-card";
-    card.dataset.userId = String(user.id);
-
-    card.innerHTML = `
-      <div class="user-card-header">
-        <label>
-          <span>User Name</span>
-          <input type="text" value="${escapeAttribute(user.name)}" data-user-name="${user.id}" />
-        </label>
-        <button class="ghost-button" type="button" data-remove-user="${user.id}">Remove</button>
-      </div>
-      <div class="selected-songs" data-user-selected="${user.id}"></div>
-      <div class="user-add-controls">
-        <label>
-          <span>Search Songs</span>
-          <input type="text" value="${escapeAttribute(user.search)}" data-user-search="${user.id}" placeholder="Search by song or folder" />
-        </label>
-        <label>
-          <span>Category</span>
-          <select data-user-folder-filter="${user.id}">
-            <option value="">All</option>
-            ${state.folders
-              .map(
-                (folder) =>
-                  `<option value="${escapeAttribute(folder)}" ${
-                    user.folderFilter === folder ? "selected" : ""
-                  }>${escapeHtml(folder)}</option>`,
-              )
-              .join("")}
-          </select>
-        </label>
-      </div>
-      <div class="song-results" data-user-results="${user.id}"></div>
-    `;
-
-    container.appendChild(card);
-    renderUserLists(user.id);
-  }
-}
-
-function renderUserLists(userId) {
-  const user = state.users.find((entry) => entry.id === userId);
-  if (!user) return;
-
-  const selectedContainer = document.querySelector(`[data-user-selected="${userId}"]`);
-  const resultsContainer = document.querySelector(`[data-user-results="${userId}"]`);
-  if (!selectedContainer || !resultsContainer) return;
-
-  const filteredSongs = state.catalog
-    .filter((row) => {
-      const query = user.search.trim().toLowerCase();
-      if (user.folderFilter && row.folder !== user.folderFilter) return false;
-      if (!query) return !user.selectedSongs.includes(row.song);
-      return (
-        !user.selectedSongs.includes(row.song) &&
-        (row.song.toLowerCase().includes(query) || row.folder.toLowerCase().includes(query))
-      );
-    })
-    .slice(0, 30);
-
-  selectedContainer.innerHTML = user.selectedSongs.length
-    ? user.selectedSongs
-        .map(
-          (song) => `
-            <span class="song-chip">
-              <span>${escapeHtml(song)}</span>
-              <button type="button" data-remove-song="${user.id}::${encodeURIComponent(song)}">×</button>
-            </span>
-          `,
-        )
-        .join("")
-    : `<div class="empty-state">No liked songs selected yet.</div>`;
-
-  if (!filteredSongs.length) {
-    resultsContainer.innerHTML = `<div class="empty-state">No matching songs available.</div>`;
-    return;
-  }
-
-  const groupedSongs = groupSongsByFolder(filteredSongs);
-  resultsContainer.innerHTML = Object.entries(groupedSongs)
-    .map(
-      ([folder, songs]) => `
-        <section class="song-group">
-          <div class="song-group-title">${escapeHtml(folder)}</div>
-          ${songs
-            .map(
-              (row) => `
-                <button class="song-action" type="button" data-add-song="${user.id}::${encodeURIComponent(row.song)}">
-                  ${escapeHtml(row.song)}
-                  <small> · ${escapeHtml(row.folder)}</small>
-                </button>
-              `,
-            )
-            .join("")}
-        </section>
-      `,
-    )
-    .join("");
-}
-
-function handleUsersInput(event) {
-  if (event.target.matches("[data-user-name]")) {
-    updateUserName(Number(event.target.dataset.userName), event.target.value);
-    return;
-  }
-  if (event.target.matches("[data-user-search]")) {
-    updateUserSearch(Number(event.target.dataset.userSearch), event.target.value);
-    return;
-  }
-  if (event.target.matches("[data-user-folder-filter]")) {
-    updateUserFolderFilter(Number(event.target.dataset.userFolderFilter), event.target.value);
-  }
-}
-
-function handleUsersClick(event) {
-  const target = event.target.closest("button");
-  if (!target) return;
-
-  if (target.dataset.removeUser) {
-    removeUserCard(Number(target.dataset.removeUser));
-    return;
-  }
-  if (target.dataset.addSong) {
-    const [userId, encodedSong] = target.dataset.addSong.split("::");
-    addSongToUser(Number(userId), decodeURIComponent(encodedSong));
-    return;
-  }
-  if (target.dataset.removeSong) {
-    const [userId, encodedSong] = target.dataset.removeSong.split("::");
-    removeSongFromUser(Number(userId), decodeURIComponent(encodedSong));
-  }
-}
-
-async function runSimulation() {
-  const room = {};
-  for (const user of state.users) {
-    const songs = user.selectedSongs.filter(Boolean);
-    if (user.name.trim() && songs.length) {
-      room[user.name.trim()] = songs;
-    }
-  }
-
-  if (!Object.keys(room).length) {
-    window.alert("Add at least one user with liked songs before running the simulation.");
-    return;
-  }
-
-  const payload = {
-    room,
-    method: readValue("method"),
-    queue_len: Number(readValue("queue-len")),
-    candidate_pool_size: Number(readValue("candidate-pool-size")),
-    candidate_limit: Number(readValue("candidate-limit")),
-    transition_weight: Number(readValue("transition-weight")),
-    time_limit: Number(readValue("time-limit")),
-    relative_gap: nullableNumber("relative-gap"),
-    same_folder_penalty: nullableNumber("same-folder-penalty"),
-    max_songs_per_folder: nullableInteger("max-songs-per-folder"),
-    user_representation_top_k: nullableInteger("user-representation-top-k"),
-    preserve_user_fraction: Number(readValue("preserve-user-fraction")),
-    max_preserved_per_user: Number(readValue("max-preserved-per-user")),
-  };
-
-  const response = await fetch("/api/simulate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+"use strict";
+const state = {catalog: [], listeners: [], session: null, result: null};
+const $ = id => document.getElementById(id);
+const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const title = id => state.catalog.find(t => t.track_id === id)?.song ?? id;
+const number = value => value == null ? "Unavailable" : Number(value).toFixed(3);
+function message(text, error = false) { $("message").textContent = text; $("message").className = error ? "error" : "notice"; }
+async function api(path, payload) {
+  const response = await fetch(path, payload === undefined ? {} : {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(payload)});
   const result = await response.json();
-  if (!response.ok) {
-    window.alert(result.error || "Simulation failed.");
-    return;
-  }
-
-  state.results = result;
-  renderResults(result);
+  if (!response.ok) throw new Error(result.error ?? `Request failed (${response.status})`);
+  return result;
 }
-
-function renderResults(result) {
-  const summary = document.getElementById("result-summary");
-  const queueStrip = document.getElementById("queue-strip");
-
-  summary.innerHTML = `
-    ${statCard("Queue Score", result.queue_score?.toFixed(4) ?? "n/a")}
-    ${statCard("Retrieved", result.meta.retrieved_candidates)}
-    ${statCard("Ranked", result.meta.ranked_candidates)}
-    ${statCard("Shortlist", result.meta.shortlist_size)}
-    ${statCard("Method", result.meta.method.toUpperCase())}
-  `;
-
-  queueStrip.innerHTML = result.queue_rows
-    .map(
-      (row) => `
-        <article class="queue-card">
-          <span class="slot">Slot ${row.slot}</span>
-          <h4>${escapeHtml(row.song)}</h4>
-          <p><strong>Folder:</strong> ${escapeHtml(row.folder)}</p>
-          <p><strong>Room Score:</strong> ${formatNumber(row.room_score)}</p>
-          <p><strong>Transition:</strong> ${formatNumber(row.transition_from_prev)}</p>
-        </article>
-      `,
-    )
-    .join("");
-
-  renderTable("shortlist-table", result.shortlist_rows, tableColumns.shortlist);
-  renderTable("ranked-table", result.ranked_rows, inferColumns(result.ranked_rows));
-  renderTable("retrieval-table", result.retrieval_rows, tableColumns.retrieval);
-  renderTable(
-    "queue-affinity-table",
-    result.queue_affinity_rows,
-    inferColumns(result.queue_affinity_rows),
-  );
-  renderTable("transition-table", result.transition_rows, tableColumns.transitions);
-  renderUserSummaryGrid(result.user_summary_rows);
-  renderSeedNeighbors(result.seed_neighbor_rows);
+function guarded(fn) { return async (...args) => { try { await fn(...args); } catch (error) { message(error.message, true); } }; }
+function evidence(listener) { return ["liked", "accepted", "disliked", "blocked"].flatMap(field => (listener[field] ?? []).map(id => ({field, id}))); }
+function renderListeners() {
+  $("users").innerHTML = state.listeners.map((listener, index) => `<article class="user-card" data-listener="${index}">
+    <div class="section-heading"><label>Display name<input data-name="${index}" value="${escapeHtml(listener.name)}"></label><button data-remove="${index}">Remove listener</button></div>
+    <div class="chips">${evidence(listener).map(({field,id}) => `<span class="chip ${field}">${escapeHtml(field)} · ${escapeHtml(title(id))}<button aria-label="Remove evidence" data-remove-evidence="${index}" data-field="${field}" data-track="${escapeHtml(id)}">×</button></span>`).join("") || '<span class="muted">No affirmative evidence yet.</span>'}</div>
+    <div class="evidence-controls"><input data-search="${index}" placeholder="Search catalog" aria-label="Search songs for ${escapeHtml(listener.name)}"><select data-label="${index}" aria-label="Evidence label"><option value="liked">Liked</option><option value="accepted">Accepted this session</option><option value="disliked">Ordinary dislike</option><option value="blocked">Do not play</option></select></div><div class="song-results" data-results="${index}"></div></article>`).join("");
+  state.listeners.forEach((_, index) => renderSongs(index, ""));
 }
-
-function renderTable(targetId, rows, columns) {
-  const target = document.getElementById(targetId);
-  if (!rows.length) {
-    target.innerHTML = `<div class="empty-state">No rows to show.</div>`;
-    return;
-  }
-
-  const header = columns.map((column) => `<th>${escapeHtml(column)}</th>`).join("");
-  const body = rows
-    .map((row) => {
-      const cells = columns
-        .map((column) => `<td>${renderCell(row[column])}</td>`)
-        .join("");
-      return `<tr>${cells}</tr>`;
-    })
-    .join("");
-
-  target.innerHTML = `
-    <table>
-      <thead><tr>${header}</tr></thead>
-      <tbody>${body}</tbody>
-    </table>
-  `;
+function renderSongs(index, query) {
+  const target = document.querySelector(`[data-results="${index}"]`);
+  const rows = state.catalog.filter(t => `${t.song} ${t.folder}`.toLocaleLowerCase().includes(query.toLocaleLowerCase())).slice(0, 20);
+  target.innerHTML = rows.map(t => `<button class="song-action" data-add="${index}" data-track="${escapeHtml(t.track_id)}">${escapeHtml(t.song)} <small>${escapeHtml(t.folder)}</small></button>`).join("");
 }
-
-function inferColumns(rows) {
-  if (!rows.length) return [];
-  return Object.keys(rows[0]);
+function addEvidence(index, id, field) {
+  const listener = state.listeners[index];
+  listener[field] ??= [];
+  if (!listener[field].includes(id)) listener[field].push(id);
+  if (["liked", "accepted"].includes(field)) listener.disliked = (listener.disliked ?? []).filter(t => t !== id);
+  if (field === "disliked") for (const positive of ["liked", "accepted"]) listener[positive] = (listener[positive] ?? []).filter(t => t !== id);
+  renderListeners();
 }
-
-function statCard(label, value) {
-  return `
-    <article class="stat-card">
-      <span class="stat-label">${escapeHtml(label)}</span>
-      <span class="stat-value">${escapeHtml(String(value))}</span>
-    </article>
-  `;
+function nullable(id) { return $(id).value === "" ? null : Number($(id).value); }
+function request() {
+  return {listeners: state.listeners.map(({id,name,liked,accepted,disliked,blocked}) => ({id,name,liked,accepted,disliked,blocked})),
+    queue_len: Number($("queue-len").value), candidate_limit: Number($("candidate-limit").value), method: $("method").value,
+    time_limit: Number($("time-limit").value), revision: state.session?.revision ?? 0, session_id: state.session?.id,
+    policy: {representation: $("representation").value, required_count: Number($("required-count").value),
+      folder_cap: nullable("folder-cap"), discovery_budget: Number($("discovery-budget").value),
+      transition_weight: Number($("transition-weight").value), same_folder_penalty: Number($("folder-penalty").value),
+      preference_tolerance: Number($("preference-tolerance").value), objective: $("objective").value, predictor: $("predictor").value}};
 }
-
-function renderCell(value) {
-  if (Array.isArray(value)) {
-    return escapeHtml(value.join(", "));
-  }
-  if (typeof value === "boolean") {
-    return value ? "yes" : "no";
-  }
-  if (value === null || value === undefined) {
-    return "—";
-  }
-  if (typeof value === "number") {
-    return formatNumber(value);
-  }
-  return escapeHtml(String(value));
+function table(target, rows, columns) {
+  $(target).innerHTML = rows.length ? `<div class="table-wrap"><table><thead><tr>${columns.map(([key,label]) => `<th>${escapeHtml(label)}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr>${columns.map(([key]) => `<td>${escapeHtml(typeof row[key] === "number" ? number(row[key]) : row[key] ?? "Unavailable")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : '<p class="muted">No result for this stage.</p>';
 }
-
-function formatNumber(value) {
-  if (value === null || value === undefined || Number.isNaN(value)) {
-    return "—";
-  }
-  return Number(value).toFixed(4);
+function renderSession() {
+  const session = state.session;
+  $("apply-membership").disabled = !session; $("override").disabled = !session?.promised_next;
+  $("session-state").textContent = session ? `Revision ${session.revision} · Promised next: ${session.promised_next ? title(session.promised_next) : "None"} · Current track: ${session.current_track ? title(session.current_track) : "None"}` : "Static request. Start a session to retain service history.";
+  table("history", Object.entries(session?.histories ?? {}).map(([id,h]) => ({id, ...h})), [["id","Listener ID"],["played_seconds","Played seconds"],["accepted_seconds","Affirmative exposure seconds"],["disliked_seconds","Disliked seconds"],["wait_seconds","Current wait seconds"],["debt_seconds","Service debt seconds"]]);
 }
-
-function readValue(id) {
-  return document.getElementById(id).value;
+function renderResult(result) {
+  state.result = result;
+  if (result.session) { state.session = result.session; renderSession(); }
+  const stats = [["Status", result.status], ["Length", `${result.returned_length}/${result.requested_length}`], ["Proof", result.proven_optimal ? "Optimal over this shortlist" : "No complete proof"], ["Total seconds", number(result.timings.total)], ["Worst listener affinity", number(result.objective_components.worst_listener_utility)]];
+  $("summary").innerHTML = stats.map(([label,value]) => `<div class="stat"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("");
+  $("queue").innerHTML = result.queue_rows.map(row => `<article class="queue-card"><span class="eyebrow">SLOT ${row.slot}</span><h3>${escapeHtml(row.song)}</h3><p>${escapeHtml(row.folder)} · ${Math.round(row.duration)} seconds</p>${state.session?.promised_next === row.track_id ? `<button class="accent" data-play="${escapeHtml(row.track_id)}" data-duration="${row.duration}">Confirm played (${Math.round(row.duration)}s)</button>` : ""}</article>`).join("");
+  table("coverage", Object.entries(result.per_listener).map(([id,row]) => ({id,...row})), [["display_name","Listener"],["id","Stable ID"],["accepted_count","Confirmed accepted tracks"],["accepted_seconds","Planned accepted seconds"],["first_acceptable_wait_seconds","Planned first wait (s)"],["representation_deficit","Explicit deficit"],["affinity_sum","Internal affinity sum"]]);
+  table("phases", result.phases, [["name","Priority"],["value","Internal value"],["proven","Proven"],["termination","Termination"],["warm_start_accepted","CBC accepted start"]]);
+  table("transitions", result.transition_rows, [["from_song","From"],["to_song","To"],["boundary_acoustic_affinity","Pooled acoustic affinity"]]);
+  $("result-json").textContent = JSON.stringify(result, null, 2);
+  message(result.termination_reason, !result.valid_incumbent);
 }
-
-function nullableNumber(id) {
-  const value = readValue(id).trim();
-  return value ? Number(value) : null;
+async function renderPlot() {
+  const fig = await api(`/api/embedding?space=${encodeURIComponent($("embedding-space").value)}`);
+  await Plotly.react("embedding-plot", fig.data, fig.layout, {responsive:true, displaylogo:false});
 }
-
-function nullableInteger(id) {
-  const value = readValue(id).trim();
-  return value ? Number.parseInt(value, 10) : null;
-}
-
-function groupSongsByFolder(rows) {
-  const grouped = {};
-  for (const row of rows) {
-    if (!grouped[row.folder]) {
-      grouped[row.folder] = [];
-    }
-    grouped[row.folder].push(row);
-  }
-  return grouped;
-}
-
-function renderUserSummaryGrid(rows) {
-  const target = document.getElementById("user-summary-grid");
-  if (!target) return;
-  if (!rows.length) {
-    target.innerHTML = `<div class="empty-state">Run a simulation to inspect user-level diagnostics.</div>`;
-    return;
-  }
-  target.innerHTML = rows
-    .map(
-      (row) => `
-        <article class="user-summary-card">
-          <h4>${escapeHtml(row.user)}</h4>
-          <div class="summary-block">
-            <span class="summary-label">Liked Songs</span>
-            <div class="selected-songs">
-              ${row.liked_songs.map((song) => `<span class="song-chip">${escapeHtml(song)}</span>`).join("")}
-            </div>
-          </div>
-          <div class="summary-block">
-            <span class="summary-label">Top Ranked For This User</span>
-            <div class="mini-list">
-              ${(row.top_candidates || [])
-                .map(
-                  (entry) => `
-                    <div class="mini-row">
-                      <strong>${escapeHtml(entry.song)}</strong>
-                      <span>${escapeHtml(entry.folder)} · ${formatNumber(entry.user_score)}</span>
-                    </div>
-                  `,
-                )
-                .join("")}
-            </div>
-          </div>
-          <div class="summary-block">
-            <span class="summary-label">Best Queue Matches</span>
-            <div class="mini-list">
-              ${(row.queue_matches || [])
-                .map(
-                  (entry) => `
-                    <div class="mini-row">
-                      <strong>${escapeHtml(entry.song)}</strong>
-                      <span>${escapeHtml(entry.folder)} · ${formatNumber(entry.user_score)}</span>
-                    </div>
-                  `,
-                )
-                .join("")}
-            </div>
-          </div>
-        </article>
-      `,
-    )
-    .join("");
-}
-
-function renderSeedNeighbors(rows) {
-  const target = document.getElementById("seed-neighbors-grid");
-  if (!target) return;
-  if (!rows.length) {
-    target.innerHTML = `<div class="empty-state">Run a simulation to inspect seed-song neighborhoods.</div>`;
-    return;
-  }
-  target.innerHTML = rows
-    .map(
-      (row) => `
-        <article class="seed-card">
-          <h4>${escapeHtml(row.user)}</h4>
-          <p class="muted-inline">${escapeHtml(row.seed_song)} · ${escapeHtml(row.seed_folder)}</p>
-          <div class="mini-list" style="margin-top: 12px;">
-            ${(row.neighbors || [])
-              .map(
-                (entry) => `
-                  <div class="mini-row">
-                    <strong>${escapeHtml(entry.song)}</strong>
-                    <span>${escapeHtml(entry.folder)} · ${formatNumber(entry.score)}</span>
-                  </div>
-                `,
-              )
-              .join("")}
-          </div>
-        </article>
-      `,
-    )
-    .join("");
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value);
-}
+document.addEventListener("DOMContentLoaded", guarded(async () => {
+  const catalog = await api("/api/catalog"); state.catalog = catalog.songs;
+  $("catalog-count").textContent = `${catalog.count} local tracks`;
+  state.listeners = (await api("/api/sample-room")).listeners; renderListeners(); renderSession(); await renderPlot();
+}));
+$("add-user").addEventListener("click", () => { state.listeners.push({id:crypto.randomUUID(), name:`Listener ${state.listeners.length + 1}`, liked:[],accepted:[],disliked:[],blocked:[]}); renderListeners(); });
+$("load-sample").addEventListener("click", guarded(async () => { if (state.session) throw new Error("The rolling session retains history. Apply sample evidence explicitly or reload the page for a static room."); state.listeners = (await api("/api/sample-room")).listeners; renderListeners(); }));
+$("users").addEventListener("input", event => { if (event.target.dataset.name !== undefined) state.listeners[Number(event.target.dataset.name)].name = event.target.value; if (event.target.dataset.search !== undefined) renderSongs(Number(event.target.dataset.search), event.target.value); });
+$("users").addEventListener("click", event => {
+  const button = event.target.closest("button"); if (!button) return;
+  if (button.dataset.remove !== undefined) { state.listeners.splice(Number(button.dataset.remove), 1); renderListeners(); }
+  if (button.dataset.add !== undefined) { const index=Number(button.dataset.add); addEvidence(index,button.dataset.track,document.querySelector(`[data-label="${index}"]`).value); }
+  if (button.dataset.removeEvidence !== undefined) { const listener=state.listeners[Number(button.dataset.removeEvidence)]; listener[button.dataset.field]=listener[button.dataset.field].filter(id=>id!==button.dataset.track);renderListeners(); }
+});
+$("run").addEventListener("click", guarded(async () => { $("run").disabled=true; message("Solving within the total request budget…"); try { renderResult(await api("/api/simulate",request())); } finally { $("run").disabled=false; } }));
+$("start-session").addEventListener("click", guarded(async () => { state.session=await api("/api/session/create",request()); renderSession(); message("New session started. Earlier session histories remain in the local process."); }));
+$("apply-membership").addEventListener("click", guarded(async () => { state.session=await api("/api/session/membership",request()); renderSession(); message("Listeners and evidence updated; service histories preserved."); }));
+$("override").addEventListener("click", guarded(async () => { state.session=await api("/api/session/override",{session_id:state.session.id,revision:state.session.revision}); renderSession(); $("queue").innerHTML=""; message("Promise explicitly released. Generate a new queue."); }));
+$("queue").addEventListener("click", guarded(async event => { const button=event.target.closest("[data-play]"); if(!button)return; state.session=await api("/api/session/playback",{session_id:state.session.id,revision:state.session.revision,track_id:button.dataset.play,seconds:Number(button.dataset.duration)});renderSession();$("queue").innerHTML=""; message("Actual playback recorded. Generate the remaining tail."); }));
+$("embedding-space").addEventListener("change", guarded(renderPlot));

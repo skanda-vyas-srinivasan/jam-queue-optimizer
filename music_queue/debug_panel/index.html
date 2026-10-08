@@ -1,163 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Jam Queue Debug Panel</title>
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <div class="shell">
-      <header class="masthead">
-        <div>
-          <p class="eyebrow">Local Debug Panel</p>
-          <h1>Jam Queue Optimizer</h1>
-          <p class="subtitle">
-            Inspect embeddings, build multi-user rooms, and run the queue pipeline without touching code.
-          </p>
-        </div>
-        <div class="pill-row">
-          <span class="pill" id="catalog-count">Loading catalog...</span>
-          <button class="ghost-button" id="load-sample-room" type="button">Load Sample Room</button>
-        </div>
-      </header>
-
-      <main class="layout">
-        <section class="panel embedding-panel">
-          <div class="panel-header">
-            <div>
-              <h2>Embedding Space</h2>
-              <p>Browse the catalog in PCA-projected embedding space.</p>
-            </div>
-            <label class="inline-control">
-              <span>Space</span>
-              <select id="embedding-space">
-                <option value="normalized" selected>Normalized</option>
-                <option value="raw">Raw</option>
-              </select>
-            </label>
-          </div>
-          <div id="embedding-plot" class="plot-frame"></div>
-        </section>
-
-        <aside class="panel control-panel">
-          <div class="panel-header">
-            <div>
-              <h2>Simulation Controls</h2>
-              <p>Build a room, tune the solver, and inspect the resulting queue.</p>
-            </div>
-            <button class="accent-button" id="run-simulation" type="button">Run Simulation</button>
-          </div>
-
-          <div class="settings-grid">
-            <label>
-              <span>Method</span>
-              <select id="method">
-                <option value="ip" selected>IP</option>
-                <option value="beam">Beam</option>
-                <option value="greedy">Greedy</option>
-              </select>
-            </label>
-            <label>
-              <span>Queue Length</span>
-              <input id="queue-len" type="number" min="1" value="5" />
-            </label>
-            <label>
-              <span>Candidate Pool Size</span>
-              <input id="candidate-pool-size" type="number" min="5" value="50" />
-            </label>
-            <label>
-              <span>IP Shortlist Size</span>
-              <input id="candidate-limit" type="number" min="5" value="10" />
-            </label>
-            <label>
-              <span>Transition Weight</span>
-              <input id="transition-weight" type="number" min="0" step="0.05" value="0.25" />
-            </label>
-            <label>
-              <span>Time Limit (sec)</span>
-              <input id="time-limit" type="number" min="1" value="10" />
-            </label>
-            <label>
-              <span>Relative Gap</span>
-              <input id="relative-gap" type="number" min="0" step="0.01" placeholder="optional" />
-            </label>
-            <label>
-              <span>Max Songs Per Folder</span>
-              <input id="max-songs-per-folder" type="number" min="1" placeholder="auto" />
-            </label>
-            <label>
-              <span>User Representation Top-K</span>
-              <input id="user-representation-top-k" type="number" min="0" value="3" />
-            </label>
-            <label>
-              <span>Preserve User Fraction</span>
-              <input id="preserve-user-fraction" type="number" min="0" max="1" step="0.05" value="0.3" />
-            </label>
-            <label>
-              <span>Max Preserved Per User</span>
-              <input id="max-preserved-per-user" type="number" min="1" value="2" />
-            </label>
-            <label>
-              <span>Same Folder Penalty</span>
-              <input id="same-folder-penalty" type="number" min="0" step="0.05" placeholder="optional" />
-            </label>
-          </div>
-
-          <div class="panel-header compact-header">
-            <div>
-              <h2>Users</h2>
-              <p>Pick liked songs per user. Search and category filtering stay inside each user card.</p>
-            </div>
-            <button class="ghost-button" id="add-user" type="button">Add User</button>
-          </div>
-          <div id="users-container" class="users-container"></div>
-        </aside>
-
-        <section class="panel results-panel">
-          <div class="panel-header">
-            <div>
-              <h2>Results</h2>
-              <p>Queue output plus the shortlist and ranking artifacts that produced it.</p>
-            </div>
-          </div>
-          <div class="result-summary" id="result-summary">
-            <div class="empty-state">Run a simulation to see queue diagnostics.</div>
-          </div>
-          <div class="queue-strip" id="queue-strip"></div>
-          <div class="table-section">
-            <h3>User Diagnostics</h3>
-            <div id="user-summary-grid" class="user-summary-grid"></div>
-          </div>
-          <div class="table-section">
-            <h3>Queue/User Affinity</h3>
-            <div id="queue-affinity-table" class="table-wrap"></div>
-          </div>
-          <div class="table-section">
-            <h3>Transition Breakdown</h3>
-            <div id="transition-table" class="table-wrap"></div>
-          </div>
-          <div class="table-section">
-            <h3>Seed Neighborhoods</h3>
-            <div id="seed-neighbors-grid" class="seed-neighbors-grid"></div>
-          </div>
-          <div class="table-section">
-            <h3>Shortlist</h3>
-            <div id="shortlist-table" class="table-wrap"></div>
-          </div>
-          <div class="table-section">
-            <h3>Ranked Candidates</h3>
-            <div id="ranked-table" class="table-wrap"></div>
-          </div>
-          <div class="table-section">
-            <h3>Retrieved Candidates</h3>
-            <div id="retrieval-table" class="table-wrap"></div>
-          </div>
-        </section>
-      </main>
-    </div>
-
-    <script src="/plotly.min.js"></script>
-    <script src="/app.js"></script>
-  </body>
-  </html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jam Queue Optimizer</title><link rel="stylesheet" href="/styles.css"></head>
+<body><div class="shell">
+<header><div><p class="eyebrow">LOCAL RESEARCH WORKBENCH</p><h1>Jam Queue Optimizer</h1><p>Explicit listening rules. Inspectable queues. Measured evidence.</p></div><div class="toolbar"><span id="catalog-count">Loading catalog…</span><button id="load-sample">Load sample room</button></div></header>
+<div id="message" role="status" aria-live="polite"></div>
+<main>
+<section class="panel"><div class="section-heading"><h2>Listening policy</h2><button id="run" class="accent">Generate queue</button></div>
+<p class="muted">Likes and acceptance protect each listener. Acoustic predictions are unvalidated and do not establish acceptance.</p>
+<div class="settings">
+<label>Method<select id="method"><option value="milp">MILP reference solver</option><option value="dp">Exact subset DP</option><option value="beam">Beam heuristic</option><option value="greedy">Greedy heuristic</option><option value="round_robin">Round-robin accepted favorites</option><option value="shared_approval">Shared approval baseline</option></select></label>
+<label>Queue length<input id="queue-len" type="number" min="1" max="20" value="5"></label>
+<label>Shortlist size<input id="candidate-limit" type="number" min="1" max="30" value="10"></label>
+<label>Total budget (seconds)<input id="time-limit" type="number" min="0.01" max="60" step="0.1" value="10"></label>
+<label>Representation<select id="representation"><option value="strict">Strict promise</option><option value="best_effort">Authorized best effort</option></select></label>
+<label>Accepted tracks per listener<input id="required-count" type="number" min="0" max="20" value="1"></label>
+<label>Discovery budget<input id="discovery-budget" type="number" min="0" max="20" value="0"></label>
+<label>Mandatory folder cap<input id="folder-cap" type="number" min="1" max="20" placeholder="No cap"></label>
+<label>Transition weight<input id="transition-weight" type="number" min="0" step="0.05" value="0.25"></label>
+<label>Same-folder edge penalty<input id="folder-penalty" type="number" min="0" step="0.05" value="0"></label>
+<label>Preference loss tolerance<input id="preference-tolerance" type="number" min="0" step="0.01" value="0"></label>
+<label>Objective<select id="objective"><option value="fair">Least served → mean → transitions</option><option value="affinity">Research affinity sum + edges</option></select></label>
+<label>Prediction baseline<select id="predictor"><option value="top_two">Top-two acoustic affinity</option><option value="maximum">Maximum acoustic affinity</option><option value="pockets">Small taste-pocket baseline</option></select></label>
+</div>
+</section>
+<section class="panel"><div class="section-heading"><h2>Listeners & evidence</h2><button id="add-user">Add listener</button></div><p class="muted">Display names may repeat. Empty profiles remain in the request and produce an explicit error.</p><div id="users"></div></section>
+<section class="panel"><div class="section-heading"><h2>Rolling session</h2><div class="toolbar"><button id="start-session">Start new session</button><button id="apply-membership" disabled>Apply listeners to session</button><button id="override" disabled>Override promised next</button></div></div><p class="muted">A session preserves promises and service history. Confirmed playback advances exposure; a generated queue does not.</p><div id="session-state">No rolling session. Generation currently uses a static request.</div><div id="history"></div></section>
+<section class="panel"><h2>Queue & certificate</h2><div id="summary" class="stats">Generate a queue to inspect the result.</div><div id="queue" class="queue-strip"></div><h3>Listener coverage</h3><div id="coverage"></div><h3>Priority phases</h3><div id="phases"></div><h3>Transition diagnostics</h3><div id="transitions"></div><details><summary>Full result, candidate decisions & conflict explanation</summary><pre id="result-json"></pre></details></section>
+<section class="panel"><div class="section-heading"><h2>Acoustic feature space</h2><label>Coordinates<select id="embedding-space"><option value="normalized">Frozen standardized</option><option value="raw">Raw</option></select></label></div><p class="muted">PCA projects acoustic features. Proximity is not a listener judgment.</p><div id="embedding-plot"></div></section>
+</main><footer>Loopback-only workbench · Hard-cut playback baseline · Listening validity awaits independent judgments</footer>
+</div><script src="/plotly.min.js"></script><script src="/app.js"></script></body></html>
