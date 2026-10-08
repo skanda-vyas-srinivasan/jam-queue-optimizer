@@ -1,0 +1,7 @@
+{
+  "python": "3.12.14",
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "pulp": "3.3.0",
+  "cbc_sha256": "9eeb33c515945620d89dfc2efef9c6740b559e14a6603153a156c6e288a5765b",
+  "cbc_banner": "Welcome to the CBC MILP Solver \nVersion: 2.10.3 \nBuild Date: Dec 15 2019 \n\ncommand line - /Users/skandavyas/jam-queue-optimizer/.venv/lib/python3.12/site-packages/pulp/apis/../solverdir/cbc/osx/i64/cbc -stop (default strategy 1)\nTotal time (CPU seconds):       0.00   (Wallclock seconds):       0.00\n\n"
+}

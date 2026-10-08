@@ -1,0 +1,10 @@
+{
+  "AUDIT_AND_REBUILD_PLAN.md": "264b0eb4939a3de68c74c73299b7fe6c26d165f8856934f82fd2e74aec266639",
+  "README.md": "f88e2f174e0bbe2a07dcdd0b41978d16d95b5058b9a7c25c498646d580219307",
+  "diagnostic_results.json": "4368e51875d370ac5d960b20bf4dfbe6bc1e9f91b7f9e88bf9628aabb68f5c34",
+  "diagnostics.py": "6298ebc271b9f891dbd9e164226ad13ca183ece131a7f0287de52c4fde7d1628",
+  "formulation_checks.py": "0ae0ef53027079caa9d8ce0373fa9d9829836d114c8ee89c5a99ab15cce3a94a",
+  "formulation_results.json": "5ced4809242e02cd8a37d6ad6d158affbc6dc1feb41fec653aa6718678edb7bc",
+  "requirements-audit.txt": "4aba7f1362f8bcfbf708f4bc83366605ab823a9bce7d5db66203e259fd9bfa0d",
+  "source_extracts.py": "2aabe5c7abbc18793d271e54d36162b46788c8443e0283f29ab1f5be2c983f7a"
+}

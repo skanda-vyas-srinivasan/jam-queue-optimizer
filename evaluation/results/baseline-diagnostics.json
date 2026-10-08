@@ -1,0 +1,254 @@
+{
+  "source_mode": "actual_upstream_functions_at_reviewed_commit",
+  "scope": "Synthetic diagnostics on source extracts unless --repo is supplied. No saved catalog, original benchmark scripts, CBC run, or listener judgments.",
+  "commit": "e637be5f78567ea24f04cf0734286f357fef7d74",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.3.3",
+  "results": [
+    {
+      "case": "E1",
+      "kind": "independent counterexample to same mechanism",
+      "observation": {
+        "catalog_songs": 61,
+        "ranked": 40,
+        "minority_seed_retrieved": true,
+        "minority_seed_ranked": false,
+        "best_remaining_minority_affinity": -0.999999999999998
+      }
+    },
+    {
+      "case": "E2",
+      "kind": "reproduced pure-function behavior",
+      "observation": {
+        "requested_cap": 1,
+        "effective_cap": null
+      }
+    },
+    {
+      "case": "E3",
+      "kind": "pure feasibility function plus independent exhaustive check",
+      "observation": {
+        "representation_only_feasible": true,
+        "jointly_feasible": false
+      }
+    },
+    {
+      "case": "E4",
+      "kind": "reproduced pure-function behavior",
+      "observation": {
+        "represented_candidate_score": -0.8,
+        "warning": "Negative affinity is not a verified dislike."
+      }
+    },
+    {
+      "case": "E5",
+      "kind": "representation check only; downstream omission checked in source",
+      "observation": {
+        "representation_check": false
+      }
+    },
+    {
+      "case": "E6",
+      "kind": "normalization/transition adapter counterexample",
+      "observation": {
+        "identical_raw_segments": true,
+        "transition": -0.9999999999999983
+      }
+    },
+    {
+      "case": "E7",
+      "kind": "reproduced pure-function behavior",
+      "observation": {
+        "one_seed_score": 1.0000000000000002,
+        "two_opposite_seeds_score": 0.0
+      }
+    },
+    {
+      "case": "E9",
+      "kind": "objective algebra; not CBC runtime",
+      "observation": {
+        "weight": 0.25,
+        "penalty": 0.1,
+        "IP_subtracts": 0.025,
+        "shared_scorer_subtracts": 0.1,
+        "difference": 0.075
+      }
+    },
+    {
+      "case": "N1",
+      "kind": "reserved listener names collide with metadata",
+      "observation": {
+        "correct_group_mean": 0.0,
+        "stored_room_score": 1.0000000000000002,
+        "song_values_with_listener_named_song": [
+          -1.0000000000000002,
+          1.0000000000000002
+        ],
+        "protected_user_columns": [
+          "B"
+        ]
+      }
+    },
+    {
+      "case": "N2",
+      "kind": "duplicate seed changes weight without new evidence",
+      "observation": {
+        "unique_seeds": 0.0,
+        "duplicated_positive_seed": 1.0000000000000002
+      }
+    },
+    {
+      "case": "N3",
+      "kind": "preservation spends distinct-song budget on already-covered users",
+      "observation": {
+        "chosen": [
+          "shared",
+          "redundant"
+        ],
+        "selection_reasons": {
+          "shared": [
+            "preserved:A"
+          ],
+          "redundant": [
+            "preserved:B"
+          ]
+        },
+        "alternative_covering_everyone": [
+          "shared",
+          "minority"
+        ],
+        "explicit_test_acceptance_cutoff": 0.9
+      }
+    },
+    {
+      "case": "N4",
+      "kind": "track identity alias collisions",
+      "observation": {
+        "identical_names_resolve_to_index": 1,
+        "case_distinct_second_track_resolves_to_index": 0
+      }
+    },
+    {
+      "case": "N5",
+      "kind": "zero-neighbor boundary",
+      "observation": {
+        "requested": 0,
+        "returned": 1
+      }
+    },
+    {
+      "case": "N6",
+      "kind": "feature schema mismatch for n_mfcc=20",
+      "observation": {
+        "error": "Found array with 0 feature(s) (shape=(2, 0)) while a minimum of 1 is required by check_pairwise_arrays.",
+        "features": 78,
+        "hardcoded_chroma_slice": [
+          80,
+          104
+        ]
+      }
+    },
+    {
+      "case": "N7",
+      "kind": "unvalidated transition row counts",
+      "observation": {
+        "catalog_songs": 3,
+        "transition_shape": [
+          2,
+          2
+        ],
+        "lookup_error": "IndexError"
+      }
+    },
+    {
+      "case": "N8",
+      "kind": "missing one segment array silently changes algorithm",
+      "observation": {
+        "fallback_equals_retrieval": true
+      }
+    },
+    {
+      "case": "N9",
+      "kind": "catalog-dependent transform changes unchanged pair",
+      "observation": {
+        "pair_before_catalog_growth": -1.0000000000000002,
+        "pair_after_catalog_growth": 1.0000000000000002,
+        "interpretation": "A calibration/stability concern, not necessarily invalid for an explicitly transductive model."
+      }
+    },
+    {
+      "case": "N10",
+      "kind": "exponential subset scan on a trivial feasible instance",
+      "observation": {
+        "songs": 20,
+        "required_song_index": 19,
+        "target_len": 1,
+        "subsets_visited": 524289,
+        "seconds_this_isolated_run": 0.007410791993606836,
+        "same_problem_required_index_0_subsets": 2
+      }
+    },
+    {
+      "case": "N11",
+      "kind": "sparse retrieval sums treat absent and negative evidence differently",
+      "observation": {
+        "score_before_more_retrieval_evidence": 0.7,
+        "score_after_more_retrieval_evidence": 0.49999999999999994
+      }
+    },
+    {
+      "case": "N12",
+      "kind": "beam initial solution misses an IP representation rule",
+      "observation": {
+        "beam_queue": [
+          "a",
+          "b"
+        ],
+        "unrepresented_users": [
+          "B"
+        ]
+      }
+    },
+    {
+      "case": "N13",
+      "kind": "missing room profile type validation",
+      "observation": {
+        "profile": "ab",
+        "accepted_as_two_seed_tracks": true
+      }
+    },
+    {
+      "case": "N14",
+      "kind": "unreported queue truncation",
+      "observation": {
+        "requested_length": 5,
+        "returned_length": 2
+      }
+    },
+    {
+      "case": "N15",
+      "kind": "candidate ranking misses useful transition endpoints",
+      "observation": {
+        "two_candidate_queue": [
+          "a",
+          "b"
+        ],
+        "three_candidate_queue": [
+          "a",
+          "bridge"
+        ],
+        "two_candidate_objective": 0.76,
+        "three_candidate_objective": 1.25
+      }
+    },
+    {
+      "case": "N16",
+      "kind": "constant features erase acoustic self-affinity",
+      "observation": {
+        "known_seed_user_affinity": 0.0,
+        "retrieval_still_injects_seed_similarity": 1.0
+      }
+    }
+  ]
+}

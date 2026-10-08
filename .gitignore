@@ -2,3 +2,10 @@
 venv/
 __pycache__/
 *.pyc
+.venv/
+.pytest_cache/
+.hypothesis/
+*.egg-info/
+artifacts/generations/
+artifacts/manifest.json
+output/

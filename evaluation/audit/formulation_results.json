@@ -1,0 +1,67 @@
+{
+  "scope": "Independent synthetic equivalent core formulations; not original repository CBC benchmarks.",
+  "scipy": "1.17.0",
+  "cases": [
+    {
+      "case": 0,
+      "exhaustive_optimum": 1.9319200177345832,
+      "all_binary": 1.9319200177345832,
+      "continuous_y": 1.9319200177345832
+    },
+    {
+      "case": 1,
+      "exhaustive_optimum": 1.6701498154442547,
+      "all_binary": 1.6701498154442547,
+      "continuous_y": 1.6701498154442547
+    },
+    {
+      "case": 2,
+      "exhaustive_optimum": 1.186755743194051,
+      "all_binary": 1.186755743194051,
+      "continuous_y": 1.186755743194051
+    },
+    {
+      "case": 3,
+      "exhaustive_optimum": 0.2562646932422547,
+      "all_binary": 0.2562646932422547,
+      "continuous_y": 0.2562646932422547
+    },
+    {
+      "case": 4,
+      "exhaustive_optimum": 0.2162680129628291,
+      "all_binary": 0.2162680129628291,
+      "continuous_y": 0.2162680129628291
+    },
+    {
+      "case": 5,
+      "exhaustive_optimum": 1.6740035509056463,
+      "all_binary": 1.6740035509056463,
+      "continuous_y": 1.6740035509056463
+    },
+    {
+      "case": 6,
+      "exhaustive_optimum": 2.1121399586030742,
+      "all_binary": 2.1121399586030742,
+      "continuous_y": 2.1121399586030742
+    },
+    {
+      "case": 7,
+      "exhaustive_optimum": 1.8578810691852612,
+      "all_binary": 1.8578810691852612,
+      "continuous_y": 1.8578810691852612
+    },
+    {
+      "case": 8,
+      "exhaustive_optimum": 1.4523281956320608,
+      "all_binary": 1.4523281956320608,
+      "continuous_y": 1.4523281956320608
+    },
+    {
+      "case": 9,
+      "exhaustive_optimum": 0.30457244378483334,
+      "all_binary": 0.30457244378483334,
+      "continuous_y": 0.30457244378483334
+    }
+  ],
+  "passed": 10
+}
