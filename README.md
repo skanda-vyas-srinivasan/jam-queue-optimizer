@@ -1,6 +1,6 @@
 # Jam Queue Optimizer
 
-A small Python research workbench for shared queues over a local audio catalog. It combines explicit listener acceptance, separately labelled acoustic predictions, constrained selection, and directed sequencing. It validates the queue it returns and reports whether an optimum was proved over its shortlist.
+A local Python research workbench with an interactive GUI for shared queues over an audio catalog. It combines explicit listener acceptance, separately labelled acoustic predictions, constrained selection, and directed sequencing. It validates the queue it returns and reports whether an optimum was proved over its shortlist.
 
 The implemented objective is inspectable and tested. Better shared listening is still a hypothesis: this repository has no independent listener judgments establishing preference prediction or product benefit. See [the listening protocol](docs/LISTENING_STUDY.md).
 
@@ -34,7 +34,7 @@ Source archives and wheels exclude the audio and catalog artifacts. Supply your 
 
 ## Local catalog and workbench
 
-The saved baseline arrays predate the schema. Import them explicitly once:
+The saved baseline arrays predate the schema. If `artifacts/manifest.json` does not exist, migrate them explicitly once. This requires the original local audio files and saved arrays:
 
 ```bash
 .venv/bin/python scripts/migrate_artifacts.py
@@ -43,9 +43,13 @@ The saved baseline arrays predate the schema. Import them explicitly once:
 .venv/bin/python scripts/run_debug_panel.py
 ```
 
-Open the [interactive workbench](http://127.0.0.1:8765). Its four stages let you form and edit clusters on a selectable 2D/3D map, build listener profiles, inspect acoustic retrieval and every room-ranking score, prepare a protected shortlist, then sequence and play the queue. A persistent player supports previews, pause, seeking, volume and queue navigation. Static solver comparisons use the same frozen instance; manual orders are revalidated and lose their optimality certificate. See the [workflow guide](docs/WORKBENCH.md).
+For later launches, run only `.venv/bin/python scripts/run_debug_panel.py`.
 
-Profiles/groups/settings save in the browser and support JSON import/export. Rolling sessions preserve promises and history, recording observed playback at track end/skip/stop. Empty profiles produce an error instead of losing room members. Sessions are in memory only; restarting clears them. Node is needed only for client development tests.
+Open the [interactive workbench](http://127.0.0.1:8765). Its four stages let you form and edit clusters on a selectable 2D/3D map, build listener profiles, inspect acoustic retrieval and every room-ranking score, prepare a protected shortlist, then sequence and play the queue. A player available across views supports previews, pause, seeking, volume and queue navigation. Static solver comparisons use the same frozen instance; manual orders are revalidated and lose their optimality certificate. See the [workflow guide](docs/WORKBENCH.md).
+
+For a first queue, leave settings at their defaults: **Load demo profiles → Retrieval & ranking → Prepare candidates → Sequence & play → Build queue → Play queue**. Clusters organize acoustic exploration; assigning a track to a cluster does not automatically mark it accepted by a listener.
+
+Profiles/groups/settings save in the browser and support JSON import/export. Rolling sessions preserve promises and history, recording observed session-queue playback at track end/skip/stop; previews do not count as session service. Empty profiles produce an error instead of losing room members. Sessions are in memory only; restarting clears them. Node is needed only for client development tests (`npm ci --ignore-scripts`, then `npm test`), not to run the GUI.
 
 For new audio, folders are categories, not artist identity:
 
@@ -54,7 +58,7 @@ For new audio, folders are categories, not artist identity:
 .venv/bin/python scripts/run_debug_panel.py --artifact-dir /absolute/path/to/artifacts --songs-dir /absolute/path/to/authorized-audio
 ```
 
-Complete generations are atomically published with stable track IDs, row alignment, checksums, feature slices, extraction parameters, durations and frozen transforms. Unsupported, partial, mixed or nonfinite inputs fail before scoring. New extraction uses two-second hard-cut endpoint features; migrated old feature rows retain their recorded 20-second windows. Measured RMS/silence metadata supports an explicitly labelled boundary-cost ablation. No loading fallback silently changes the transition algorithm.
+Complete generations are atomically published with stable track IDs, row alignment, checksums, feature slices, extraction parameters, durations and frozen transforms. Unsupported, partial, mixed or nonfinite inputs fail before scoring. New extraction uses two-second hard-cut endpoint features; legacy migration records 20-second windows based on the reviewed extraction defaults, since the original arrays had no extraction metadata. Measured RMS/silence metadata supports an explicitly labelled boundary-cost ablation. No loading fallback silently changes the transition algorithm.
 
 ## Queue contract
 
@@ -65,7 +69,7 @@ Complete generations are atomically published with stable track IDs, row alignme
 5. An immutable instance freezes coefficients, evidence, candidate scope, policy and history. DP, beam, greedy, MILP and product baselines consume that same instance.
 6. A decoded-queue validator checks every returned incumbent, including warm starts and fallbacks. `OPTIMAL`, `FEASIBLE_NOT_PROVEN`, `HARD_INFEASIBLE`, timeout, invalid request and resource failures are distinct outcomes.
 
-A canonical edge is `transition_weight * transition_value - same_folder_penalty`. All algorithms and the UI use those units. Negative acoustic affinity is not an observed dislike. Unknown is not affirmative acceptance. Artist/family limits use explicit metadata, not folder guesses.
+A canonical edge is `transition_weight * transition_value - same_folder_penalty * int(same_folder)`. The folder penalty applies only when adjacent tracks share a folder. All algorithms and the UI use those units. Negative acoustic affinity is not an observed dislike. Unknown is not affirmative acceptance. Artist/family limits use explicit metadata, not folder guesses.
 
 Each listener has a stable ID separate from a display name; two people named Alex remain two participants. Seeds are canonicalized and deduplicated. Explicit acceptance stays positive when another taste pocket is added.
 
@@ -112,6 +116,7 @@ The study generator makes blank instruments and randomized local excerpts. No ra
 - `objective.py`, `constraints.py`, `validation.py`: one score definition and independent decoded-queue checks.
 - `solvers/`: exact subset DP, incremental merged beam/greedy and phase-based MILP with continuous edges.
 - `session.py`: revision checks, promises, current-track anchor, cooldowns and confirmed duration history.
+- `workbench.py`, `debug_panel.py`, `debug_panel/`: clustering/retrieval views, frozen preparation, local audio streaming and the interactive GUI.
 - `evaluation/`, `tests/`: frozen experiments, original audit provenance, regression/property checks and independent-study instruments.
 
 Requests are bounded to eight listeners, twenty slots, thirty candidates and sixty seconds. Exact DP is capped at twenty candidates. The deadline covers preprocessing and solving, with small measured process/validation overhead; it is not a realtime deadline. The server is loopback-only and serializes solves. Dense retrieval remains appropriate for the current 121-track catalog; candidate transition blocks are computed on demand.
