@@ -1,124 +1,128 @@
 # Jam Queue Optimizer
 
-A local Python research workbench with an interactive GUI for shared queues over an audio catalog. It combines explicit listener acceptance, separately labelled acoustic predictions, constrained selection, and directed sequencing. It validates the queue it returns and reports whether an optimum was proved over its shortlist.
+This is a research-heavy prototype for audio-based music comparison, candidate retrieval for multi-users with varying overlap, and constrained sequencing over a catalog of songs. The result is a hybrid system ...
 
-The implemented objective is inspectable and tested. Better shared listening is still a hypothesis: this repository has no independent listener judgments establishing preference prediction or product benefit. See [the listening protocol](docs/LISTENING_STUDY.md).
+This repo isn't really meant to be read as a polished consumer app; its current focus is to be the underlying surface for a future collaborative queueing app.
 
-## Setup
 
-Use Python 3.12 (the tested environment is 3.12.14). PuLP is pinned to 3.3.0, with the bundled CBC 2.10.3 binary recorded by hash in the evaluation environment. A PuLP 4 migration is a separate change, not an implicit dependency upgrade.
+## Motivation
 
-```bash
-python3.12 -m venv .venv
-.venv/bin/python -m pip install -r requirements-lock.txt
-.venv/bin/python -m pip install --no-build-isolation --no-deps -e .
-.venv/bin/python -m pytest
-```
+--To be filled later
 
-Tests use synthetic features and generated tones; they do not need the MP3 catalog, network, or a notebook runtime. Black and Ruff are included in the development lock:
 
-```bash
-.venv/bin/black --check music_queue scripts tests evaluation/benchmark.py evaluation/catalog_benchmark.py evaluation/study.py
-.venv/bin/ruff check music_queue scripts tests evaluation/benchmark.py evaluation/catalog_benchmark.py evaluation/study.py
-```
+## Structure
 
-The historical music remains in this checkout. No redistribution permission was established by the reviews, and no shared assets/history were deleted. To obtain code without downloading music, use a sparse clone:
+### 1. Audio Representation
 
-```bash
-git clone --filter=blob:none --sparse https://github.com/skanda-vyas-srinivasan/jam-queue-optimizer.git
-cd jam-queue-optimizer
-git sparse-checkout set music_queue scripts tests docs evaluation
-```
+Each song is embedded from local audio using librosa using:
 
-Source archives and wheels exclude the audio and catalog artifacts. Supply your own authorized local catalog for audio-backed demos.
+- MFCC mean/std
+- chroma mean/std
+- spectral contrast mean/std
 
-## Local catalog and workbench
+This is a handcrafted baseline, not a learned embedding model. The design is intentionally simple, interpretable, and cheap enough to iterate on locally.
 
-The saved baseline arrays predate the schema. If `artifacts/manifest.json` does not exist, migrate them explicitly once. This requires the original local audio files and saved arrays:
+### 2. Retrieval Similarity
 
-```bash
-.venv/bin/python scripts/migrate_artifacts.py
-.venv/bin/python scripts/test_import.py
-.venv/bin/python scripts/run_queue_demo.py --method dp
-.venv/bin/python scripts/run_debug_panel.py
-```
+During Retrieval, full-song embeddings are standardized using a frozen, saved per-feature transform and then compared with cosine similarity.
 
-For later launches, run only `.venv/bin/python scripts/run_debug_panel.py`.
+Representing each user as a single vector was something I considered early on, but averaging music taste is usually a bad idea. If I have two strong taste pockets, like rage music and dreamy synth-heavy music, the average can place me somewhere in the middle, near a genre like alt-rock which I don't really care about. You end up with an artificial taste profile that smooths over both sides instead of preserving either one. Because of that, it made more sense to let individual-liked songs drive retrieval rather than collapsing the whole user into a single vector.
 
-Open the [interactive workbench](http://127.0.0.1:8765). Its four stages let you form and edit clusters on a selectable 2D/3D map, build listener profiles, inspect acoustic retrieval and every room-ranking score, prepare a protected shortlist, then sequence and play the queue. A player available across views supports previews, pause, seeking, volume and queue navigation. Static solver comparisons use the same frozen instance; manual orders are revalidated and lose their optimality certificate. See the [workflow guide](docs/WORKBENCH.md).
+This gives the main retrieval similarity used for:
 
-For a first queue, leave settings at their defaults: **Load demo profiles → Retrieval & ranking → Prepare candidates → Sequence & play → Build queue → Play queue**. Clusters organize acoustic exploration; assigning a track to a cluster does not automatically mark it accepted by a listener.
+- nearest-neighbor lookup
+- user-level candidate scoring
+- room-level ranking
 
-Profiles/groups/settings save in the browser and support JSON import/export. Rolling sessions preserve promises and history, recording observed session-queue playback at track end/skip/stop; previews do not count as session service. Empty profiles produce an error instead of losing room members. Sessions are in memory only; restarting clears them. Node is needed only for client development tests (`npm ci --ignore-scripts`, then `npm test`), not to run the GUI.
+Retrieval is song-based, not cluster-based:
 
-For new audio, folders are categories, not artist identity:
+That choice preserves multi-modal taste better than collapsing a user into one averaged profile too early.
 
-```bash
-.venv/bin/python scripts/embed_audio.py --songs-dir /absolute/path/to/authorized-audio --output-dir /absolute/path/to/artifacts --n-mfcc 40
-.venv/bin/python scripts/run_debug_panel.py --artifact-dir /absolute/path/to/artifacts --songs-dir /absolute/path/to/authorized-audio
-```
 
-Complete generations are atomically published with stable track IDs, row alignment, checksums, feature slices, extraction parameters, durations and frozen transforms. Unsupported, partial, mixed or nonfinite inputs fail before scoring. New extraction uses two-second hard-cut endpoint features; legacy migration records 20-second windows based on the reviewed extraction defaults, since the original arrays had no extraction metadata. Measured RMS/silence metadata supports an explicitly labelled boundary-cost ablation. No loading fallback silently changes the transition algorithm.
+### 3. Transition Scoring
 
-## Queue contract
+Queue transitions use a different signal than retrieval.
 
-1. Playback eligibility, explicit blocks, uniqueness, locked prefix and mandatory caps are hard rules.
-2. Representation uses affirmative likes/acceptance, not a relative top-k acoustic score. Best effort requires explicit selection and reports every deficit.
-3. The fair policy improves the least-served listener, then mean utility, then transitions within a declared preference tolerance. A separate `affinity` policy is the numerical research baseline.
-4. Full eligible ranking precedes a joint-feasibility protected shortlist. One shared accepted song can cover several listeners. Candidates may expand with an explanation; rules never disappear.
-5. An immutable instance freezes coefficients, evidence, candidate scope, policy and history. DP, beam, greedy, MILP and product baselines consume that same instance.
-6. A decoded-queue validator checks every returned incumbent, including warm starts and fallbacks. `OPTIMAL`, `FEASIBLE_NOT_PROVEN`, `HARD_INFEASIBLE`, timeout, invalid request and resource failures are distinct outcomes.
+The current transition score is built from intro/outro embeddings:
 
-A canonical edge is `transition_weight * transition_value - same_folder_penalty * int(same_folder)`. The folder penalty applies only when adjacent tracks share a folder. All algorithms and the UI use those units. Negative acoustic affinity is not an observed dislike. Unknown is not affirmative acceptance. Artist/family limits use explicit metadata, not folder guesses.
+- segment term: cosine similarity from `outro(song_a)` to `intro(song_b)`
+- chroma term: chroma-only cosine similarity between `outro(song_a)` and `intro(song_b)`
 
-Each listener has a stable ID separate from a display name; two people named Alex remain two participants. Seeds are canonicalized and deduplicated. Explicit acceptance stays positive when another taste pocket is added.
+Intro/outro features use a shared frozen transform. These are acoustic-affinity signals, not independently validated transition quality.
 
-## Python API
+### 4. Ranking and Shortlisting
 
-```python
-from music_queue import Listener, Policy, SessionRequest, load_catalog, generate_queue
+The ranking stage is also heuristic by design.
 
-catalog = load_catalog()
-request = SessionRequest(
-    listeners=(
-        Listener("listener_1", "Alex", tuple(t.id for t in catalog.tracks[:3])),
-        Listener("listener_2", "Alex", tuple(t.id for t in catalog.tracks[20:23])),
-    ),
-    queue_len=5,
-    candidate_limit=10,
-    method="milp",
-    policy=Policy(representation="strict", discovery_budget=0),
-)
-result = generate_queue(catalog, request)
-print(result.status, result.queue, result.proven_optimal)
-print(result.per_listener, result.conflicts, result.relaxations)
-```
+We compute per-user scores over the full eligible catalog and aggregate them into a room score. We preserve a jointly feasible covering selection based on explicit listener acceptance before filling the remaining shortlist by room score.
 
-V2 intentionally replaces list-only solver outcomes and user-named score columns. Use `generate_queue(catalog, request)` for orchestration or `solve_instance(instance, ...)` for matched-rule experiments. The original notebook is a historical prototype and is not the current model/API. Unknown request/rule fields are rejected.
+As a step-by step process:
+- Start with the full eligible catalog
+- Compute per-user scores for each candidate
+- aggregate these per-user scores into a room score
+- preserve a selection covering listeners under the joint session rules
+- fill the remaining with top candidates as per the global room score.
 
-## Reproduce evidence
+At this point in iteration, I'm trying not to push the solver to work over the full retrieved set.
 
-```bash
-.venv/bin/python evaluation/benchmark.py
-.venv/bin/python evaluation/catalog_benchmark.py  # requires local saved features
-.venv/bin/python evaluation/study.py --output output/study --render-audio
-```
+### 5. Final Queue Optimization
 
-The committed [benchmark evidence](docs/BENCHMARKS.md) contains 378 synthetic runs and 96 saved-catalog runs, complete instances and CBC logs. Exact DP and both edge formulations agree on the synthetic optima. These are internal-objective/correctness diagnostics, not listening outcomes or production latency guarantees. The original PDF's six comparisons were not independently reproduced because its exact generator/scripts were unavailable.
+The last stage can use a mixed-integer program over the final shortlist, with exact subset DP and heuristic alternatives.
 
-The study generator makes blank instruments and randomized local excerpts. No ratings are manufactured. Human judgments, consent, a held-out protocol, and later statistical design remain required for the listening-evidence gate.
+**Decision variables**
 
-## Architecture and limits
+- $x_{a,t} \in \{0,1\}$: song $a$ is assigned to queue slot $t$
+- $y_{a,b,t} \in [0,1]$: song $a$ is followed by song $b$ between slots $t$ and $t+1$; integral placements and linking equalities force these continuous variables to 0 or 1
 
-- `domain.py`, `preferences.py`: stable identities, validated evidence, policy and immutable instances/results.
-- `artifacts.py`, `artifact_store.py`, `catalog.py`, `boundary.py`: extraction, manifests, transforms and candidate-level transition signals.
-- `candidates.py`: full-ranking reference and joint-feasible protection.
-- `objective.py`, `constraints.py`, `validation.py`: one score definition and independent decoded-queue checks.
-- `solvers/`: exact subset DP, incremental merged beam/greedy and phase-based MILP with continuous edges.
-- `session.py`: revision checks, promises, current-track anchor, cooldowns and confirmed duration history.
-- `workbench.py`, `debug_panel.py`, `debug_panel/`: clustering/retrieval views, frozen preparation, local audio streaming and the interactive GUI.
-- `evaluation/`, `tests/`: frozen experiments, original audit provenance, regression/property checks and independent-study instruments.
+**Objective**
 
-Requests are bounded to eight listeners, twenty slots, thirty candidates and sixty seconds. Exact DP is capped at twenty candidates. The deadline covers preprocessing and solving, with small measured process/validation overhead; it is not a realtime deadline. The server is loopback-only and serializes solves. Dense retrieval remains appropriate for the current 121-track catalog; candidate transition blocks are computed on demand.
+The default fair policy improves the least-served listener, then mean utility, then transitions within the agreed preference tolerance. The `affinity` research policy uses the scalar objective below.
 
-[Policy details](docs/POLICY.md) · [Artifacts](docs/ARTIFACTS.md) · [Sessions](docs/SESSIONS.md) · [Rebuild gates](docs/REBUILD_STATUS.md)
+Maximize internal affinity:
+- total room relevance of selected songs
+- plus transition-weighted quality of adjacent song pairs
+
+With the optional same-folder penalty set to zero, equivalently,
+
+- maximize $\sum r_a x_{a,t} + \lambda \sum c_{ab} y_{a,b,t}$
+
+where:
+- $r_a$ is the room score of song $a$
+- $c_{ab}$ is the transition score from song $a$ to song $b$
+- $\lambda$ controls the importance of transitions
+
+**Constraints**
+
+- Exactly one song is placed in each queue slot
+- Each song can appear at most once
+- Exactly one transition is chosen for each adjacent slot pair
+- If song $a$ is placed in slot $t$, it must connect to exactly one song in slot $t+1$
+- If song $b$ is placed in slot $t+1$, it must be reached from exactly one song in slot $t$
+- Playback blocks, locked songs, mandatory caps and strict acceptance requirements are enforced jointly
+
+with:
+- $A$: shortlisted songs
+- $T$: queue slots
+- $P$: adjacent slot indices
+
+Important scope note:
+
+> an optimality certificate covers only the final shortlist, not the entire catalog. Time-limited feasible queues are reported separately from proven optima.
+
+So the overall system is best described as:
+
+song-based retrieval + policy-grounded shortlisting + validated sequencing, with exact reference methods.
+
+At this point, the methods provide an optimization baseline; preference prediction and better listening still need independent judgments. Machine Learning solutions for retrieval and ranking are potential options.
+
+### Optimization Reasoning
+
+The sequencing idea was loosely inspired by Spotify's own mix feature, where songs are arranged to sound smoother when transitioning.
+
+Other approaches I thought about for the sequencing + room-score problem were beam search and dynamic programming.
+
+Beam Search: Beam search was a great baseline since it's fast and easy to compare against. However, when it comes to optimality, there is no guarantee. It throws away potentially better sequences early due to the pruning.
+
+Dynamic Programming: Fits the current formulation well and is implemented as an exact subset-DP baseline; however, I plan to add more global constraints as development continues. This will be a lot more annoying to extend cleanly with DP.
+
+For the interactive GUI, playback and step-by-step usage, see the [workbench guide](docs/WORKBENCH.md).
